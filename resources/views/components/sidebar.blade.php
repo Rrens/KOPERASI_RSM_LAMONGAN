@@ -68,19 +68,19 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="{{ route('pembelian.index') }}" class="sidebar-link">
                         <i class="bi bi-cash-stack"></i>
                         <span>Pembelian</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="{{ route('stok.index') }}" class="sidebar-link">
                         <i class="bi bi-box-fill"></i>
                         <span>Stok Barang</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="{{ route('laporan.index') }}" class="sidebar-link">
                         <i class="bi bi-newspaper"></i>
                         <span>Laporan</span>
                     </a>

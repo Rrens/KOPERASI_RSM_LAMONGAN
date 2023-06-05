@@ -87,7 +87,7 @@
 @section('container')
     <div class="page-heading d-flex justify-content-between">
         <div class="flex-start">
-            <h3>Penjualan</h3>
+            <h3>Stok Barang</h3>
         </div>
     </div>
     <div class="page-content">
@@ -99,21 +99,20 @@
                             <div class="card-header d-flex justify-content-between">
                                 <p>Penjualan Table</p>
                                 <button class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#modalKasir">Kasir</button>
+                                    data-bs-target="#modalTambah">Tambah</button>
                             </div>
                             <div class="card-body">
                                 <table class="table table-striped" id="table1">
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>No Transaksi</th>
+                                            <th>ID Barang</th>
+                                            <th>Kategori</th>
+                                            <th>Nama Barang</th>
                                             <th>Jumlah Barang</th>
-                                            <th>Nominal Bayar</th>
-                                            <th>Total Bayar</th>
-                                            <th>Kembalian</th>
-                                            <th>Waktu</th>
+                                            <th>Harga Jual</th>
+                                            <th>Keterangan</th>
                                             <th>Aksi</th>
-                                            <th>Detail</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -149,12 +148,6 @@
                                                     <i class="bi bi-trash-fill"></i>
                                                 </a>
                                             </td>
-                                            <td>
-                                                <a class="tagA btn btn-primary" href="#" data-bs-toggle="modal"
-                                                    data-bs-target="#modalToggleDetail"><i
-                                                        class="bi bi-exclamation-triangle-fill"></i>
-                                                </a>
-                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -168,18 +161,18 @@
     </div>
 
     {{-- MODAL KASIR --}}
-    <div class="modal fade" id="modalKasir" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    <div class="modal fade" id="modalTambah" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header d-flex justify-content-center">
-                    <h5 class="modal-title" id="exampleModalScrollableTitle">Kasir</h5>
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Input Stok Barang</h5>
                 </div>
-                <form action="" method="post" enctype="multipart/form-data">
+                <form action="" method="post">
                     @csrf
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-lg-5 col-md-12 col-sm-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
                                 <div class="card row-color">
                                     <div class="card-content">
                                         <div class="card-body">
@@ -191,9 +184,9 @@
                                                             name="no_transaksi" required>
                                                     </fieldset>
                                                     <fieldset class="form-group">
-                                                        <label for="basicInput">Pelanggan</label>
-                                                        <input type="number" class="form-control mb-3 mt-2"
-                                                            name="id_pelanggan" readonly>
+                                                        <label for="basicInput">Nama Kasir</label>
+                                                        <input type="text" class="form-control mb-3 mt-2"
+                                                            name="nama_kasir" readonly>
                                                     </fieldset>
                                                     <fieldset class="form-group">
                                                         <label for="basicInput">Tanggal</label>
@@ -205,80 +198,38 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-5 col-md-12 col-sm-12">
-                                <div class="card row-color">
-                                    <div class="card-header header-color">
-                                        <h4 class="card-title text-center">Keterangan Anggota</h4>
-                                    </div>
-                                    <div class="card-content">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-lg-6 col-md-6 col-sm-12">
-                                                    <fieldset class="form-group">
-                                                        <label for="basicInput">ID ANGGOTA</label>
-                                                        <input type="number" class="form-control mb-3 mt-2"
-                                                            name="id_anggota" readonly>
-                                                    </fieldset>
-                                                    <fieldset class="form-group">
-                                                        <label for="basicInput">Nama</label>
-                                                        <input type="text" class="form-control mb-3 mt-2" name="nama"
-                                                            readonly>
-                                                    </fieldset>
-                                                </div>
-                                                <div class="col-lg-6 col-md-6 col-sm-12">
-                                                    <fieldset class="form-group">
-                                                        <label for="basicInput">Poin</label>
-                                                        <input type="number" class="form-control mb-3 mt-2"
-                                                            name="poin" readonly>
-                                                    </fieldset>
-                                                    <fieldset class="form-group">
-                                                        <label for="basicInput">Credit</label>
-                                                        <input type="number" class="form-control mb-3 mt-2"
-                                                            name="credit" readonly>
-                                                    </fieldset>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-1">
-                                <center>
-                                    <button type="button" value="1" name="tukar_poin"
-                                        class="btn btn-primary mb-1 px-5 py-4">Tukar Poin</button>
-                                    <a href="#" class="btn btn-success mb-1 px-5 py-4">&nbsp;Cetak&nbsp;</a>
-                                </center>
-                            </div>
                             <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="for-flex">
                                             <center>
-                                                <p>ID Barang</p>
+                                                <p class="mt-3">ID Barang</p>
                                                 <input type="text" value="B001">
                                             </center>
                                             <center>
-                                                <p>Stok</p>
+                                                <p class="mt-3">Kategori</p>
+                                                <input type="text" value="Minuman">
+                                            </center>
+                                            <center>
+                                                <p class="mt-3">Nama Barang</p>
                                                 <input type="text" value="Nutrisari">
                                             </center>
                                             <center>
-                                                <p>Harga Jual</p>
-                                                <input type="text" value="5000">
+                                                <p class="mt-3">Harga Jual</p>
+                                                <input type="number" value="5000">
                                             </center>
                                             <center>
-                                                <p>Jumlah Barang</p>
-                                                <input type="text" value="5">
+                                                <p class="mt-3">Harga Asli</p>
+                                                <input type="number" value="3000">
                                             </center>
                                             <center>
-                                                <p>Harga Jual</p>
-                                                <input type="text" value="3000">
-                                            </center>
-                                            <center>
-                                                <p>Harga Akhir</p>
-                                                <input type="text" value="15000">
+                                                <p class="mt-3">Keterangan</p>
+                                                <input type="text" value="Fast Moving">
                                             </center>
                                         </div>
-
+                                        <center>
+                                            <button class="btn btn-primary mt-3">Simpan</button>
+                                        </center>
                                     </div>
                                 </div>
                             </div>
@@ -296,8 +247,8 @@
                                                         <th>ID Barang</th>
                                                         <th>Kategori</th>
                                                         <th>Nama Barang</th>
-                                                        <th>Jumlah Barang</th>
                                                         <th>Harga Jual</th>
+                                                        <th>harga Beli</th>
                                                         <th>Harga Akhir</th>
                                                     </tr>
                                                 </thead>
@@ -330,80 +281,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-12 col-sm-12">
-                                <div class="card row-color">
-                                    <div class="card-content">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <fieldset class="form-group">
-                                                        <label for="basicInput">Sub Total</label>
-                                                        <input type="number" class="form-control mb-3 mt-2"
-                                                            name="sub_total" required>
-                                                    </fieldset>
-                                                    <fieldset class="form-group">
-                                                        <label for="basicInput">Diskon</label>
-                                                        <div class="row">
-                                                            <div class="col-5">
-                                                                <input type="number" class="form-control mb-3 mt-2"
-                                                                    name="diskon">
-                                                            </div>
-                                                            <div class="col-1">
-                                                                <p class="text-center">%=</p>
-                                                            </div>
-                                                            <div class="col-6">
-                                                                <input type="number" class="form-control mb-3 mt-2"
-                                                                    name="hasil_diskon">
-                                                            </div>
-
-                                                    </fieldset>
-                                                    <fieldset class="form-group">
-                                                        <label for="basicInput">Nominal Bayar</label>
-                                                        <input type="number" class="form-control mb-3 mt-2"
-                                                            name="nominal_bayar">
-                                                    </fieldset>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-12 col-sm-12">
-                                <div class="card row-color">
-                                    <div class="card-content">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <fieldset class="form-group">
-                                                        <label for="basicInput">Total Bayar</label>
-                                                        <input type="number" class="form-control mb-3 mt-2"
-                                                            name="total_bayar" required>
-                                                    </fieldset>
-                                                    <fieldset class="form-group">
-                                                        <label for="basicInput">Kembalian</label>
-                                                        <input type="number" class="form-control mb-3 mt-2"
-                                                            name="kembalian" readonly>
-                                                    </fieldset>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="d-flex justify-content-around align-items-center">
-                                <p>Tambahan Poin Sebesar: <input type="number"></p>
-                                <p>Metode Pembayaran:
-                                    <select name="metode_pembayaran" id="">
-                                        <option selected hidden>Pilih Metode Pembayaran</option>
-                                        <option value="tunai">Tunai</option>
-                                        <option value="kredit">Kredit</option>
-                                    </select>
-                                </p>
                             </div>
                         </div>
                     </div>
@@ -540,15 +417,6 @@
         integrity = "sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin = "anonymous" >
     </script>
-    {{-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
-    </script> --}}
     <script src="{{ asset('assets/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
     <script src="{{ asset('assets/js/pages/simple-datatables.js') }}"></script>
-    {{-- <script type="text/javascript">
-        document.forms['filter_date'].submit();
-    </script> --}}
 @endpush

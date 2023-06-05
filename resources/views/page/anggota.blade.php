@@ -17,7 +17,7 @@
 
         body.theme-dark a {
             /* text-decoration: none !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                color: white; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                color: white; */
             color: inherit;
             text-decoration: none !important;
         }
@@ -172,36 +172,37 @@
                     <div class="modal-body">
                         <div class="row">
                             <form action="" method="post">
-                                <div class="col-lg-5 col-md-6 col-sm-12">
+                                @csrf
+                                <div class="col-lg-5 col-md-12 col-sm-12">
                                     <div class="card row-color">
                                         <div class="card-header header-color">
-                                            <h4 class="card-title text-center">Bootstrap Select</h4>
+                                            <h4 class="card-title text-center">Keterangan Anggota</h4>
                                         </div>
                                         <div class="card-content">
                                             <div class="card-body">
                                                 <div class="row">
-                                                    <div class="col-md-6 mb-4">
-                                                        <h6>Basic Select</h6>
-                                                        <p>Use <code>.form-select</code> class for basic select control.</p>
+                                                    <div class="col-lg-6 col-md-6 col-sm-12">
                                                         <fieldset class="form-group">
-                                                            <select class="form-select" id="basicSelect">
-                                                                <option>IT</option>
-                                                                <option>Blade Runner</option>
-                                                                <option>Thor Ragnarok</option>
-                                                            </select>
+                                                            <label for="basicInput">ID ANGGOTA *</label>
+                                                            <input type="number" class="form-control mb-3 mt-2"
+                                                                name="id_anggota" required>
+                                                        </fieldset>
+                                                        <fieldset class="form-group">
+                                                            <label for="basicInput">Nama</label>
+                                                            <input type="text" class="form-control mb-3 mt-2"
+                                                                name="nama" readonly>
                                                         </fieldset>
                                                     </div>
-                                                    <div class="col-md-6 mb-4">
-                                                        <h6>Disabled Select</h6>
-                                                        <p>Use <code>disabled</code> attribute for disabled select control.
-                                                        </p>
+                                                    <div class="col-lg-6 col-md-6 col-sm-12">
                                                         <fieldset class="form-group">
-                                                            <select class="form-select" disabled="disabled"
-                                                                id="disabledSelect">
-                                                                <option>Green</option>
-                                                                <option>Red</option>
-                                                                <option>Blue</option>
-                                                            </select>
+                                                            <label for="basicInput">Alamat</label>
+                                                            <input type="text" class="form-control mb-3 mt-2"
+                                                                name="alamat" readonly>
+                                                        </fieldset>
+                                                        <fieldset class="form-group">
+                                                            <label for="basicInput">Credit</label>
+                                                            <input type="number" class="form-control mb-3 mt-2"
+                                                                name="credit" readonly>
                                                         </fieldset>
                                                     </div>
                                                 </div>
@@ -209,45 +210,42 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-5 col-md-6 col-sm-12">
+                                <div class="col-lg-5 col-md-12 col-sm-12">
                                     <div class="card row-color">
                                         <div class="card-header header-color">
-                                            <h4 class="card-title text-center">Bootstrap Select</h4>
+                                            <h4 class="card-title text-center">Pembayaran</h4>
                                         </div>
                                         <div class="card-content">
                                             <div class="card-body">
                                                 <div class="row">
-                                                    <div class="col-md-6 mb-4">
-                                                        <h6>Basic Select</h6>
-                                                        <p>Use <code>.form-select</code> class for basic select control.
-                                                        </p>
+                                                    <div class="col-lg-6 col-md-6 col-sm-12">
                                                         <fieldset class="form-group">
-                                                            <select class="form-select" id="basicSelect">
-                                                                <option>IT</option>
-                                                                <option>Blade Runner</option>
-                                                                <option>Thor Ragnarok</option>
-                                                            </select>
+                                                            <label for="basicInput">ID ANGGOTA</label>
+                                                            <input type="number" class="form-control mb-3 mt-2"
+                                                                name="id_anggota" readonly>
+                                                        </fieldset>
+                                                        <fieldset class="form-group">
+                                                            <label for="basicInput">Nama</label>
+                                                            <input type="text" class="form-control mb-3 mt-2"
+                                                                name="nama" readonly>
                                                         </fieldset>
                                                     </div>
-                                                    <div class="col-md-6 mb-4">
-                                                        <h6>Disabled Select</h6>
-                                                        <p>Use <code>disabled</code> attribute for disabled select
-                                                            control.
-                                                        </p>
+                                                    <div class="col-lg-6 col-md-6 col-sm-12">
                                                         <fieldset class="form-group">
-                                                            <select class="form-select" disabled="disabled"
-                                                                id="disabledSelect">
-                                                                <option>Green</option>
-                                                                <option>Red</option>
-                                                                <option>Blue</option>
-                                                            </select>
+                                                            <label for="basicInput">Poin</label>
+                                                            <input type="number" class="form-control mb-3 mt-2"
+                                                                name="poin" readonly>
+                                                        </fieldset>
+                                                        <fieldset class="form-group">
+                                                            <label for="basicInput">Credit</label>
+                                                            <input type="number" class="form-control mb-3 mt-2"
+                                                                name="credit" readonly>
                                                         </fieldset>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                                 <div class="col-lg-1">
                                     <center>
@@ -258,63 +256,65 @@
                             </form>
                             <div class="card">
                                 <div class="card-body">
-                                    <table class="table table-striped" id="table1">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>ID Anggota</th>
-                                                <th>Nama</th>
-                                                <th>Password</th>
-                                                <th>Kelamin</th>
-                                                <th>No Telp</th>
-                                                <th>Alamat</th>
-                                                <th>Aksi</th>
-                                                <th>Detail</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="text-bold-500">
-                                                    1
-                                                </td>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>ID Anggota</th>
+                                                    <th>Nama</th>
+                                                    <th>Password</th>
+                                                    <th>Kelamin</th>
+                                                    <th>No Telp</th>
+                                                    <th>Alamat</th>
+                                                    <th>Aksi</th>
+                                                    <th>Detail</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-bold-500">
+                                                        1
+                                                    </td>
 
-                                                <td class="text-bold-500">
-                                                    1229199
-                                                </td>
-                                                <td class="text-bold-500">
-                                                    Rahma Anjani
-                                                </td>
-                                                <td class="text-bold-500">
-                                                    RahmaPaheho123
-                                                </td>
-                                                <td class="text-bold-500">
-                                                    Perempuan
-                                                </td>
-                                                <td class="text-bold-500">
-                                                    081288812877
-                                                </td>
-                                                <td class="text-bold-500">
-                                                    Sebelahe omah ketek gede
-                                                </td>
-                                                <td>
-                                                    <a class="tagA btn btn-outline-warning" href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#modalEditAdmin">
-                                                        <i class="bi bi-pencil-fill"></i>
-                                                    </a>
-                                                    <a class="tagA btn btn-outline-danger" href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#modalDeleteAdmin">
-                                                        <i class="bi bi-trash-fill"></i>
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <a class="tagA btn btn-primary" href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalToggleDetail"><i
-                                                            class="bi bi-exclamation-triangle-fill"></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                                    <td class="text-bold-500">
+                                                        1229199
+                                                    </td>
+                                                    <td class="text-bold-500">
+                                                        Rahma Anjani
+                                                    </td>
+                                                    <td class="text-bold-500">
+                                                        RahmaPaheho123
+                                                    </td>
+                                                    <td class="text-bold-500">
+                                                        Perempuan
+                                                    </td>
+                                                    <td class="text-bold-500">
+                                                        081288812877
+                                                    </td>
+                                                    <td class="text-bold-500">
+                                                        Sebelahe omah ketek gede
+                                                    </td>
+                                                    <td>
+                                                        <a class="tagA btn btn-outline-warning" href="#"
+                                                            data-bs-toggle="modal" data-bs-target="#modalEditAdmin">
+                                                            <i class="bi bi-pencil-fill"></i>
+                                                        </a>
+                                                        <a class="tagA btn btn-outline-danger" href="#"
+                                                            data-bs-toggle="modal" data-bs-target="#modalDeleteAdmin">
+                                                            <i class="bi bi-trash-fill"></i>
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a class="tagA btn btn-primary" href="#"
+                                                            data-bs-toggle="modal" data-bs-target="#modalToggleDetail"><i
+                                                                class="bi bi-exclamation-triangle-fill"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
