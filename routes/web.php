@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AnggotaController;
+use App\Http\Controllers\DashboardConroller;
+use App\Http\Controllers\PenjualanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +20,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('dashboard', [DashboardConroller::class, 'index'])->name('dashboard.index');
+Route::get('admin', [AdminController::class, 'index'])->name('admin.index');
+Route::get('anggota', [AnggotaController::class, 'index'])->name('anggota.index');
+Route::get('penjualan', [PenjualanController::class, 'index'])->name('penjualan.index');
