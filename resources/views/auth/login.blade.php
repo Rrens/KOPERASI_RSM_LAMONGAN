@@ -1,4 +1,4 @@
-@extends('tenant.auth.components.master')
+@extends('auth.components.master')
 @section('title', 'LOGIN')
 
 @section('container')
@@ -30,6 +30,6 @@
     <div class="text-center mt-5 text-lg fs-4">
         {{-- <p class="text-gray-600">Don't have an account? <a href="{{ route('register') }}" class="font-bold">Sign
                 up</a>.</p> --}}
-        <p><a class="font-bold" {{-- href="{{ route('forgot-password') }}" --}}>Forgot password?</a>.</p>
+        {{-- <p><a class="font-bold" href="{{ route('forgot-password') }}">Forgot password?</a>.</p> --}}
     </div>
 @endsection

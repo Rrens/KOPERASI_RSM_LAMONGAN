@@ -17,7 +17,7 @@
 
         body.theme-dark a {
             /* text-decoration: none !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                color: white; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        color: white; */
             color: inherit;
             text-decoration: none !important;
         }
@@ -154,13 +154,17 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header d-flex justify-content-center">
-                    <h5 class="modal-title" id="exampleModalScrollableTitle">Edit Profile</h5>
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Tambah Profile</h5>
                 </div>
-                <form action="" method="post" enctype="multipart/form-data">
+                <form action="{{ route('admin.store') }}" method="post">
                     @csrf
                     <div class="modal-body">
                         <div class="d-flex justify-content-between">
                             <div class="flex-start">
+                                <div class="form-group mb-3">
+                                    <label for="basicInput">ID Admin</label>
+                                    <input type="text" class="form-control mt-3"round id="basicInput" name="id_admin">
+                                </div>
                                 <div class="form-group mb-3">
                                     <label for="basicInput">NIK</label>
                                     <input type="text" class="form-control mt-3"round id="basicInput" name="nik">
@@ -245,6 +249,11 @@
                     <div class="modal-body">
                         <div class="d-flex justify-content-between">
                             <div class="flex-start">
+                                <div class="form-group mb-3">
+                                    <label for="basicInput">ID Admin</label>
+                                    <input type="text" class="form-control mt-3"round id="basicInput"
+                                        name="id_admin">
+                                </div>
                                 <div class="form-group mb-3">
                                     <label for="basicInput">NIK</label>
                                     <input type="text" class="form-control mt-3"round id="basicInput" name="nik">

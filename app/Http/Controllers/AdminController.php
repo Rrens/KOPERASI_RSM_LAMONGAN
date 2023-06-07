@@ -10,4 +10,9 @@ class AdminController extends Controller
     {
         return view('page.admin');
     }
+
+    public function store(Request $request)
+    {
+        dd($request->all());
+    }
 }

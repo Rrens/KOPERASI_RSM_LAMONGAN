@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AnggotaController;
+use App\Http\Controllers\AuthConroller;
 use App\Http\Controllers\DashboardConroller;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PembelianController;
@@ -26,8 +27,10 @@ Route::get('/', function () {
 
 Route::redirect('/', 'dashboard');
 
+Route::get('login', [AuthConroller::class, 'index'])->name('login');
 Route::get('dashboard', [DashboardConroller::class, 'index'])->name('dashboard.index');
 Route::get('admin', [AdminController::class, 'index'])->name('admin.index');
+Route::post('admin', [AdminController::class, 'store'])->name('admin.store');
 Route::get('anggota', [AnggotaController::class, 'index'])->name('anggota.index');
 Route::get('penjualan', [PenjualanController::class, 'index'])->name('penjualan.index');
 Route::get('pembelian', [PembelianController::class, 'index'])->name('pembelian.index');
