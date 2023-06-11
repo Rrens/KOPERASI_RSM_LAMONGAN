@@ -12,9 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('penjualan', function (Blueprint $table) {
-            $table->string('no_transaksi')->primary();
-            $table->string('id_user')->nullable();
-            $table->foreign('id_user')->references('id')->on('users');
+            // $table->string('no_transaksi')->primary();
+            $table->id();
+            $table->unsignedBigInteger('id_user')->nullable();
+            // $table->foreign('id_user')->references('id')->on('users');
             $table->float('subtotal')->nullable();
             $table->float('diskon')->nullable();
             $table->float('total_bayar')->nullable();

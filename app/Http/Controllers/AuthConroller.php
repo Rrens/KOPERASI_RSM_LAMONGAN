@@ -22,7 +22,7 @@ class AuthConroller extends Controller
     {
         // dd($request->all());
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
+            'name' => 'required',
             'password' => 'required'
         ]);
 
@@ -31,15 +31,15 @@ class AuthConroller extends Controller
             return redirect()->route('dashboard');
         }
         $data = [
-            'email' => $request->email,
+            'name' => $request->name,
             'password' => $request->password
         ];
 
         if (!Auth::attempt($data)) {
-            Session::flash('error', 'Email or Password is wrong');
+            Session::flash('error', 'Name or Password is wrong');
             Alert::error(
                 'error',
-                'Email or Password is wrong'
+                'Name or Password is wrong'
             );
             return redirect()->route('login');
         }
