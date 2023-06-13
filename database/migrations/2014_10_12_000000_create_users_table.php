@@ -16,12 +16,12 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('pin');
-            $table->integer('phone');
-            $table->string('address');
-            $table->string('nik');
-            $table->string('gender');
-            $table->date('tanggal_lahir');
-            $table->string('tempat_lahir');
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
+            $table->string('nik')->nullable();
+            $table->integer('gender');
+            $table->date('tanggal_lahir')->nullable();
+            $table->string('tempat_lahir')->nullable();
             $table->integer('credit')->nullable()->default(0);
             $table->integer('poin')->nullable()->default(0);
             $table->integer('role');

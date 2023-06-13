@@ -15,7 +15,7 @@ return new class extends Migration
             // $table->string('no_transaksi')->primary();
             $table->id();
             $table->unsignedBigInteger('id_user')->nullable();
-            // $table->foreign('id_user')->references('id')->on('users');
+            $table->foreign('id_user')->references('id')->on('users');
             $table->float('subtotal')->nullable();
             $table->float('diskon')->nullable();
             $table->float('total_bayar')->nullable();

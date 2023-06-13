@@ -11,16 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pembelian', function (Blueprint $table) {
-            $table->string('no_transaksi')->primary();
+        Schema::create('penjualan_details', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('id_penjualan')->nullable();
+            $table->foreign('id_penjualan')->references('id')->on('penjualan');
             $table->unsignedBigInteger('id_product')->nullable();
             $table->foreign('id_product')->references('id')->on('products');
-            $table->float('harga_beli')->nullable();
-            $table->float('harga_jual')->nullable();
-            $table->float('total_bayar')->nullable();
-            $table->float('total_harga')->nullable();
-            $table->integer('jumlah_barang');
-            $table->text('keterangan')->nullable();
+            $table->integer('harga_jual')->nullable();
+            $table->integer('jumlah_barang')->nullable();
+            $table->integer('harga_akhir')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pembelian');
+        Schema::dropIfExists('penjualan_details');
     }
 };

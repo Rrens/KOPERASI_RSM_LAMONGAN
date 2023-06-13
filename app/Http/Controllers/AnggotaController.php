@@ -98,8 +98,6 @@ class AnggotaController extends Controller
         $user = User::findOrFail($request->id_anggota);
         // dd($user);
         try {
-
-
             $user->nik = $request->nik;
             $user->name = $request->nama_lengkap;
             $user->pin = $request->pin;

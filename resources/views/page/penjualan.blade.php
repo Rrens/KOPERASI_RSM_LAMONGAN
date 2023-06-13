@@ -17,7 +17,7 @@
 
         body.theme-dark a {
             /* text-decoration: none !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            color: white; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        color: white; */
             color: inherit;
             text-decoration: none !important;
         }
@@ -137,7 +137,7 @@
                                                 081288812877
                                             </td>
                                             <td class="text-bold-500">
-                                                Sebelahe omah ketek gede
+                                                100000
                                             </td>
                                             <td>
                                                 <a class="tagA btn btn-outline-warning" href="#"
@@ -186,14 +186,9 @@
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <fieldset class="form-group">
-                                                        <label for="basicInput">No Transaksi *</label>
+                                                        <label for="basicInput">ID Pelanggan</label>
                                                         <input type="number" class="form-control mb-3 mt-2"
-                                                            name="no_transaksi" required>
-                                                    </fieldset>
-                                                    <fieldset class="form-group">
-                                                        <label for="basicInput">Pelanggan</label>
-                                                        <input type="number" class="form-control mb-3 mt-2"
-                                                            name="id_pelanggan" readonly>
+                                                            name="id_pelanggan" id="id_pelanggan">
                                                     </fieldset>
                                                     <fieldset class="form-group">
                                                         <label for="basicInput">Tanggal</label>
@@ -217,24 +212,24 @@
                                                     <fieldset class="form-group">
                                                         <label for="basicInput">ID ANGGOTA</label>
                                                         <input type="number" class="form-control mb-3 mt-2"
-                                                            name="id_anggota" readonly>
+                                                            name="id_anggota" id="id_anggota" readonly>
                                                     </fieldset>
                                                     <fieldset class="form-group">
                                                         <label for="basicInput">Nama</label>
-                                                        <input type="text" class="form-control mb-3 mt-2" name="nama"
-                                                            readonly>
+                                                        <input type="text" id="nama_anggota"
+                                                            class="form-control mb-3 mt-2" name="nama" readonly>
                                                     </fieldset>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                                     <fieldset class="form-group">
                                                         <label for="basicInput">Poin</label>
-                                                        <input type="number" class="form-control mb-3 mt-2"
-                                                            name="poin" readonly>
+                                                        <input type="number" class="form-control mb-3 mt-2" name="poin"
+                                                            id="poin" readonly>
                                                     </fieldset>
                                                     <fieldset class="form-group">
                                                         <label for="basicInput">Credit</label>
                                                         <input type="number" class="form-control mb-3 mt-2"
-                                                            name="credit" readonly>
+                                                            name="credit" id="credit" readonly>
                                                     </fieldset>
                                                 </div>
                                             </div>
@@ -243,56 +238,65 @@
                                 </div>
                             </div>
                             <div class="col-lg-1">
-                                <center>
-                                    <button type="button" value="1" name="tukar_poin"
-                                        class="btn btn-primary mb-1 px-5 py-4">Tukar Poin</button>
-                                    <a href="#" class="btn btn-success mb-1 px-5 py-4">&nbsp;Cetak&nbsp;</a>
-                                </center>
+                                <div class="row">
+
+                                    <center>
+                                        <a href="#" id="tukar_poin" type="button" value="1"
+                                            name="tukar_poin" class="btn btn-primary mb-1 px-5 py-4">Tukar Poin</a>
+                                        <input type="number" name="jumlah_poin" id="jumlah_poin" hidden>
+                                        <a href="#" class="btn btn-success mb-1 px-5 py-4">&nbsp;Cetak&nbsp;</a>
+                                    </center>
+                                </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="for-flex">
-                                            <center>
-                                                <p>ID Barang</p>
-                                                <input type="text" value="B001">
-                                            </center>
-                                            <center>
-                                                <p>Stok</p>
-                                                <input type="text" value="Nutrisari">
-                                            </center>
-                                            <center>
-                                                <p>Harga Jual</p>
-                                                <input type="text" value="5000">
-                                            </center>
-                                            <center>
-                                                <p>Jumlah Barang</p>
-                                                <input type="text" value="5">
-                                            </center>
-                                            <center>
-                                                <p>Harga Jual</p>
-                                                <input type="text" value="3000">
-                                            </center>
-                                            <center>
-                                                <p>Harga Akhir</p>
-                                                <input type="text" value="15000">
-                                            </center>
+                                            <form id="add_table_kasir" method="post">
+                                                @csrf
+                                                <center>
+                                                    <p>ID Barang</p>
+                                                    <input type="number" id="id_barang" name="id_barang">
+                                                </center>
+                                                <center>
+                                                    <p>Stok</p>
+                                                    <input type="number" id="stok" name="stok" readonly>
+                                                </center>
+                                                <center>
+                                                    <p>Jumlah Barang</p>
+                                                    <input type="number" id="jumlah_barang" name="jumlah_barang">
+                                                </center>
+                                                <center>
+                                                    <p>Harga Jual</p>
+                                                    <input type="number" id="harga_jual" name="harga_jual" readonly>
+                                                </center>
+                                                <center>
+                                                    <p>Harga Akhir</p>
+                                                    <input type="number" id="harga_akhir" name="harga_akhir" readonly>
+                                                </center>
+                                                <center>
+                                                    {{-- <p class="mt-3">Tambah produk</p> --}}
+                                                    <a type="submit"" class="btn btn-primary mt-3" id="btn_tambah"
+                                                        onclick="tambahBaris()">Tambah</a>
+                                                </center>
+                                            </form>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
 
                         </div>
+                        {{-- TABLE --}}
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="table-responsive">
-                                            <table class="table table-striped">
+                                            <table class="table table-striped" id="table_kasir">
                                                 <thead>
                                                     <tr>
-                                                        <th>No</th>
+                                                        <th>Delete</th>
+                                                        {{-- <th>No</th> --}}
                                                         <th>ID Barang</th>
                                                         <th>Kategori</th>
                                                         <th>Nama Barang</th>
@@ -302,29 +306,6 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td class="text-bold-500">
-                                                            1
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            1229199
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            Rahma Anjani
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            RahmaPaheho123
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            Perempuan
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            081288812877
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            Sebelahe omah ketek gede
-                                                        </td>
-                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -332,6 +313,7 @@
                                 </div>
                             </div>
 
+                            <a href="#" class="btn btn-primary my-5" id="hitung_sub_total">Hitung</a>
                         </div>
                         <div class="row">
                             <div class="col-lg-6 col-md-12 col-sm-12">
@@ -343,28 +325,28 @@
                                                     <fieldset class="form-group">
                                                         <label for="basicInput">Sub Total</label>
                                                         <input type="number" class="form-control mb-3 mt-2"
-                                                            name="sub_total" required>
+                                                            name="sub_total" id="sub_total" readonly>
                                                     </fieldset>
                                                     <fieldset class="form-group">
                                                         <label for="basicInput">Diskon</label>
                                                         <div class="row">
                                                             <div class="col-5">
                                                                 <input type="number" class="form-control mb-3 mt-2"
-                                                                    name="diskon">
+                                                                    name="diskon" id="diskon" readonly>
                                                             </div>
                                                             <div class="col-1">
                                                                 <p class="text-center">%=</p>
                                                             </div>
                                                             <div class="col-6">
                                                                 <input type="number" class="form-control mb-3 mt-2"
-                                                                    name="hasil_diskon">
+                                                                    name="hasil_diskon" id="hasil_diskon" readonly>
                                                             </div>
 
                                                     </fieldset>
                                                     <fieldset class="form-group">
                                                         <label for="basicInput">Nominal Bayar</label>
                                                         <input type="number" class="form-control mb-3 mt-2"
-                                                            name="nominal_bayar">
+                                                            name="nominal_bayar" id="nominal_bayar" readonly>
                                                     </fieldset>
                                                 </div>
                                             </div>
@@ -379,14 +361,14 @@
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <fieldset class="form-group">
-                                                        <label for="basicInput">Total Bayar</label>
+                                                        <label for="basicInput">Uang Bayar</label>
                                                         <input type="number" class="form-control mb-3 mt-2"
-                                                            name="total_bayar" required>
+                                                            name="uang_bayar" id="uang_bayar" required readonly>
                                                     </fieldset>
                                                     <fieldset class="form-group">
                                                         <label for="basicInput">Kembalian</label>
                                                         <input type="number" class="form-control mb-3 mt-2"
-                                                            name="kembalian" readonly>
+                                                            name="kembalian" id="kembalian" readonly>
                                                     </fieldset>
                                                 </div>
                                             </div>
@@ -396,9 +378,9 @@
                             </div>
 
                             <div class="d-flex justify-content-around align-items-center">
-                                <p>Tambahan Poin Sebesar: <input type="number"></p>
+                                <p>Tambahan Poin Sebesar: <input type="number" id="tambahan_poin" readonly></p>
                                 <p>Metode Pembayaran:
-                                    <select name="metode_pembayaran" id="">
+                                    <select name="metode_pembayaran" id="metode_pembayaran">
                                         <option selected hidden>Pilih Metode Pembayaran</option>
                                         <option value="tunai">Tunai</option>
                                         <option value="kredit">Kredit</option>
@@ -415,7 +397,7 @@
                 <i class="bx bx-x d-block d-sm-none"></i>
                 <span class="d-none d-sm-block">Batal</span>
             </button>
-            <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">
+            <button type="submit" class="btn btn-primary ml-1" id="btn_save">
                 <i class="bx bx-check d-block d-sm-none"></i>
                 <span class="d-none d-sm-block">Simpan</span>
             </button>
@@ -532,23 +514,280 @@
 
 @push('scripts')
     <script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            $('#tableLaporan').DataTable();
-        }); <
-        script src = "https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity = "sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin = "anonymous" >
-    </script>
-    {{-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
-    </script> --}}
     <script src="{{ asset('assets/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
     <script src="{{ asset('assets/js/pages/simple-datatables.js') }}"></script>
-    {{-- <script type="text/javascript">
-        document.forms['filter_date'].submit();
-    </script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+        integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $('#id_pelanggan').on('change', function(e) {
+            var id_pelanggan = e.target.value;
+            // console.log(id_pelanggan)
+            $.ajax({
+                url: `/penjualan/get-id-anggota/${id_pelanggan}`,
+                method: 'GET',
+                success: function(data) {
+                    // console.log(data);
+                    $('#id_anggota').val(data.id);
+                    $('#nama_anggota').val(data.name);
+                    $('#poin').val(data.poin);
+                    $('#credit').val(data.credit);
+                    // if (data.data.omzet === undefined) {
+                    //     $('#jumlah_omzet').val(0)
+                    // } else {
+                    //     $('#jumlah_omzet').val(data.data.omzet)
+                    // }
+
+                    // $.ajax({
+                    //     url: ,
+                    //     method: 'GET',
+                    //     success: function(data) {
+                    //         console.log('Bonus Omzet: ' + data.bonus_omzet);
+                    //         if (data.bonus_omzet == 0) {
+                    //             $('#bonus_omzet').val(data.bonus_omzet);
+                    //         } else {
+                    //             $('#bonus_omzet').val(data.bonus_omzet);
+                    //         }
+                    //     }
+                    // })
+                },
+                error: function() {
+                    // alert(request.responseText);
+
+                    $('#id_anggota').val('');
+                    $('#nama_anggota').val('');
+                    $('#poin').val('');
+                    $('#credit').val('');
+                }
+            })
+
+        });
+
+        $('#tukar_poin').on('click', function() {
+            $('#jumlah_poin').val($('#poin').val())
+            // alert($('#jumlah_poin').val())
+        })
+
+        $('#hitung_sub_total').on('click', function() {
+            var harga_total = [];
+            var id_anggota = $('#id_pelanggan').val();
+            var poin = $('#jumlah_poin').val() * 3000;
+            var metode_pembayaran = $('#metode_pembayaran').val();
+
+
+            $('#table_kasir tbody tr').each(function() {
+                var harga_akhir = $(this).find('td:eq(6)')[0]['innerText'];
+                // console.log(id_barang, kategori, nama_barang, jumlah_barang, harga_jual, harga_akhir)
+                harga_total.push({
+                    harga_akhir: harga_akhir
+                });
+            });
+            let sum = 0;
+
+            harga_total.forEach(value => {
+                // console.log(`VALUE: ${value}`)
+                sum += parseInt(value['harga_akhir']);
+            });
+
+
+
+            if (metode_pembayaran) {
+                if (metode_pembayaran == 'Pilih Metode Pembayaran') {
+                    $('#sub_total').val(sum - poin);
+                } else if (metode_pembayaran == 'kredit') {
+                    $('#sub_total').val((sum - poin) + ((sum - poin) * 0.05));
+                } else {
+                    $('#sub_total').val(sum - poin);
+                }
+            } else {
+                $('#sub_total').val(sum - poin);
+            }
+
+
+            console.log('id_anggota: ' +
+                id_anggota, 'POIN: ' + poin);
+
+
+
+            // $('#nama_anggota').val(data.name);
+            if (id_anggota) {
+                console.log('yaya')
+                $('#diskon').val(10);
+                $('#hasil_diskon').val(sum * 0.1);
+
+                if ($('#sub_total').val() >= 100000) {
+                    $('#tambahan_poin').val(1);
+                }
+            }
+            $('#nominal_bayar').val(sum - $('#hasil_diskon').val())
+            console.log(harga_total, `sum: ${sum}`);
+            // $('#uang_bayar').attr(hidden, false);
+            $('#uang_bayar').attr('readonly', false);
+
+
+        })
+
+
+        $('#uang_bayar').on('change', function() {
+
+            var uang_bayar = $('#uang_bayar').val();
+            var nominal_bayar = $('#nominal_bayar').val();
+            console.log(`UANG BAYAR: ${uang_bayar} NOMINAL BAYAR ${nominal_bayar}`)
+
+            if (uang_bayar < nominal_bayar) {
+                alert('Uang kurang ' + (nominal_bayar - uang_bayar))
+                $('#kembalian').val('');
+            } else {
+                $('#kembalian').val(uang_bayar - nominal_bayar);
+            }
+        })
+
+
+
+
+        // $('#jumlah_barang').on('change', function() {
+        //     var data = [];
+        //     var harga_total = [];
+
+        //     $('#table_kasir tbody tr').each(function() {
+        //         var id_barang = $(this).find('td:eq(1)')[0]['innerText'];
+        //         var kategori = $(this).find('td:eq(2)')[0]['innerText'];
+        //         var nama_barang = $(this).find('td:eq(3)')[0]['innerText'];
+        //         var jumlah_barang = $(this).find('td:eq(4)')[0]['innerText'];
+        //         var harga_jual = $(this).find('td:eq(5)')[0]['innerText'];
+        //         var harga_akhir = $(this).find('td:eq(6)')[0]['innerText'];
+        //         // console.log(id_barang, kategori, nama_barang, jumlah_barang, harga_jual, harga_akhir)
+        //         data.push({
+        //             id_barang: id_barang,
+        //             kategori: kategori,
+        //             nama_barang: nama_barang,
+        //             jumlah_barang: jumlah_barang,
+        //             harga_jual: harga_jual,
+        //             harga_akhir: harga_akhir
+        //         });
+        //         harga_total.push({
+        //             harga_akhir: harga_akhir
+        //         });
+        //     });
+        //     let sum = 0;
+
+        //     harga_total.forEach(value => {
+        //         // console.log(`VALUE: ${value}`)
+        //         sum += parseInt(value['harga_akhir']);
+        //     });
+
+        // })
+
+        // var table_kasir = $('#table_kasir');
+        $('#btn_save').on('click', function() {
+            var data = [];
+            var harga_total = [];
+
+            $('#table_kasir tbody tr').each(function() {
+                var id_barang = $(this).find('td:eq(1)')[0]['innerText'];
+                var kategori = $(this).find('td:eq(2)')[0]['innerText'];
+                var nama_barang = $(this).find('td:eq(3)')[0]['innerText'];
+                var jumlah_barang = $(this).find('td:eq(4)')[0]['innerText'];
+                var harga_jual = $(this).find('td:eq(5)')[0]['innerText'];
+                var harga_akhir = $(this).find('td:eq(6)')[0]['innerText'];
+                // console.log(id_barang, kategori, nama_barang, jumlah_barang, harga_jual, harga_akhir)
+                data.push({
+                    id_barang: id_barang,
+                    kategori: kategori,
+                    nama_barang: nama_barang,
+                    jumlah_barang: jumlah_barang,
+                    harga_jual: harga_jual,
+                    harga_akhir: harga_akhir
+                });
+                harga_total.push({
+                    harga_akhir: harga_akhir
+                });
+            });
+            let sum = 0;
+
+            harga_total.forEach(value => {
+                // console.log(`VALUE: ${value}`)
+                sum += parseInt(value['harga_akhir']);
+            });
+            console.log(data, harga_total, `sum: ${sum}`);
+
+        })
+
+        function tambahBaris() {
+            var stok = $('#stok').val();
+            var harga_jual = $('#harga_jual').val();
+            var jumlah_barang = $('#jumlah_barang').val();
+            var harga_akhir = $('#harga_akhir').val();
+            var id_barang = $('#id_barang').val();
+            // console.log(stok, harga_akhir, harga_jual, jumlah_barang, id_barang);
+            if (harga_akhir) {
+                $.ajax({
+                    url: `/penjualan/get-id-product/${id_barang}`,
+                    method: 'GET',
+                    success: function(data) {
+                        // console.log(data)
+                        var newRow = `
+                            <tr>
+                                <td class="text-bold-500">
+                                    <button class="btn btn-outline-danger" name="delete_row" onclick="deleteRow(this)">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </button>
+                                </td>
+                                <td class="text-bold-500">
+                                    ${id_barang}
+                                </td>
+                                <td class="text-bold-500">
+                                    ${data.kategori}
+                                </td>
+                                <td class="text-bold-500">
+                                    ${data.nama}
+                                </td>
+                                <td class="text-bold-500">
+                                    ${jumlah_barang}
+                                </td>
+                                <td class="text-bold-500">
+                                    ${data.harga}
+                                </td>
+                                <td class="text-bold-500">
+                                    ${harga_akhir}
+                                </td>
+                            </tr>
+
+                        `;
+                        $('#table_kasir tbody').append(newRow);
+                    }
+                })
+            }
+        }
+
+
+
+        function deleteRow(btn) {
+            var row = btn.closest('tr');
+            row.remove();
+        }
+
+
+        $('#id_barang').on('change', function(e) {
+            var id_barang = e.target.value;
+            // console.log(id_barang);
+            $.ajax({
+                url: `penjualan/get-id-product/${id_barang}`,
+                method: 'GET',
+                success: function(data) {
+                    // console.log(data);
+                    $('#stok').val(data.stok);
+                    $('#harga_jual').val(data.harga);
+                    $('#jumlah_barang').on('change', function(e) {
+                        var jumlah_barang = e.target.value;
+                        var stok_awal = data.stok;
+                        var stok_final = stok_awal - jumlah_barang;
+                        var harga_akhir = data.harga * jumlah_barang;
+                        $('#stok').val(stok_final);
+                        $('#harga_akhir').val(harga_akhir);
+                    })
+                }
+            })
+        })
+    </script>
 @endpush

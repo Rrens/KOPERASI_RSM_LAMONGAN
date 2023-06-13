@@ -38,6 +38,9 @@ Route::post('anggota', [AnggotaController::class, 'store'])->name('anggota.store
 Route::post('anggota/update', [AnggotaController::class, 'update'])->name('anggota.update');
 Route::post('anggota/delete', [AnggotaController::class, 'delete'])->name('anggota.delete');
 Route::get('penjualan', [PenjualanController::class, 'index'])->name('penjualan.index');
+Route::get('penjualan/get-id-anggota/{id}', [PenjualanController::class, 'get_id_anggota']);
+Route::get('penjualan/get-id-product/{id}', [PenjualanController::class, 'get_id_product']);
+Route::post('penjualan/post-table-kasir', [PenjualanController::class, 'post_table_kasir']);
 Route::get('pembelian', [PembelianController::class, 'index'])->name('pembelian.index');
 Route::get('stok-barang', [StokBarangController::class, 'index'])->name('stok.index');
 Route::get('laporan', [LaporanController::class, 'index'])->name('laporan.index');
