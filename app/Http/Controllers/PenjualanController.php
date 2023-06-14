@@ -28,6 +28,8 @@ class PenjualanController extends Controller
 
     public function post_table_kasir(Request $request)
     {
-        return response()->json($request);
+        return response()->json($request->all());
     }
+
+    // public function
 }
