@@ -6,18 +6,13 @@
             background-color: rgb(14, 12, 27);
         }
 
-        .img-container {
-            /* position: relative; */
-            /* padding-top: 100%; */
-        }
-
         img {
             max-width: 500px;
         }
 
         body.theme-dark a {
             /* text-decoration: none !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                color: white; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    color: white; */
             color: inherit;
             text-decoration: none !important;
         }
@@ -299,7 +294,6 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Delete</th>
-                                                            {{-- <th>No</th> --}}
                                                             <th>ID Barang</th>
                                                             <th>Kategori</th>
                                                             <th>Nama Barang</th>
@@ -381,7 +375,8 @@
                                 </div>
 
                                 <div class="d-flex justify-content-around align-items-center">
-                                    <p>Tambahan Poin Sebesar: <input type="number" id="tambahan_poin" readonly></p>
+                                    <p>Tambahan Poin Sebesar: <input type="number" id="tambahan_poin"
+                                            name="tambahan_poin" readonly></p>
                                     <p>Metode Pembayaran:
                                         <select name="metode_pembayaran" id="metode_pembayaran">
                                             <option selected hidden>Pilih Metode Pembayaran</option>
@@ -539,19 +534,16 @@
 
         $('#id_pelanggan').on('change', function(e) {
             var id_pelanggan = e.target.value;
-            // console.log(id_pelanggan)
             $.ajax({
                 url: `/penjualan/get-id-anggota/${id_pelanggan}`,
                 method: 'GET',
                 success: function(data) {
-                    // console.log(data);
                     $('#id_anggota').val(data.id);
                     $('#nama_anggota').val(data.name);
                     $('#poin').val(data.poin);
                     $('#credit').val(data.credit);
                 },
                 error: function() {
-                    // alert(request.responseText);
 
                     $('#id_anggota').val('');
                     $('#nama_anggota').val('');
@@ -578,7 +570,6 @@
 
             $('#table_kasir tbody tr').each(function() {
                 var harga_akhir = $(this).find('td:eq(6)')[0]['innerText'];
-                // console.log(id_barang, kategori, nama_barang, jumlah_barang, harga_jual, harga_akhir)
                 harga_total.push({
                     harga_akhir: harga_akhir
                 });
@@ -586,21 +577,9 @@
             let sum = 0;
 
             harga_total.forEach(value => {
-                // console.log(`VALUE: ${value}`)
                 sum += parseInt(value['harga_akhir']);
             });
 
-
-
-
-
-
-            // console.log('id_anggota: ' +
-            //     id_anggota, 'POIN: ' + poin);
-
-
-
-            // $('#nama_anggota').val(data.name);
             if (metode_pembayaran) {
                 if (metode_pembayaran == 'Pilih Metode Pembayaran') {
                     $('#sub_total').val(sum - poin);
@@ -614,7 +593,6 @@
             }
 
             if (id_anggota) {
-                // console.log('yaya')
                 $('#diskon').val(10);
                 $('#hasil_diskon').val(sum * 0.1);
 
@@ -629,8 +607,7 @@
             }
 
 
-            console.log(harga_total, `sum: ${sum}`);
-            // $('#uang_bayar').attr(hidden, false);
+            // console.log(harga_total, `sum: ${sum}`);
             $('#uang_bayar').attr('readonly', false);
 
 
@@ -641,7 +618,7 @@
 
             var uang_bayar = $('#uang_bayar').val();
             var nominal_bayar = $('#nominal_bayar').val();
-            console.log(`UANG BAYAR: ${uang_bayar} NOMINAL BAYAR ${nominal_bayar}`)
+            // console.log(`UANG BAYAR: ${uang_bayar} NOMINAL BAYAR ${nominal_bayar}`)
 
             if (uang_bayar < nominal_bayar) {
                 alert('Uang kurang ' + (nominal_bayar - uang_bayar))
@@ -651,43 +628,6 @@
             }
         })
 
-
-
-
-        // $('#jumlah_barang').on('change', function() {
-        //     var data = [];
-        //     var harga_total = [];
-
-        //     $('#table_kasir tbody tr').each(function() {
-        //         var id_barang = $(this).find('td:eq(1)')[0]['innerText'];
-        //         var kategori = $(this).find('td:eq(2)')[0]['innerText'];
-        //         var nama_barang = $(this).find('td:eq(3)')[0]['innerText'];
-        //         var jumlah_barang = $(this).find('td:eq(4)')[0]['innerText'];
-        //         var harga_jual = $(this).find('td:eq(5)')[0]['innerText'];
-        //         var harga_akhir = $(this).find('td:eq(6)')[0]['innerText'];
-        //         // console.log(id_barang, kategori, nama_barang, jumlah_barang, harga_jual, harga_akhir)
-        //         data.push({
-        //             id_barang: id_barang,
-        //             kategori: kategori,
-        //             nama_barang: nama_barang,
-        //             jumlah_barang: jumlah_barang,
-        //             harga_jual: harga_jual,
-        //             harga_akhir: harga_akhir
-        //         });
-        //         harga_total.push({
-        //             harga_akhir: harga_akhir
-        //         });
-        //     });
-        //     let sum = 0;
-
-        //     harga_total.forEach(value => {
-        //         // console.log(`VALUE: ${value}`)
-        //         sum += parseInt(value['harga_akhir']);
-        //     });
-
-        // })
-
-        // var table_kasir = $('#table_kasir');
         $('#btn_save').on('click', function() {
             const data = [];
 
@@ -777,13 +717,11 @@
             var jumlah_barang = $('#jumlah_barang').val();
             var harga_akhir = $('#harga_akhir').val();
             var id_barang = $('#id_barang').val();
-            // console.log(stok, harga_akhir, harga_jual, jumlah_barang, id_barang);
             if (harga_akhir) {
                 $.ajax({
                     url: `/penjualan/get-id-product/${id_barang}`,
                     method: 'GET',
                     success: function(data) {
-                        // console.log(data)
                         var newRow = `
                             <tr>
                                 <td class="text-bold-500">
@@ -810,7 +748,6 @@
                                     ${harga_akhir}
                                 </td>
                             </tr>
-
                         `;
                         $('#table_kasir tbody').append(newRow);
                     }
@@ -828,8 +765,6 @@
 
         $('#id_barang').on('change', function(e) {
             var id_barang = e.target.value;
-            // console.log(id_barang);
-
 
             $.ajax({
                 url: `penjualan/get-id-product/${id_barang}`,
@@ -844,38 +779,25 @@
                             var id_barang = $(this).find('td:eq(1)')[0][
                                 'innerText'
                             ];
-                            // console.log(id_barang, kategori, nama_barang, jumlah_barang, harga_jual, harga_akhir)
                             checkDataDouble.push({
                                 jumlah_barang: jumlah_barang,
                                 id_barang: id_barang
                             });
                         });
-                        console.log(checkDataDouble);
+                        // console.log(checkDataDouble);
                         let sum = 0;
                         let data_id_barang = []
                         checkDataDouble.forEach(value => {
-                            console.log(`VALUE: ${value['jumlah_barang']}`)
+                            // console.log(`VALUE: ${value['jumlah_barang']}`)
                             if (parseInt(value['id_barang']) == id_barang) {
                                 sum += parseInt(value['jumlah_barang']);
                             }
-                            // console.log(sum, data.stok)
                             data_id_barang.push({
                                 id_barang: value['id_barang'],
                                 jumlah_barang: sum
                             });
                         });
-                        // console.log(data_id_barang);
-                        // let lastElement = [];
-                        // for (let index = 0; index < data_id_barang.length; index++) {
-                        //     const element = data_id_barang[index];
-                        //     lastElement.push(element);
-
-                        // }
-                        // data_id_barang.each(value => {
-
-                        // })
-                        // console.log(lastElement);
-                        console.log(sum)
+                        // console.log(sum)
                         var stok_awal = data.stok - sum;
                         $('#stok').val(stok_awal);
                     } else {
@@ -883,7 +805,6 @@
                         $('#stok').val(stok_awal);
                     }
 
-                    // console.log(data);
                     $('#harga_jual').val(data.harga);
 
                     $('#jumlah_barang').on('change', function(e) {
@@ -896,7 +817,6 @@
                                 var id_barang = $(this).find('td:eq(1)')[0][
                                     'innerText'
                                 ];
-                                // console.log(id_barang, kategori, nama_barang, jumlah_barang, harga_jual, harga_akhir)
                                 checkDataDouble.push({
                                     jumlah_barang: jumlah_barang,
                                     id_barang: id_barang
@@ -910,24 +830,12 @@
                                 if (parseInt(value['id_barang']) == id_barang) {
                                     sum += parseInt(value['jumlah_barang']);
                                 }
-                                // console.log(sum, data.stok)
                                 data_id_barang.push({
                                     id_barang: value['id_barang'],
                                     jumlah_barang: sum
                                 });
                             });
-                            // console.log(data_id_barang);
-                            // let lastElement = [];
-                            // for (let index = 0; index < data_id_barang.length; index++) {
-                            //     const element = data_id_barang[index];
-                            //     lastElement.push(element);
-
-                            // }
-                            // data_id_barang.each(value => {
-
-                            // })
-                            // console.log(lastElement);
-                            console.log(sum)
+                            // console.log(sum)
                             var stok_awal = data.stok - sum;
                             var jumlah_barang = e.target.value;
                             var stok_final = stok_awal - jumlah_barang;

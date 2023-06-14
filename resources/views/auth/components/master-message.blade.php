@@ -7,8 +7,8 @@
     <title>Restopia | @yield('title')</title>
     <link rel="stylesheet" href="assets/css/main/app.css">
     <link rel="stylesheet" href="assets/css/pages/error.css">
-    <link rel="shortcut icon" href="assets/images/logo/favicon.svg" type="image/x-icon">
-    <link rel="shortcut icon" href="assets/images/logo/favicon.png" type="image/png">
+    <link rel="shortcut icon" href="assets/images/logo/favicon.ico" type="image/x-icon">
+    {{-- <link rel="shortcut icon" href="assets/images/logo/favicon.png" type="image/png"> --}}
 </head>
 
 <body>
