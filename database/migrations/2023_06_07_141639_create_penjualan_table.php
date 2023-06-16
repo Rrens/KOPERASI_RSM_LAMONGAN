@@ -16,11 +16,11 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_user')->nullable();
             $table->foreign('id_user')->references('id')->on('users');
-            $table->float('subtotal')->nullable();
-            $table->float('diskon')->nullable();
-            $table->float('total_bayar')->nullable();
-            $table->float('kembalian')->nullable();
-            $table->float('poin_tambah')->nullable();
+            $table->bigInteger('subtotal')->nullable();
+            $table->bigInteger('diskon')->nullable();
+            $table->bigInteger('total_bayar')->nullable();
+            $table->bigInteger('kembalian')->nullable();
+            $table->bigInteger('poin_tambah')->nullable();
             $table->string('metode_pembayaran')->nullable();
             $table->timestamps();
         });
