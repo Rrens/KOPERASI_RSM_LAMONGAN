@@ -12,7 +12,7 @@
 
         body.theme-dark a {
             /* text-decoration: none !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            color: white; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            color: white; */
             color: inherit;
             text-decoration: none !important;
         }
@@ -410,7 +410,7 @@
             <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
                 <div class="modal-content">
                     <div>
-                        <form id="form_kasir">
+                        <form id="form_kasir_edit">
                             <div class="modal-header d-flex justify-content-center">
                                 <h5 class="modal-title" id="exampleModalScrollableTitle">Edit Kasir</h5>
                             </div>
@@ -425,15 +425,19 @@
                                                         <div class="col-lg-12">
                                                             <fieldset class="form-group">
                                                                 <label for="basicInput">ID Pelanggan</label>
+                                                                <input type="number" value="{{ $item->id }}"
+                                                                    name="id_penjualan" hidden>
                                                                 <input type="number" class="form-control mb-3 mt-2"
-                                                                    name="id_pelanggan" id="id_pelanggan_edit"
-                                                                    value="{{ $item->user[0]->id != null ? $item->user[0]->id : '' }}">
+                                                                    name="id_pelanggan_edit" id="id_pelanggan_edit"
+                                                                    value="{{ $item->user[0]->id != null ? $item->user[0]->id : '' }}"
+                                                                    readonly>
                                                             </fieldset>
                                                             <fieldset class="form-group">
                                                                 <label for="basicInput">Tanggal</label>
                                                                 <input type="date" class="form-control mb-3 mt-2"
-                                                                    name="tanggal" id="tanggal_edit"
-                                                                    value="{{ $item->created_at }}">
+                                                                    name="tanggal_edit" id="tanggal_edit"
+                                                                    value="{{ $item->created_at != null ? $item->created_at->toDateString() : '' }}"
+                                                                    readonly>
                                                             </fieldset>
                                                         </div>
                                                     </div>
@@ -456,14 +460,15 @@
                                                             <fieldset class="form-group">
                                                                 <label for="basicInput">ID ANGGOTA</label>
                                                                 <input type="number" class="form-control mb-3 mt-2"
-                                                                    name="id_anggota" id="id_anggota_edit"
+                                                                    name="id_anggota_edit" id="id_anggota_edit"
                                                                     value="{{ $item->user[0]->id != null ? $item->user[0]->id : '' }}"
                                                                     readonly>
                                                             </fieldset>
                                                             <fieldset class="form-group">
                                                                 <label for="basicInput">Nama</label>
                                                                 <input type="text" id="nama_anggota_edit"
-                                                                    class="form-control mb-3 mt-2" name="nama"
+                                                                    class="form-control mb-3 mt-2"
+                                                                    name="nama_anggota_edit"
                                                                     value="{{ $item->user[0]->name != null ? $item->user[0]->name : '' }}"
                                                                     readonly>
                                                             </fieldset>
@@ -472,14 +477,14 @@
                                                             <fieldset class="form-group">
                                                                 <label for="basicInput">Poin</label>
                                                                 <input type="number" class="form-control mb-3 mt-2"
-                                                                    name="poin" id="poin_edit"
+                                                                    name="poin_edit" id="poin_edit"
                                                                     value="{{ $item->user[0]->poin != null ? $item->user[0]->poin : 0 }}"
                                                                     readonly>
                                                             </fieldset>
                                                             <fieldset class="form-group">
                                                                 <label for="basicInput">Credit</label>
                                                                 <input type="number" class="form-control mb-3 mt-2"
-                                                                    name="credit"
+                                                                    name="credit_edit"
                                                                     value="{{ $item->user[0]->credit != null ? $item->user[0]->credit : 0 }}"
                                                                     id="credit_edit" readonly>
                                                             </fieldset>
@@ -494,9 +499,10 @@
 
                                             <center>
                                                 <a href="#" id="tukar_poin_edit" type="button" value="1"
-                                                    name="tukar_poin" class="btn btn-primary mb-1 px-5 py-4">Tukar
+                                                    name="tukar_poin_edit" class="btn btn-primary mb-1 px-5 py-4">Tukar
                                                     Poin</a>
-                                                <input type="number" name="jumlah_poin" id="jumlah_poin_edit" hidden>
+                                                <input type="number" name="jumlah_poin_edit" id="jumlah_poin_edit"
+                                                    value="" hidden>
                                                 {{-- <a href="#"
                                                     class="btn btn-success mb-1 px-5 py-4">&nbsp;Cetak&nbsp;</a> --}}
                                             </center>
@@ -510,29 +516,30 @@
                                                         @csrf
                                                         <center>
                                                             <p>ID Barang</p>
-                                                            <input type="number" id="id_barang_edit" name="id_barang"
-                                                                readonly>
+                                                            <input type="number" id="id_barang_edit"
+                                                                name="id_barang_edit" readonly>
                                                             <input type="number" id="edit_id_product" value=""
                                                                 hidden>
                                                         </center>
                                                         <center>
                                                             <p>Stok</p>
-                                                            <input type="number" id="stok_edit" name="stok" readonly>
+                                                            <input type="number" id="stok_edit" name="stok_edit"
+                                                                readonly>
                                                         </center>
                                                         <center>
                                                             <p>Jumlah Barang</p>
                                                             <input type="number" id="jumlah_barang_edit"
-                                                                name="jumlah_barang">
+                                                                name="jumlah_barang_edit">
                                                         </center>
                                                         <center>
                                                             <p>Harga Jual</p>
-                                                            <input type="number" id="harga_jual_edit" name="harga_jual"
-                                                                readonly>
+                                                            <input type="number" id="harga_jual_edit"
+                                                                name="harga_jual_edit" readonly>
                                                         </center>
                                                         <center>
                                                             <p>Harga Akhir</p>
                                                             <input type="number" id="harga_akhir_edit"
-                                                                name="harga_akhir" readonly>
+                                                                name="harga_akhir_edit" readonly>
                                                         </center>
                                                         <center>
                                                             {{-- <p class="mt-3">Tambah produk</p> --}}
@@ -619,15 +626,15 @@
                                                             <fieldset class="form-group">
                                                                 <label for="basicInput">Sub Total</label>
                                                                 <input type="number" class="form-control mb-3 mt-2"
-                                                                    name="sub_total" id="sub_total_edit" readonly>
+                                                                    name="sub_total_edit" id="sub_total_edit" readonly>
                                                             </fieldset>
                                                             <fieldset class="form-group">
                                                                 <label for="basicInput">Diskon</label>
                                                                 <div class="row">
                                                                     <div class="col-5">
                                                                         <input type="number"
-                                                                            class="form-control mb-3 mt-2" name="diskon"
-                                                                            id="diskon_edit" readonly>
+                                                                            class="form-control mb-3 mt-2"
+                                                                            name="diskon_edit" id="diskon_edit" readonly>
                                                                     </div>
                                                                     <div class="col-1">
                                                                         <p class="text-center">%=</p>
@@ -635,15 +642,16 @@
                                                                     <div class="col-6">
                                                                         <input type="number"
                                                                             class="form-control mb-3 mt-2"
-                                                                            name="hasil_diskon" id="hasil_diskon_edit"
-                                                                            readonly>
+                                                                            name="hasil_diskon_edit"
+                                                                            id="hasil_diskon_edit" readonly>
                                                                     </div>
 
                                                             </fieldset>
                                                             <fieldset class="form-group">
                                                                 <label for="basicInput">Nominal Bayar</label>
                                                                 <input type="number" class="form-control mb-3 mt-2"
-                                                                    name="nominal_bayar" id="nominal_bayar_edit" readonly>
+                                                                    name="nominal_bayar_edit" id="nominal_bayar_edit"
+                                                                    readonly>
                                                             </fieldset>
                                                         </div>
                                                     </div>
@@ -660,13 +668,13 @@
                                                             <fieldset class="form-group">
                                                                 <label for="basicInput">Uang Bayar</label>
                                                                 <input type="number" class="form-control mb-3 mt-2"
-                                                                    name="uang_bayar" id="uang_bayar_edit" required
+                                                                    name="uang_bayar_edit" id="uang_bayar_edit" required
                                                                     readonly>
                                                             </fieldset>
                                                             <fieldset class="form-group">
                                                                 <label for="basicInput">Kembalian</label>
                                                                 <input type="number" class="form-control mb-3 mt-2"
-                                                                    name="kembalian" id="kembalian_edit" readonly>
+                                                                    name="kembalian_edit" id="kembalian_edit" readonly>
                                                             </fieldset>
                                                         </div>
                                                     </div>
@@ -676,10 +684,10 @@
                                     </div>
 
                                     <div class="d-flex justify-content-around align-items-center">
-                                        <p>Tambahan Poin Sebesar: <input type="number" id="tambahan_poin"
-                                                name="tambahan_poin" readonly></p>
+                                        <p>Tambahan Poin Sebesar: <input type="number" id="tambahan_poin_edit"
+                                                name="tambahan_poin_edit" readonly></p>
                                         <p>Metode Pembayaran:
-                                            <select name="metode_pembayaran" id="metode_pembayaran_edit">
+                                            <select name="metode_pembayaran_edit" id="metode_pembayaran_edit">
                                                 <option selected hidden>Pilih Metode Pembayaran</option>
                                                 <option value="tunai">Tunai</option>
                                                 <option value="kredit" id="option_kredit_edit">Kredit</option>

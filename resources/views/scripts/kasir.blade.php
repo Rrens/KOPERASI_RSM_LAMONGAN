@@ -171,7 +171,7 @@
             });
         });
 
-        // console.log(data);
+        console.log(data);
 
         $.ajax({
             url: '/penjualan',

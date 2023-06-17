@@ -1,51 +1,54 @@
 <script>
-    $('#metode_pembayaran').on('click', function(e) {
+    $('#metode_pembayaran_edit').on('click', function(e) {
         const metode_pembayaran = e.target.value;
-        let id_pelanggan = $('#id_pelanggan').val();
+        let id_pelanggan = $('#id_pelanggan_edit').val();
 
+        if (!metode_pembayaran == 'metode_pembayaran_edit') {
+            $('#btn_save_edit').attr('hidden', true);
+        }
         if (!id_pelanggan) {
-            $('#option_kredit').attr('hidden', true);
-            $('#btn_save').attr('hidden', false);
+            $('#option_kredit_edit').attr('hidden', true);
+            $('#btn_save_edit').attr('hidden', false);
         } else {
-            $('#option_kredit').attr('hidden', false);
-            $('#btn_save').attr('hidden', false);
+            $('#option_kredit_edit').attr('hidden', false);
+            $('#btn_save_edit').attr('hidden', false);
         }
     })
 
-    $('#id_pelanggan').on('change', function(e) {
-        var id_pelanggan = e.target.value;
-        $.ajax({
-            url: `/penjualan/get-id-anggota/${id_pelanggan}`,
-            method: 'GET',
-            success: function(data) {
-                $('#id_anggota').val(data.id);
-                $('#nama_anggota').val(data.name);
-                $('#poin').val(data.poin);
-                $('#credit').val(data.credit);
-            },
-            error: function() {
+    // $('#id_pelanggan').on('change', function(e) {
+    //     var id_pelanggan = e.target.value;
+    //     $.ajax({
+    //         url: `/penjualan/get-id-anggota/${id_pelanggan}`,
+    //         method: 'GET',
+    //         success: function(data) {
+    //             $('#id_anggota').val(data.id);
+    //             $('#nama_anggota').val(data.name);
+    //             $('#poin').val(data.poin);
+    //             $('#credit').val(data.credit);
+    //         },
+    //         error: function() {
 
-                $('#id_anggota').val('');
-                $('#nama_anggota').val('');
-                $('#poin').val('');
-                $('#credit').val('');
-            }
-        })
+    //             $('#id_anggota').val('');
+    //             $('#nama_anggota').val('');
+    //             $('#poin').val('');
+    //             $('#credit').val('');
+    //         }
+    //     })
 
-    });
+    // });
 
-    $('#tukar_poin').on('click', function() {
-        $('#jumlah_poin').val($('#poin').val())
+    $('#tukar_poin_edit').on('click', function() {
+        $('#jumlah_poin_edit').val($('#poin_edit').val())
         // alert($('#jumlah_poin').val())
     })
 
-    $('#hitung_sub_total').on('click', function(e) {
+    $('#hitung_sub_total_edit').on('click', function(e) {
         e.stopPropagation();
 
         var harga_total = [];
-        var id_anggota = $('#id_pelanggan').val();
-        var poin = $('#jumlah_poin').val() * 3000;
-        var metode_pembayaran = $('#metode_pembayaran').val();
+        var id_anggota = $('#id_pelanggan_edit').val();
+        var poin = $('#jumlah_poin_edit').val() * 3000;
+        var metode_pembayaran = $('#metode_pembayaran_edit').val();
 
 
         $('#table_kasir_edit tbody tr').each(function() {
@@ -59,56 +62,60 @@
         harga_total.forEach(value => {
             sum += parseInt(value['harga_akhir']);
         });
+        console.log(harga_total, sum);
 
+
+        // console.log(metode_pembayaran);
         if (metode_pembayaran) {
+            // alert(metode_pembayaran);
             if (metode_pembayaran == 'Pilih Metode Pembayaran') {
-                $('#sub_total').val(sum - poin);
+                $('#sub_total_edit').val(sum - poin);
             } else if (metode_pembayaran == 'kredit') {
-                $('#sub_total').val((sum - poin) + ((sum - poin) * 0.05));
+                $('#sub_total_edit').val((sum - poin) + ((sum - poin) * 0.05));
             } else {
-                $('#sub_total').val(sum - poin);
+                $('#sub_total_edit').val(sum - poin);
             }
         } else {
-            $('#sub_total').val(sum - poin);
+            $('#sub_total_edit').val(sum - poin);
         }
 
         if (id_anggota) {
-            $('#diskon').val(10);
-            $('#hasil_diskon').val(sum * 0.1);
+            $('#diskon_edit').val(10);
+            $('#hasil_diskon_edit').val(sum * 0.1);
 
-            if ($('#sub_total').val() >= 100000) {
-                $('#tambahan_poin').val(1);
+            if ($('#sub_total_edit').val() >= 100000) {
+                $('#tambahan_poin_edit').val(1);
             }
-            $('#nominal_bayar').val($('#sub_total').val() - $('#hasil_diskon').val())
+            $('#nominal_bayar_edit').val($('#sub_total_edit').val() - $('#hasil_diskon_edit').val())
         } else {
-            $('#diskon').val('');
-            $('#hasil_diskon').val('');
-            $('#nominal_bayar').val(sum - poin)
+            $('#diskon_edit').val('');
+            $('#hasil_diskon_edit').val('');
+            $('#nominal_bayar_edit').val(sum - poin)
         }
 
 
         // console.log(harga_total, `sum: ${sum}`);
-        $('#uang_bayar').attr('readonly', false);
+        $('#uang_bayar_edit').attr('readonly', false);
 
 
     })
 
 
-    $('#uang_bayar').on('change', function() {
+    $('#uang_bayar_edit').on('change', function() {
 
-        var uang_bayar = $('#uang_bayar').val();
-        var nominal_bayar = $('#nominal_bayar').val();
+        var uang_bayar = $('#uang_bayar_edit').val();
+        var nominal_bayar = $('#nominal_bayar_edit').val();
         // console.log(`UANG BAYAR: ${uang_bayar} NOMINAL BAYAR ${nominal_bayar}`)
 
         if (uang_bayar < nominal_bayar) {
             alert('Uang kurang ' + (nominal_bayar - uang_bayar))
-            $('#kembalian').val('');
+            $('#kembalian_edit').val('');
         } else {
-            $('#kembalian').val(uang_bayar - nominal_bayar);
+            $('#kembalian_edit').val(uang_bayar - nominal_bayar);
         }
     })
 
-    $('#btn_save').on('click', function() {
+    $('#btn_save_edit').on('click', function() {
         let data = [];
         let data_detail = []
 
@@ -129,52 +136,76 @@
                 harga_akhir
             });
 
-            const {
-                id_pelanggan,
-                tanggal,
-                id_anggota,
-                nama_anggota,
-                poin,
-                tukar_poin,
-                credit,
-                jumlah_poin,
-                sub_total,
-                diskon,
-                hasil_diskon,
-                nominal_bayar,
-                uang_bayar,
-                kembalian,
-                metode_pembayaran,
-                tambahan_poin
-            } = $('#form_kasir').serializeArray().reduce((obj, item) => {
-                obj[item.name] = item.value;
-                return obj;
-            }, {});
 
-            data.push({
-                id_pelanggan,
-                tanggal,
-                id_anggota,
-                nama_anggota,
-                poin,
-                tukar_poin,
-                credit,
-                jumlah_poin,
-                sub_total,
-                diskon,
-                hasil_diskon,
-                nominal_bayar,
-                uang_bayar,
-                kembalian,
-                metode_pembayaran,
-                tambahan_poin
-            });
+
         });
 
+        const {
+            id_pelanggan_edit,
+            tanggal_edit,
+            id_anggota_edit,
+            nama_anggota_edit,
+            poin_edit,
+            tukar_poin_edit,
+            credit_edit,
+            jumlah_poin_edit,
+            sub_total_edit,
+            diskon_edit,
+            hasil_diskon_edit,
+            nominal_bayar_edit,
+            uang_bayar_edit,
+            kembalian_edit,
+            metode_pembayaran_edit,
+            tambahan_poin_edit,
+            id_penjualan
+        } = $('#form_kasir_edit').serializeArray().reduce((obj_edit, item_edit) => {
+            obj_edit[item_edit.name] = item_edit.value;
+            // console.log(obj_edit)
+            return obj_edit;
+        }, {});
+        // console.log(
+        //     id_pelanggan_edit,
+        //     tanggal_edit,
+        //     id_anggota_edit,
+        //     nama_anggota_edit,
+        //     poin_edit,
+        //     tukar_poin_edit,
+        //     credit_edit,
+        //     jumlah_poin_edit,
+        //     sub_total_edit,
+        //     diskon_edit,
+        //     hasil_diskon_edit,
+        //     nominal_bayar_edit,
+        //     uang_bayar_edit,
+        //     kembalian_edit,
+        //     metode_pembayaran_edit,
+        //     tambahan_poin_edit
+        // )
+
+        data.push({
+            id_pelanggan_edit,
+            tanggal_edit,
+            id_anggota_edit,
+            nama_anggota_edit,
+            poin_edit,
+            tukar_poin_edit,
+            credit_edit,
+            jumlah_poin_edit,
+            sub_total_edit,
+            diskon_edit,
+            hasil_diskon_edit,
+            nominal_bayar_edit,
+            uang_bayar_edit,
+            kembalian_edit,
+            metode_pembayaran_edit,
+            tambahan_poin_edit,
+            id_penjualan
+        });
         // console.log(data);
 
+
         $.ajax({
-            url: '/penjualan',
+            url: '/penjualan/update',
             type: 'POST',
             dataType: "json",
             data: {
@@ -190,7 +221,7 @@
             }
         })
 
-        location.reload();
+        // location.reload();
     })
 
     function tambahBarisEdit() {
@@ -284,7 +315,7 @@
     function editRowEdit(btn) {
         var row = btn.getAttribute('data-id');
         var for_id_barang = btn.getAttribute('data-value');
-        console.log(for_id_barang);
+        // console.log(for_id_barang);
         // console.log(row);
         let data = [];
         let stok = [];
@@ -319,7 +350,7 @@
         stok.forEach(value => {
             sum_stok += parseInt(value['jumlah_barang']);
         })
-        console.log(sum_stok);
+        // console.log(sum_stok);
 
 
         // console.log(data);
@@ -335,15 +366,18 @@
             url: `penjualan/get-id-product/${for_id_barang}`,
             method: 'GET',
             success: function(get_data) {
+                let id_barang_iki = 0
                 data.forEach(value => {
                     // console.log(value['id_barang'], for_id_barang);
                     // sum_stok += parseInt(value['jumlah_barang']);
                     if (value['id_barang'] == for_id_barang) {
                         let sum_stok = 0;
+                        // console.log(for_id_barang, value);
+                        id_barang_iki = value['id_barang'];
                         stok.forEach(value => {
                             sum_stok += parseInt(value['jumlah_barang']);
                         })
-                        $('#edit_id_product').val(value['id_barang']);
+
                         // console.log(data, value['jumlah_barang'])
                         $('#stok_edit').val(get_data.stok - sum_stok);
                         $('#harga_jual_edit').val(value['harga_jual']);
@@ -352,10 +386,10 @@
                         $('#id_barang_edit').val(value['id_barang']);
                     }
                 });
+                // console.log(id_barang_iki)
+                $('#edit_id_product').val(id_barang_iki);
             }
         })
-        // console.log(data);
-
     }
     $('#jumlah_barang_edit').on('change', function(e) {
         var checkDataDouble = [];
@@ -373,11 +407,9 @@
                 id_barang: id_barang
             });
         });
-        // console.log(checkDataDouble);
         let sum = 0;
         let data_id_barang = []
         checkDataDouble.forEach(value => {
-            // console.log(`VALUE: ${value['jumlah_barang']}`)
             if (parseInt(value['id_barang']) == id_product_edit) {
                 sum += parseInt(value['jumlah_barang']);
             }
@@ -392,14 +424,8 @@
             method: 'GET',
             success: function(get_data) {
                 console.log(get_data, id_product_edit);
-                // get_data.forEach(value => {
-                // console.log(value['id_barang'], for_id_barang);
-                // sum_stok += parseInt(value['jumlah_barang']);
                 if (get_data.id == id_product_edit) {
                     let sum_stok = 0;
-                    // stok.forEach(value => {
-                    //     sum_stok += parseInt(value['jumlah_barang']);
-                    // })
                     var stok_awal = get_data.stok - sum;
                     console.log(stok_awal);
                     var jumlah_barang = e.target.value;
@@ -413,97 +439,4 @@
         })
 
     })
-
-
-    // $('#id_barang').on('change', function(e) {
-    //     var id_barang = e.target.value;
-
-    //     $.ajax({
-    //         url: `penjualan/get-id-product/${id_barang}`,
-    //         method: 'GET',
-    //         success: function(data) {
-    //             var checkDataDouble = [];
-    //             if ($('#table_kasir_edit tbody tr').val() != null) {
-    //                 $('#table_kasir_edit tbody tr').each(function() {
-    //                     var jumlah_barang = $(this).find('td:eq(4)')[0][
-    //                         'innerText'
-    //                     ];
-    //                     var id_barang = $(this).find('td:eq(1)')[0][
-    //                         'innerText'
-    //                     ];
-    //                     checkDataDouble.push({
-    //                         jumlah_barang: jumlah_barang,
-    //                         id_barang: id_barang
-    //                     });
-    //                 });
-    //                 // console.log(checkDataDouble);
-    //                 let sum = 0;
-    //                 let data_id_barang = []
-    //                 checkDataDouble.forEach(value => {
-    //                     // console.log(`VALUE: ${value['jumlah_barang']}`)
-    //                     if (parseInt(value['id_barang']) == id_barang) {
-    //                         sum += parseInt(value['jumlah_barang']);
-    //                     }
-    //                     data_id_barang.push({
-    //                         id_barang: value['id_barang'],
-    //                         jumlah_barang: sum
-    //                     });
-    //                 });
-    //                 // console.log(sum)
-    //                 var stok_awal = data.stok - sum;
-    //                 $('#stok').val(stok_awal);
-    //             } else {
-    //                 var stok_awal = data.stok;
-    //                 $('#stok').val(stok_awal);
-    //             }
-
-    //             $('#harga_jual').val(data.harga);
-
-    //             $('#jumlah_barang').on('change', function(e) {
-    //                 var checkDataDouble = [];
-    //                 if ($('#table_kasir_edit tbody tr').val() != null) {
-    //                     $('#table_kasir_edit tbody tr').each(function() {
-    //                         var jumlah_barang = $(this).find('td:eq(4)')[0][
-    //                             'innerText'
-    //                         ];
-    //                         var id_barang = $(this).find('td:eq(1)')[0][
-    //                             'innerText'
-    //                         ];
-    //                         checkDataDouble.push({
-    //                             jumlah_barang: jumlah_barang,
-    //                             id_barang: id_barang
-    //                         });
-    //                     });
-    //                     console.log(checkDataDouble);
-    //                     let sum = 0;
-    //                     let data_id_barang = []
-    //                     checkDataDouble.forEach(value => {
-    //                         console.log(`VALUE: ${value['jumlah_barang']}`)
-    //                         if (parseInt(value['id_barang']) == id_barang) {
-    //                             sum += parseInt(value['jumlah_barang']);
-    //                         }
-    //                         data_id_barang.push({
-    //                             id_barang: value['id_barang'],
-    //                             jumlah_barang: sum
-    //                         });
-    //                     });
-    //                     // console.log(sum)
-    //                     var stok_awal = data.stok - sum;
-    //                     var jumlah_barang = e.target.value;
-    //                     var stok_final = stok_awal - jumlah_barang;
-    //                     var harga_akhir = data.harga * jumlah_barang;
-    //                     $('#stok').val(stok_final);
-    //                     $('#harga_akhir').val(harga_akhir);
-    //                 } else {
-    //                     var stok_awal = data.stok;
-    //                     var jumlah_barang = e.target.value;
-    //                     var stok_final = stok_awal - jumlah_barang;
-    //                     var harga_akhir = data.harga * jumlah_barang;
-    //                     $('#stok').val(stok_final);
-    //                     $('#harga_akhir').val(harga_akhir);
-    //                 }
-    //             })
-    //         }
-    //     })
-    // })
 </script>
