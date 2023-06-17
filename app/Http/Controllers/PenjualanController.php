@@ -15,11 +15,12 @@ class PenjualanController extends Controller
     public function index()
     {
         $data = Penjualan::with('user')->whereHas('user', function ($query) {
-            $query->where('role', 0);
+            $query->where('role', 1);
         })->get();
+        $penjualan_detail = Penjualan_details::with('product')->get();
         // dd($data);
         $date = Carbon::now()->toDateString();
-        return view('page.penjualan', compact('data', 'date'));
+        return view('page.penjualan', compact('data', 'date', 'penjualan_detail'));
     }
 
     public function get_id_anggota($id)
