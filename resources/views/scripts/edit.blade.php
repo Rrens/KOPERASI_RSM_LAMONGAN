@@ -48,7 +48,7 @@
         var metode_pembayaran = $('#metode_pembayaran').val();
 
 
-        $('#table_kasir tbody tr').each(function() {
+        $('#table_kasir_edit tbody tr').each(function() {
             var harga_akhir = $(this).find('td:eq(6)')[0]['innerText'];
             harga_total.push({
                 harga_akhir: harga_akhir
@@ -112,7 +112,7 @@
         let data = [];
         let data_detail = []
 
-        $('#table_kasir tbody tr').each(function() {
+        $('#table_kasir_edit tbody tr').each(function() {
             const id_barang = $(this).find('td:eq(1)')[0]['innerText'];
             const kategori = $(this).find('td:eq(2)')[0]['innerText'];
             const nama_barang = $(this).find('td:eq(3)')[0]['innerText'];
@@ -357,97 +357,153 @@
         // console.log(data);
 
     }
+    $('#jumlah_barang_edit').on('change', function(e) {
+        var checkDataDouble = [];
+        let id_product_edit = $('#id_barang_edit').val();
+        $('#table_kasir_edit tbody tr').each(function() {
+            var jumlah_barang = $(this).find('td:eq(4)')[0][
+                'innerText'
+            ];
+            var id_barang = $(this).find('td:eq(1)')[0][
+                'innerText'
+            ];
 
-
-    $('#id_barang').on('change', function(e) {
-        var id_barang = e.target.value;
-
+            checkDataDouble.push({
+                jumlah_barang: jumlah_barang,
+                id_barang: id_barang
+            });
+        });
+        // console.log(checkDataDouble);
+        let sum = 0;
+        let data_id_barang = []
+        checkDataDouble.forEach(value => {
+            // console.log(`VALUE: ${value['jumlah_barang']}`)
+            if (parseInt(value['id_barang']) == id_product_edit) {
+                sum += parseInt(value['jumlah_barang']);
+            }
+            data_id_barang.push({
+                id_barang: value['id_barang'],
+                jumlah_barang: sum
+            });
+        });
+        console.log(sum, data_id_barang)
         $.ajax({
-            url: `penjualan/get-id-product/${id_barang}`,
+            url: `penjualan/get-id-product/${id_product_edit}`,
             method: 'GET',
-            success: function(data) {
-                var checkDataDouble = [];
-                if ($('#table_kasir tbody tr').val() != null) {
-                    $('#table_kasir tbody tr').each(function() {
-                        var jumlah_barang = $(this).find('td:eq(4)')[0][
-                            'innerText'
-                        ];
-                        var id_barang = $(this).find('td:eq(1)')[0][
-                            'innerText'
-                        ];
-                        checkDataDouble.push({
-                            jumlah_barang: jumlah_barang,
-                            id_barang: id_barang
-                        });
-                    });
-                    // console.log(checkDataDouble);
-                    let sum = 0;
-                    let data_id_barang = []
-                    checkDataDouble.forEach(value => {
-                        // console.log(`VALUE: ${value['jumlah_barang']}`)
-                        if (parseInt(value['id_barang']) == id_barang) {
-                            sum += parseInt(value['jumlah_barang']);
-                        }
-                        data_id_barang.push({
-                            id_barang: value['id_barang'],
-                            jumlah_barang: sum
-                        });
-                    });
-                    // console.log(sum)
-                    var stok_awal = data.stok - sum;
-                    $('#stok').val(stok_awal);
-                } else {
-                    var stok_awal = data.stok;
-                    $('#stok').val(stok_awal);
+            success: function(get_data) {
+                console.log(get_data, id_product_edit);
+                // get_data.forEach(value => {
+                // console.log(value['id_barang'], for_id_barang);
+                // sum_stok += parseInt(value['jumlah_barang']);
+                if (get_data.id == id_product_edit) {
+                    let sum_stok = 0;
+                    // stok.forEach(value => {
+                    //     sum_stok += parseInt(value['jumlah_barang']);
+                    // })
+                    var stok_awal = get_data.stok - sum;
+                    console.log(stok_awal);
+                    var jumlah_barang = e.target.value;
+                    var stok_final = stok_awal - jumlah_barang;
+                    var harga_akhir = get_data.harga * jumlah_barang;
+                    $('#stok_edit').val(stok_final);
+                    $('#harga_akhir_edit').val(harga_akhir);
                 }
-
-                $('#harga_jual').val(data.harga);
-
-                $('#jumlah_barang').on('change', function(e) {
-                    var checkDataDouble = [];
-                    if ($('#table_kasir tbody tr').val() != null) {
-                        $('#table_kasir tbody tr').each(function() {
-                            var jumlah_barang = $(this).find('td:eq(4)')[0][
-                                'innerText'
-                            ];
-                            var id_barang = $(this).find('td:eq(1)')[0][
-                                'innerText'
-                            ];
-                            checkDataDouble.push({
-                                jumlah_barang: jumlah_barang,
-                                id_barang: id_barang
-                            });
-                        });
-                        console.log(checkDataDouble);
-                        let sum = 0;
-                        let data_id_barang = []
-                        checkDataDouble.forEach(value => {
-                            console.log(`VALUE: ${value['jumlah_barang']}`)
-                            if (parseInt(value['id_barang']) == id_barang) {
-                                sum += parseInt(value['jumlah_barang']);
-                            }
-                            data_id_barang.push({
-                                id_barang: value['id_barang'],
-                                jumlah_barang: sum
-                            });
-                        });
-                        // console.log(sum)
-                        var stok_awal = data.stok - sum;
-                        var jumlah_barang = e.target.value;
-                        var stok_final = stok_awal - jumlah_barang;
-                        var harga_akhir = data.harga * jumlah_barang;
-                        $('#stok').val(stok_final);
-                        $('#harga_akhir').val(harga_akhir);
-                    } else {
-                        var stok_awal = data.stok;
-                        var jumlah_barang = e.target.value;
-                        var stok_final = stok_awal - jumlah_barang;
-                        var harga_akhir = data.harga * jumlah_barang;
-                        $('#stok').val(stok_final);
-                        $('#harga_akhir').val(harga_akhir);
-                    }
-                })
+                // });
             }
         })
+
     })
+
+
+    // $('#id_barang').on('change', function(e) {
+    //     var id_barang = e.target.value;
+
+    //     $.ajax({
+    //         url: `penjualan/get-id-product/${id_barang}`,
+    //         method: 'GET',
+    //         success: function(data) {
+    //             var checkDataDouble = [];
+    //             if ($('#table_kasir_edit tbody tr').val() != null) {
+    //                 $('#table_kasir_edit tbody tr').each(function() {
+    //                     var jumlah_barang = $(this).find('td:eq(4)')[0][
+    //                         'innerText'
+    //                     ];
+    //                     var id_barang = $(this).find('td:eq(1)')[0][
+    //                         'innerText'
+    //                     ];
+    //                     checkDataDouble.push({
+    //                         jumlah_barang: jumlah_barang,
+    //                         id_barang: id_barang
+    //                     });
+    //                 });
+    //                 // console.log(checkDataDouble);
+    //                 let sum = 0;
+    //                 let data_id_barang = []
+    //                 checkDataDouble.forEach(value => {
+    //                     // console.log(`VALUE: ${value['jumlah_barang']}`)
+    //                     if (parseInt(value['id_barang']) == id_barang) {
+    //                         sum += parseInt(value['jumlah_barang']);
+    //                     }
+    //                     data_id_barang.push({
+    //                         id_barang: value['id_barang'],
+    //                         jumlah_barang: sum
+    //                     });
+    //                 });
+    //                 // console.log(sum)
+    //                 var stok_awal = data.stok - sum;
+    //                 $('#stok').val(stok_awal);
+    //             } else {
+    //                 var stok_awal = data.stok;
+    //                 $('#stok').val(stok_awal);
+    //             }
+
+    //             $('#harga_jual').val(data.harga);
+
+    //             $('#jumlah_barang').on('change', function(e) {
+    //                 var checkDataDouble = [];
+    //                 if ($('#table_kasir_edit tbody tr').val() != null) {
+    //                     $('#table_kasir_edit tbody tr').each(function() {
+    //                         var jumlah_barang = $(this).find('td:eq(4)')[0][
+    //                             'innerText'
+    //                         ];
+    //                         var id_barang = $(this).find('td:eq(1)')[0][
+    //                             'innerText'
+    //                         ];
+    //                         checkDataDouble.push({
+    //                             jumlah_barang: jumlah_barang,
+    //                             id_barang: id_barang
+    //                         });
+    //                     });
+    //                     console.log(checkDataDouble);
+    //                     let sum = 0;
+    //                     let data_id_barang = []
+    //                     checkDataDouble.forEach(value => {
+    //                         console.log(`VALUE: ${value['jumlah_barang']}`)
+    //                         if (parseInt(value['id_barang']) == id_barang) {
+    //                             sum += parseInt(value['jumlah_barang']);
+    //                         }
+    //                         data_id_barang.push({
+    //                             id_barang: value['id_barang'],
+    //                             jumlah_barang: sum
+    //                         });
+    //                     });
+    //                     // console.log(sum)
+    //                     var stok_awal = data.stok - sum;
+    //                     var jumlah_barang = e.target.value;
+    //                     var stok_final = stok_awal - jumlah_barang;
+    //                     var harga_akhir = data.harga * jumlah_barang;
+    //                     $('#stok').val(stok_final);
+    //                     $('#harga_akhir').val(harga_akhir);
+    //                 } else {
+    //                     var stok_awal = data.stok;
+    //                     var jumlah_barang = e.target.value;
+    //                     var stok_final = stok_awal - jumlah_barang;
+    //                     var harga_akhir = data.harga * jumlah_barang;
+    //                     $('#stok').val(stok_final);
+    //                     $('#harga_akhir').val(harga_akhir);
+    //                 }
+    //             })
+    //         }
+    //     })
+    // })
 </script>
