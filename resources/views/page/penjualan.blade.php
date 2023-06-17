@@ -12,7 +12,7 @@
 
         body.theme-dark a {
             /* text-decoration: none !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        color: white; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    color: white; */
             color: inherit;
             text-decoration: none !important;
         }
@@ -102,7 +102,6 @@
                                         <tr>
                                             <th>No</th>
                                             <th>No Transaksi</th>
-                                            <th>Jumlah Barang</th>
                                             <th>Nominal Bayar</th>
                                             <th>Total Bayar</th>
                                             <th>Kembalian</th>
@@ -112,45 +111,46 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="text-bold-500">
-                                                1
-                                            </td>
-                                            <td class="text-bold-500">
-                                                1229199
-                                            </td>
-                                            <td class="text-bold-500">
-                                                Rahma Anjani
-                                            </td>
-                                            <td class="text-bold-500">
-                                                RahmaPaheho123
-                                            </td>
-                                            <td class="text-bold-500">
-                                                Perempuan
-                                            </td>
-                                            <td class="text-bold-500">
-                                                081288812877
-                                            </td>
-                                            <td class="text-bold-500">
-                                                100000
-                                            </td>
-                                            <td>
-                                                <a class="tagA btn btn-outline-warning" href="#"
-                                                    data-bs-toggle="modal" data-bs-target="#modalEditAdmin">
-                                                    <i class="bi bi-pencil-fill"></i>
-                                                </a>
-                                                <a class="tagA btn btn-outline-danger" href="#" data-bs-toggle="modal"
-                                                    data-bs-target="#modalDeleteAdmin">
-                                                    <i class="bi bi-trash-fill"></i>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a class="tagA btn btn-primary" href="#" data-bs-toggle="modal"
-                                                    data-bs-target="#modalToggleDetail"><i
-                                                        class="bi bi-exclamation-triangle-fill"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
+                                        @foreach ($data as $item)
+                                            <tr>
+                                                <td class="text-bold-500">
+                                                    {{ $loop->iteration }}
+                                                </td>
+                                                <td class="text-bold-500">
+                                                    {{ $item->id }}
+                                                </td>
+                                                <td class="text-bold-500">
+                                                    {{ $item->subtotal }}
+                                                </td>
+                                                <td class="text-bold-500">
+                                                    {{ $item->total_bayar }}
+                                                </td>
+                                                <td class="text-bold-500">
+                                                    {{ $item->kembalian }}
+                                                </td>
+                                                <td class="text-bold-500">
+                                                    {{ $item->created_at->toDateString() }}
+                                                </td>
+                                                <td>
+                                                    <a class="tagA btn btn-outline-warning" href="#"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#modalEditAdmin{{ $item->id }}">
+                                                        <i class="bi bi-pencil-fill"></i>
+                                                    </a>
+                                                    <a class="tagA btn btn-outline-danger" href="#"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#modalDeleteAdmin{{ $item->id }}">
+                                                        <i class="bi bi-trash-fill"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="tagA btn btn-primary" href="#" data-bs-toggle="modal"
+                                                        data-bs-target="#modalToggleDetail"><i
+                                                            class="bi bi-exclamation-triangle-fill"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -189,7 +189,7 @@
                                                         <fieldset class="form-group">
                                                             <label for="basicInput">Tanggal</label>
                                                             <input type="date" class="form-control mb-3 mt-2"
-                                                                name="tanggal" id="tanggal">
+                                                                name="tanggal" id="tanggal" value="{{ $date }}">
                                                         </fieldset>
                                                     </div>
                                                 </div>

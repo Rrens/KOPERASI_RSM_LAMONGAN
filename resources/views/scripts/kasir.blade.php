@@ -190,7 +190,7 @@
             }
         })
 
-
+        location.reload();
     })
 
     function tambahBaris() {
