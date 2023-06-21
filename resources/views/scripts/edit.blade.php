@@ -163,24 +163,6 @@
             // console.log(obj_edit)
             return obj_edit;
         }, {});
-        // console.log(
-        //     id_pelanggan_edit,
-        //     tanggal_edit,
-        //     id_anggota_edit,
-        //     nama_anggota_edit,
-        //     poin_edit,
-        //     tukar_poin_edit,
-        //     credit_edit,
-        //     jumlah_poin_edit,
-        //     sub_total_edit,
-        //     diskon_edit,
-        //     hasil_diskon_edit,
-        //     nominal_bayar_edit,
-        //     uang_bayar_edit,
-        //     kembalian_edit,
-        //     metode_pembayaran_edit,
-        //     tambahan_poin_edit
-        // )
 
         data.push({
             id_pelanggan_edit,
@@ -221,7 +203,7 @@
             }
         })
 
-        // location.reload();
+        location.reload();
     })
 
     function tambahBarisEdit() {

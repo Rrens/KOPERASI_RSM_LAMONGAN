@@ -38,7 +38,7 @@ class PenjualanController extends Controller
     public function update_table_kasir(Request $request)
     {
         try {
-            // return response()->json($request->data[0]);
+            // return response()->json($request->data_detail);
             $penjualan = Penjualan::findOrFail($request->data[0]['id_penjualan']);
             $penjualan->id_user = $request->data[0]['id_anggota_edit'];
             $penjualan->subtotal = $request->data[0]['sub_total_edit'];
@@ -48,7 +48,27 @@ class PenjualanController extends Controller
             $penjualan->poin_tambah = $request->data[0]['tambahan_poin_edit'];
             $penjualan->metode_pembayaran = $request->data[0]['metode_pembayaran_edit'];
             $penjualan->save();
-            return response()->json($penjualan);
+
+            $group_data = collect($request->data_detail)->groupBy('id_barang');
+            $penjualan_detail = Penjualan_details::where('id_penjualan', $penjualan->id)->delete();
+            // return response()->json($group_data);
+            foreach ($group_data as $item) {
+                $productID = $item->first()['id_barang'];
+                $total_stok = $item->sum('jumlah_barang');
+                $total_harga = $item->sum('harga_akhir');
+                $harga_jual = $item->first()['harga_jual'];
+
+                $penjualan_detail = new Penjualan_details();
+                $penjualan_detail->id_penjualan = $penjualan->id;
+                $penjualan_detail->id_product = $productID;
+                $penjualan_detail->harga_jual = $harga_jual;
+                $penjualan_detail->jumlah_barang = $total_stok;
+                $penjualan_detail->harga_akhir = $total_harga;
+                $penjualan_detail->save();
+            }
+
+
+            return response()->json($penjualan_detail);
         } catch (Exception $error) {
             return response()->json([
                 'meta' => [
@@ -99,6 +119,21 @@ class PenjualanController extends Controller
                     'penjualan_detail' => $penjualan_detail
                 ]
             ], 200);
+        } catch (Exception $error) {
+            return response()->json([
+                'meta' => [
+                    'status' => 'error',
+                    'message' => 'Something went wrong'
+                ],
+                'data' => $error->getMessage()
+            ], 500);
+        }
+    }
+
+    public function delete_table_kasir(Request $request)
+    {
+        try {
+            return response()->json($request->all());
         } catch (Exception $error) {
             return response()->json([
                 'meta' => [
