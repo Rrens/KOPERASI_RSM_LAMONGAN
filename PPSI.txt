@@ -1,0 +1,20 @@
+Poin didapat setiap pembelian 100K. Mendapat 1 poin
+1 poin berharga sebesar 3000 berlaku kelipatan dan bisa digunakan untuk mendapat diskon lebih banyak dari diskon anggota
+Diskon anggota berlaku bila melakukan pembelian sebesar 30k
+Contoh :
+Subtotal belanja 150.000
+Diskon anggota : 10%
+Poin digunakan : 3 poin
+Tambahan diskon : 9000 ( 3000 x 3 poin )
+Nominal bayar : 150.000 - 10% - 9000 = 126.000
+Total bayar : 150.000
+Kembalian : 24.000
+Tambahan poin : 1
+
+Setiap menggunakan metode bayar credit maka akan mendapat bunga sebesar 5%
+Contoh :
+Nominal bayar : 126.000
+Total setelah bunga : 132.300
+
+batas maksimal kredit sebesar 300k
+metode pembayaran credit hanya bisa dilakukan oleh anggota

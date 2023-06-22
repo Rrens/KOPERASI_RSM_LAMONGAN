@@ -13,6 +13,15 @@
             $('#option_kredit_edit').attr('hidden', false);
             $('#btn_save_edit').attr('hidden', false);
         }
+
+        if (metode_pembayaran == 'tunai') {
+
+            $('#isTunai_edit').attr('hidden', false);
+        } else if (metode_pembayaran == 'kredit') {
+            $('#isTunai_edit').attr('hidden', true);
+            $('#uang_bayar_edit').val('');
+            $('#kembalian_edit').val('');
+        }
     })
 
     // $('#id_pelanggan').on('change', function(e) {

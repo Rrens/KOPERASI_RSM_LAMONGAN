@@ -1,6 +1,6 @@
 <script>
     $('#metode_pembayaran').on('click', function(e) {
-        const metode_pembayaran = e.target.value;
+        let metode_pembayaran = e.target.value;
         let id_pelanggan = $('#id_pelanggan').val();
 
         if (!id_pelanggan) {
@@ -9,7 +9,17 @@
         } else {
             $('#option_kredit').attr('hidden', false);
             $('#btn_save').attr('hidden', false);
+
         }
+        if (metode_pembayaran == 'tunai') {
+
+            $('#isTunai').attr('hidden', false);
+        } else if (metode_pembayaran == 'kredit') {
+            $('#isTunai').attr('hidden', true);
+            $('#uang_bayar').val('');
+            $('#kembalian').val('');
+        }
+
     })
 
     $('#id_pelanggan').on('change', function(e) {
@@ -65,6 +75,7 @@
                 $('#sub_total').val(sum - poin);
             } else if (metode_pembayaran == 'kredit') {
                 $('#sub_total').val((sum - poin) + ((sum - poin) * 0.05));
+
             } else {
                 $('#sub_total').val(sum - poin);
             }

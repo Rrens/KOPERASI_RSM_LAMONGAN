@@ -47,6 +47,20 @@ class PenjualanController extends Controller
             $penjualan->kembalian = $request->data[0]['kembalian_edit'];
             $penjualan->poin_tambah = $request->data[0]['tambahan_poin_edit'];
             $penjualan->metode_pembayaran = $request->data[0]['metode_pembayaran_edit'];
+            if ($request->data[0]['metode_pembayaran_edit'] == 'kredit') {
+                $user = User::findOrFail($penjualan->id_user);
+                $user->credit = $user->credit + (int) $request->data[0]['nominal_bayar'];
+                $user->save();
+            }
+            if ($request->data[0]['jumlah_poin_edit'] != null) {
+                $user = User::findOrFail($penjualan->id_user);
+                $user->poin =  $penjualan->poin_tambah;
+                $user->save();
+            } else {
+                $user = User::findOrFail($penjualan->id_user);
+                $user->poin = $penjualan->poin_tambah + $user->poin;
+                $user->save();
+            }
             $penjualan->save();
 
             $group_data = collect($request->data_detail)->groupBy('id_barang');
@@ -82,7 +96,6 @@ class PenjualanController extends Controller
 
     public function post_table_kasir(Request $request)
     {
-        // return response()->json($request->data[0]);
         try {
             $penjualan = new Penjualan();
             $penjualan->id_user = $request->data[0]['id_anggota'];
@@ -90,8 +103,22 @@ class PenjualanController extends Controller
             $penjualan->diskon = $request->data[0]['hasil_diskon'];
             $penjualan->total_bayar = $request->data[0]['uang_bayar'];
             $penjualan->kembalian = $request->data[0]['kembalian'];
-            $penjualan->poin_tambah = $request->data[0]['tambahan_poin'];
+            $penjualan->poin_tambah = (int) $request->data[0]['tambahan_poin'];
             $penjualan->metode_pembayaran = $request->data[0]['metode_pembayaran'];
+            if ($request->data[0]['metode_pembayaran'] == 'kredit') {
+                $user = User::findOrFail($penjualan->id_user);
+                $user->credit = $user->credit + (int) $request->data[0]['nominal_bayar'];
+                $user->save();
+            }
+            if ($request->data[0]['jumlah_poin'] != null) {
+                $user = User::findOrFail($penjualan->id_user);
+                $user->poin =  $penjualan->poin_tambah;
+                $user->save();
+            } else {
+                $user = User::findOrFail($penjualan->id_user);
+                $user->poin = $penjualan->poin_tambah + $user->poin;
+                $user->save();
+            }
             $penjualan->save();
             $group_data = collect($request->data_detail)->groupBy('id_barang');
 
