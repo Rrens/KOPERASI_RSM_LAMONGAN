@@ -12,12 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pembelian', function (Blueprint $table) {
-            $table->string('no_transaksi')->primary();
-            $table->unsignedBigInteger('id_product')->nullable();
-            $table->foreign('id_product')->references('id')->on('products');
+            $table->id();
             $table->bigInteger('harga_beli')->nullable();
             $table->bigInteger('harga_jual')->nullable();
-            $table->bigInteger('total_bayar')->nullable();
             $table->bigInteger('total_harga')->nullable();
             $table->integer('jumlah_barang');
             $table->text('keterangan')->nullable();

@@ -17,7 +17,7 @@
 
         body.theme-dark a {
             /* text-decoration: none !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            color: white; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                color: white; */
             color: inherit;
             text-decoration: none !important;
         }
@@ -165,6 +165,97 @@
                 <div class="modal-header d-flex justify-content-center">
                     <h5 class="modal-title" id="exampleModalScrollableTitle">Tambah Pembelian</h5>
                 </div>
+                {{-- <form action="" method="post" enctype="multipart/form-data"> --}}
+                {{-- @csrf --}}
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group mb-3">
+                                <label for="basicInput">Nama Barang</label>
+                                <input type="text" class="form-control mt-3" id="nama_barang" value=""
+                                    name="nama_barang">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="basicInput">Kategori</label>
+                                <fieldset class="form-group mt-3">
+                                    <select class="form-select" id="kategori" name="kategori">
+                                        <option value="makanan">Makanan</option>
+                                        <option value="minuman">Minuman</option>
+                                    </select>
+                                </fieldset>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="basicInput">Jumlah Barang</label>
+                                <input type="number" class="form-control mt-3" id="jumlah_barang" value=""
+                                    name="jumlah_barang">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="basicInput">Keterangan</label>
+                                <textarea type="text" class="form-control mt-3" id="keterangan" name="keterangan"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group mb-3">
+                                <label for="basicInput">Harga Beli</label>
+                                <input type="number" class="form-control mt-3" id="harga_beli" name="harga_beli">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="basicInput">Harga Jual</label>
+                                <input type="number" class="form-control mt-3" id="harga_jual" name="harga_jual">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="basicInput">Total Harga</label>
+                                <input type="number" class="form-control mt-3" id="total_harga" name="total_harga">
+                            </div>
+                            <div class="form-group mb-3">
+                                <a href="#" class="btn btn-primary mt-5" id="tambah_tabel"
+                                    onclick="tambahBaris()">Tambah</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="table_tambah">
+                            <thead>
+                                <tr>
+                                    <th>Hapus</th>
+                                    <th>Nama Barang</th>
+                                    <th>Kategori</th>
+                                    <th>Jumlah Barang</th>
+                                    <th>Harga Beli</th>
+                                    <th>Harga Jual</th>
+                                    <th>Total Harga</th>
+                                    <th>Keterangan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                        <i class="bx bx-x d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Batal</span>
+                    </button>
+                    <button type="submit" class="btn btn-primary ml-1" id="btn_save">
+                        <i class="bx bx-check d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Simpan</span>
+                    </button>
+                </div>
+                {{-- </form> --}}
+            </div>
+        </div>
+    </div>
+
+    {{-- MODAL EDIT --}}
+    <div class="modal fade" id="modalEditAdmin" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header d-flex justify-content-center">
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Tambah Pembelian</h5>
+                </div>
                 <form action="" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
@@ -177,7 +268,8 @@
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="basicInput">Nama Barang</label>
-                                    <input type="text" class="form-control mt-3"round id="basicInput" name="nama_barang">
+                                    <input type="text" class="form-control mt-3"round id="basicInput"
+                                        name="nama_barang">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="basicInput">Kategori</label>
@@ -196,11 +288,13 @@
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="form-group mb-3">
                                     <label for="basicInput">Harga Beli</label>
-                                    <input type="number" class="form-control mt-3"round id="basicInput" name="harga_beli">
+                                    <input type="number" class="form-control mt-3"round id="basicInput"
+                                        name="harga_beli">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="basicInput">Harga Jual</label>
-                                    <input type="number" class="form-control mt-3"round id="basicInput" name="harga_jual">
+                                    <input type="number" class="form-control mt-3"round id="basicInput"
+                                        name="harga_jual">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="basicInput">Total Harga</label>
@@ -272,90 +366,6 @@
     </div>
 
     {{-- MODAL EDIT --}}
-    <div class="modal fade" id="modalEditAdmin" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header d-flex justify-content-center">
-                    <h5 class="modal-title" id="exampleModalScrollableTitle">Edit Profile</h5>
-                </div>
-                <form action="" method="post" enctype="multipart/form-data">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="d-flex justify-content-between">
-                            <div class="flex-start">
-                                <div class="form-group mb-3">
-                                    <label for="basicInput">NIK</label>
-                                    <input type="text" class="form-control mt-3"round id="basicInput" name="nik">
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="basicInput">Nama Lengkap</label>
-                                    <input type="text" class="form-control mt-3"round id="basicInput"
-                                        name="nama_lengkap">
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="basicInput">Tempat Lahir</label>
-                                    <input type="text" class="form-control mt-3"round id="basicInput"
-                                        name="tempat_lahir">
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="basicInput">Tanggal Lahir</label>
-                                    <input type="date" class="form-control mt-3"round id="basicInput"
-                                        name="tanggal_lahir">
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="basicInput">Alamat Lengkap</label>
-                                    <textarea type="text" class="form-control mt-3"round id="basicInput" name="nama_lengkap"></textarea>
-                                </div>
-                            </div>
-                            <div class="flex-end">
-                                <div class="form-group mb-3">
-                                    <label for="basicInput">Jenis Kelamin</label>
-                                    <select class="form-select mt-3" id="basicSelect" name="jenis_kelamin">
-                                        <option selected hidden>Pilih Jenis Kelamin</option>
-                                        <option value="0">Laki-laki</option>
-                                        <option value="1">Perempuan</option>
-                                    </select>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="basicInput">No Telepon</label>
-                                    <input type="number" class="form-control mt-3"round id="basicInput" name="telp">
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="basicInput">Status Pernikahan</label>
-                                    <select class="form-select mt-3" id="basicSelect" name="status_nikah">
-                                        <option selected hidden>Pilih Status Pernikahan</option>
-                                        <option value="0">Menikah</option>
-                                        <option value="1">Belum Menikah</option>
-                                    </select>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="basicInput">PIN</label>
-                                    <input type="number" class="form-control mt-3"round id="basicInput" name="PIN">
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="basicInput">Re-type PIN</label>
-                                    <input type="number" class="form-control mt-3"round id="basicInput" name="rpin">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                            <i class="bx bx-x d-block d-sm-none"></i>
-                            <span class="d-none d-sm-block">Batal</span>
-                        </button>
-                        <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">
-                            <i class="bx bx-check d-block d-sm-none"></i>
-                            <span class="d-none d-sm-block">Simpan</span>
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    {{-- MODAL EDIT --}}
     <div class="modal fade" id="modalDeleteAdmin" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -381,23 +391,10 @@
 
 @push('scripts')
     <script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            $('#tableLaporan').DataTable();
-        }); <
-        script src = "https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity = "sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin = "anonymous" >
-    </script>
-    {{-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
-    </script> --}}
     <script src="{{ asset('assets/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
     <script src="{{ asset('assets/js/pages/simple-datatables.js') }}"></script>
-    {{-- <script type="text/javascript">
-        document.forms['filter_date'].submit();
-    </script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+        integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    @include('scripts.pembelian-tambah')
 @endpush
