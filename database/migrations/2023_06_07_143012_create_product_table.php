@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_pembelian')->nullable();
-            $table->foreign('id_pembelian')->references('id')->on('pembelian');
             $table->string('nama');
             $table->float('harga');
             $table->string('kategori');

@@ -17,7 +17,7 @@
 
         body.theme-dark a {
             /* text-decoration: none !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                color: white; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        color: white; */
             color: inherit;
             text-decoration: none !important;
         }
@@ -94,57 +94,52 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>ID Anggota</th>
-                                            <th>Nama</th>
-                                            <th>Password</th>
-                                            <th>Kelamin</th>
-                                            <th>No Telp</th>
-                                            <th>Alamat</th>
+                                            <th>Jumlah Barang</th>
+                                            <th>Total Harga</th>
+                                            <th>Keterangan</th>
+                                            <th>Waktu</th>
                                             <th>Aksi</th>
                                             <th>Detail</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="text-bold-500">
-                                                1
-                                            </td>
-
-                                            <td class="text-bold-500">
-                                                1229199
-                                            </td>
-                                            <td class="text-bold-500">
-                                                Rahma Anjani
-                                            </td>
-                                            <td class="text-bold-500">
-                                                RahmaPaheho123
-                                            </td>
-                                            <td class="text-bold-500">
-                                                Perempuan
-                                            </td>
-                                            <td class="text-bold-500">
-                                                081288812877
-                                            </td>
-                                            <td class="text-bold-500">
-                                                Sebelahe omah ketek gede
-                                            </td>
-                                            <td>
-                                                <a class="tagA btn btn-outline-warning" href="#"
-                                                    data-bs-toggle="modal" data-bs-target="#modalEditAdmin">
-                                                    <i class="bi bi-pencil-fill"></i>
-                                                </a>
-                                                <a class="tagA btn btn-outline-danger" href="#" data-bs-toggle="modal"
-                                                    data-bs-target="#modalDeleteAdmin">
-                                                    <i class="bi bi-trash-fill"></i>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a class="tagA btn btn-primary" href="#" data-bs-toggle="modal"
-                                                    data-bs-target="#modalToggleDetail"><i
-                                                        class="bi bi-exclamation-triangle-fill"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
+                                        @foreach ($data as $item)
+                                            <tr>
+                                                <td class="text-bold-500">
+                                                    {{ $loop->iteration }}
+                                                </td>
+                                                <td class="text-bold-500">
+                                                    {{ $item->jumlah_barang != null ? $item->jumlah_barang : '' }}
+                                                </td>
+                                                <td class="text-bold-500">
+                                                    {{ $item->total_bayar != null ? number_format($item->total_bayar) : '' }}
+                                                </td>
+                                                <td class="text-bold-500">
+                                                    {{ $item->keterangan != null ? $item->keterangan : '' }}
+                                                </td>
+                                                <td class="text-bold-500">
+                                                    {{ $item->created_at != null ? $item->created_at->toDateString() : '' }}
+                                                </td>
+                                                <td>
+                                                    <a class="tagA btn btn-outline-warning" href="#"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#modalEditAdmin{{ $item->id }}">
+                                                        <i class="bi bi-pencil-fill"></i>
+                                                    </a>
+                                                    <a class="tagA btn btn-outline-danger" href="#"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#modalDeleteAdmin{{ $item->id }}">
+                                                        <i class="bi bi-trash-fill"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="tagA btn btn-primary" href="#" data-bs-toggle="modal"
+                                                        data-bs-target="#modalToggleDetail"><i
+                                                            class="bi bi-exclamation-triangle-fill"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -179,6 +174,7 @@
                                 <label for="basicInput">Kategori</label>
                                 <fieldset class="form-group mt-3">
                                     <select class="form-select" id="kategori" name="kategori">
+                                        <Option selected hidden>Pilih Kategori</Option>
                                         <option value="makanan">Makanan</option>
                                         <option value="minuman">Minuman</option>
                                     </select>
@@ -249,103 +245,114 @@
     </div>
 
     {{-- MODAL EDIT --}}
-    <div class="modal fade" id="modalEditAdmin" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header d-flex justify-content-center">
-                    <h5 class="modal-title" id="exampleModalScrollableTitle">Tambah Pembelian</h5>
-                </div>
-                <form action="" method="post" enctype="multipart/form-data">
-                    @csrf
+    @foreach ($data as $item)
+        <div class="modal fade" id="modalEditAdmin{{ $item->id }}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header d-flex justify-content-center">
+                        <h5 class="modal-title" id="exampleModalScrollableTitle">Edit Pembelian {{ $item->id }}</h5>
+                    </div>
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="form-group mb-3">
-                                    <label for="basicInput">No Transaksi</label>
-                                    <input type="number" class="form-control mt-3"round id="basicInput"
-                                        name="no_transaksi">
-                                </div>
-                                <div class="form-group mb-3">
                                     <label for="basicInput">Nama Barang</label>
-                                    <input type="text" class="form-control mt-3"round id="basicInput"
+                                    <input type="number" id="id_pembelian" value="{{ $item->id }}" hidden>
+                                    <input type="text" class="form-control mt-3" id="nama_barang_edit"
                                         name="nama_barang">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="basicInput">Kategori</label>
                                     <fieldset class="form-group mt-3">
-                                        <select class="form-select" id="basicSelect" name="kategori">
-                                            <option>Makanan</option>
-                                            <option>Minuman</option>
+                                        <select class="form-select" id="kategori_edit" name="kategori">
+                                            <button hidden>Pilih Kategori</button>
+                                            <option value="makanan">Makanan</option>
+                                            <option value="minuman">Minuman</option>
                                         </select>
                                     </fieldset>
                                 </div>
                                 <div class="form-group mb-3">
+                                    <label for="basicInput">Jumlah Barang</label>
+                                    <input type="text" class="form-control mt-3" id="jumlah_barang_edit"
+                                        name="jumlah_barang">
+                                </div>
+                                <div class="form-group mb-3">
                                     <label for="basicInput">Keterangan</label>
-                                    <textarea type="text" class="form-control mt-3"round id="keterangan" name="keterangan"></textarea>
+                                    <textarea type="text" class="form-control mt-3" id="keterangan_edit" name="keterangan">{{ $item->keterangan }}</textarea>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="form-group mb-3">
                                     <label for="basicInput">Harga Beli</label>
-                                    <input type="number" class="form-control mt-3"round id="basicInput"
+                                    <input type="text" class="form-control mt-3" id="harga_beli_edit"
                                         name="harga_beli">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="basicInput">Harga Jual</label>
-                                    <input type="number" class="form-control mt-3"round id="basicInput"
+                                    <input type="text" class="form-control mt-3" id="harga_jual_edit"
                                         name="harga_jual">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="basicInput">Total Harga</label>
-                                    <input type="number" class="form-control mt-3"round id="total_harga"
+                                    <input type="text" class="form-control mt-3" id="total_harga_edit"
                                         name="total_harga">
                                 </div>
                                 <div class="form-group mb-3">
-
-                                    <button class="btn btn-primary mt-5" id="simpan_sementara">Simpan</button>
+                                    <a href="#" class="btn btn-primary mt-5" id="simpan_sementara_edit"
+                                        onclick="tambahBarisEdit()">Tambah</a>
                                 </div>
                             </div>
                         </div>
 
 
-                        <div class="table-responsive">
+                        <div class="table-responsive" id="table_edit">
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
+                                        <th>Action</th>
                                         <th>Nama Barang</th>
                                         <th>Kategori</th>
                                         <th>Harga Beli</th>
+                                        <th>Harga Jual</th>
                                         <th>Jumlah Barang</th>
                                         <th>Total Harga</th>
-                                        <th>Keterangan</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td class="text-bold-500">
-                                            1
-                                        </td>
-                                        <td class="text-bold-500">
-                                            1229199
-                                        </td>
-                                        <td class="text-bold-500">
-                                            Rahma Anjani
-                                        </td>
-                                        <td class="text-bold-500">
-                                            RahmaPaheho123
-                                        </td>
-                                        <td class="text-bold-500">
-                                            Perempuan
-                                        </td>
-                                        <td class="text-bold-500">
-                                            081288812877
-                                        </td>
-                                        <td class="text-bold-500">
-                                            Sebelahe omah ketek gede
-                                        </td>
-                                    </tr>
+                                    @foreach ($pembelian_detail->where('id_pembelian', $item->id) as $row)
+                                        <tr>
+                                            <td class="text-bold-500">
+                                                <a href="#" class="btn btn-outline-warning" name="edit_row"
+                                                    onclick="editRowEdit(this)" {{-- data-id="{{ empty($item->id) != null ? $item->id : '' }}" --}}
+                                                    data-value="{{ $row->product[0]->nama }}" id="edit_id_product">
+                                                    <i class="bi bi-pencil-fill"></i>
+                                                </a>
+                                                <a href="#" class="btn btn-outline-danger" name="delete_row"
+                                                    onclick="deleteRowEdit(this)">
+                                                    <i class="bi bi-trash-fill"></i>
+                                                </a>
+                                            </td>
+                                            <td class="text-bold-500">
+                                                {{ $row->product[0]->nama }}
+                                            </td>
+                                            <td class="text-bold-500">
+                                                {{ $row->product[0]->kategori }}
+                                            </td>
+                                            <td class="text-bold-500">
+                                                {{ $row->harga_beli }}
+                                            </td>
+                                            <td class="text-bold-500">
+                                                {{ $row->harga_jual }}
+                                            </td>
+                                            <td class="text-bold-500">
+                                                {{ $row->jumlah_barang }}
+                                            </td>
+                                            <td class="text-bold-500">
+                                                {{ $row->jumlah_barang * $row->harga_beli }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -355,37 +362,39 @@
                             <i class="bx bx-x d-block d-sm-none"></i>
                             <span class="d-none d-sm-block">Batal</span>
                         </button>
-                        <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">
+                        <button type="submit" class="btn btn-primary ml-1" id="btn_save_edit">
                             <i class="bx bx-check d-block d-sm-none"></i>
                             <span class="d-none d-sm-block">Simpan</span>
                         </button>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
+    @endforeach
 
     {{-- MODAL EDIT --}}
-    <div class="modal fade" id="modalDeleteAdmin" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header d-flex justify-content-center">
-                    <h5 class="modal-title" id="exampleModalScrollableTitle">Edit Profile</h5>
-                </div>
-                <div class="modal-footer d-flex justify-content-center">
-                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                        <i class="bx bx-x d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Batal</span>
-                    </button>
-                    <a href="#" class="btn btn-danger ml-1" data-bs-dismiss="modal">
-                        <i class="bx bx-check d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Hapus</span>
-                    </a>
+    @foreach ($data as $item)
+        <div class="modal fade" id="modalDeleteAdmin{{ $item->id }}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header d-flex justify-content-center">
+                        <h5 class="modal-title" id="exampleModalScrollableTitle">Edit Profile</h5>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Batal</span>
+                        </button>
+                        <a href="#" class="btn btn-danger ml-1" data-bs-dismiss="modal">
+                            <i class="bx bx-check d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Hapus</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endforeach
 
 @endsection
 
@@ -397,4 +406,5 @@
         integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     @include('scripts.pembelian-tambah')
+    @include('scripts.pembelian-edit')
 @endpush

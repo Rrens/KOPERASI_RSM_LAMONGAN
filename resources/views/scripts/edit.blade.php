@@ -2,6 +2,7 @@
     $('#metode_pembayaran_edit').on('click', function(e) {
         const metode_pembayaran = e.target.value;
         let id_pelanggan = $('#id_pelanggan_edit').val();
+        let kredit = $('#credit_edit').val();
 
         if (!metode_pembayaran == 'metode_pembayaran_edit') {
             $('#btn_save_edit').attr('hidden', true);
@@ -9,9 +10,13 @@
         if (!id_pelanggan) {
             $('#option_kredit_edit').attr('hidden', true);
             $('#btn_save_edit').attr('hidden', false);
-        } else {
-            $('#option_kredit_edit').attr('hidden', false);
-            $('#btn_save_edit').attr('hidden', false);
+        } else if (id_pelanggan) {
+            if (kredit >= 300000) {
+                $('#option_kredit').attr('hidden', true);
+            } else {
+                $('#option_kredit').attr('hidden', false);
+            }
+            $('#btn_save').attr('hidden', false);
         }
 
         if (metode_pembayaran == 'tunai') {
@@ -23,28 +28,6 @@
             $('#kembalian_edit').val('');
         }
     })
-
-    // $('#id_pelanggan').on('change', function(e) {
-    //     var id_pelanggan = e.target.value;
-    //     $.ajax({
-    //         url: `/penjualan/get-id-anggota/${id_pelanggan}`,
-    //         method: 'GET',
-    //         success: function(data) {
-    //             $('#id_anggota').val(data.id);
-    //             $('#nama_anggota').val(data.name);
-    //             $('#poin').val(data.poin);
-    //             $('#credit').val(data.credit);
-    //         },
-    //         error: function() {
-
-    //             $('#id_anggota').val('');
-    //             $('#nama_anggota').val('');
-    //             $('#poin').val('');
-    //             $('#credit').val('');
-    //         }
-    //     })
-
-    // });
 
     $('#tukar_poin_edit').on('click', function() {
         $('#jumlah_poin_edit').val($('#poin_edit').val())
@@ -291,7 +274,17 @@
                                 </td>
                             </tr>
                         `;
-                    $('#table_kasir_edit tbody').append(newRow);
+
+                    let data_table = [];
+                    $('#table_kasir_edit tbody tr').each(function() {
+                        const id_barang_table = $(this).find('td:eq(1)')[0]['innerText'];
+                        const ini = $(this)[0];
+
+                        if (id_barang_table == id_barang) {
+                            ini.remove();
+                            $('#table_kasir_edit tbody').append(newRow);
+                        }
+                    });
                 }
             })
         }
@@ -341,18 +334,6 @@
         stok.forEach(value => {
             sum_stok += parseInt(value['jumlah_barang']);
         })
-        // console.log(sum_stok);
-
-
-        // console.log(data);
-
-
-
-        // var stok = $('#stok_edit').val(sum_stok - data[0]['jumlah_barang']);
-        // var harga_jual = $('#harga_jual_edit').val(data[0]['harga_jual']);
-        // var jumlah_barang = $('#jumlah_barang_edit').val(data[0]['jumlah_barang']);
-        // var harga_akhir = $('#harga_akhir_edit').val(data[0]['harga_akhir']);
-        // var id_barang = $('#id_barang_edit').val(data[0]['id_barang']);
         $.ajax({
             url: `penjualan/get-id-product/${for_id_barang}`,
             method: 'GET',

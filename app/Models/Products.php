@@ -14,7 +14,7 @@ class Products extends Model
     protected $guarded = [];
 
     protected $fillable = [
-        'id_pembelian',
+        // 'id_pembelian',
         'nama',
         'harga',
         'kategori',
@@ -28,8 +28,13 @@ class Products extends Model
         return $this->belongsTo(penjualan_detail::class);
     }
 
-    public function pembelian()
+    // public function pembelian_to_product()
+    // {
+    //     return $this->belongsTo(Pembelian::class, 'id_pembelian');
+    // }
+
+    public function pembelian_detail()
     {
-        return $this->hasMany(Pembelian::class, 'id', 'id_pembelian');
+        return $this->belongsTo(pembelian_details::class);
     }
 }

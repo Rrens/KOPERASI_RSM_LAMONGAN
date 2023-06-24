@@ -45,5 +45,7 @@ Route::post('penjualan/update', [PenjualanController::class, 'update_table_kasir
 Route::post('penjualan/delete', [PenjualanController::class, 'delete_table_kasir'])->name('delete_table_kasir');
 Route::get('pembelian', [PembelianController::class, 'index'])->name('pembelian.index');
 Route::post('pembelian', [PembelianController::class, 'store'])->name('pembelian.store');
+Route::get('pembelian/get_product/{nama}', [PembelianController::class, 'get_product']);
+Route::post('pembelian/update', [PembelianController::class, 'update'])->name('pembelian.update');
 Route::get('stok-barang', [StokBarangController::class, 'index'])->name('stok.index');
 Route::get('laporan', [LaporanController::class, 'index'])->name('laporan.index');

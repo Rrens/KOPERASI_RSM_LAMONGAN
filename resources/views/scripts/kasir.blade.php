@@ -2,15 +2,24 @@
     $('#metode_pembayaran').on('click', function(e) {
         let metode_pembayaran = e.target.value;
         let id_pelanggan = $('#id_pelanggan').val();
+        let kredit = $('#credit').val();
+
+        // if (kredit < 300000) {
+        //     $('#option_kredit').attr('hidden', true);
+        // }
 
         if (!id_pelanggan) {
             $('#option_kredit').attr('hidden', true);
             $('#btn_save').attr('hidden', false);
-        } else {
-            $('#option_kredit').attr('hidden', false);
+        } else if (id_pelanggan) {
+            if (kredit >= 300000) {
+                $('#option_kredit').attr('hidden', true);
+            } else {
+                $('#option_kredit').attr('hidden', false);
+            }
             $('#btn_save').attr('hidden', false);
-
         }
+
         if (metode_pembayaran == 'tunai') {
 
             $('#isTunai').attr('hidden', false);

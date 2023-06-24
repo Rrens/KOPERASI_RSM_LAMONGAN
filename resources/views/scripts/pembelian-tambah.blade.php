@@ -3,13 +3,15 @@
         let data = [];
 
         $('#table_tambah tbody tr').each(function() {
-            const nama_barang = $(this).find('td:eq(1)')[0]['innerText'];
+            const nama = $(this).find('td:eq(1)')[0]['innerText'];
             const kategori = $(this).find('td:eq(2)')[0]['innerText'];
             const jumlah_barang = $(this).find('td:eq(3)')[0]['innerText'];
             const harga_beli = $(this).find('td:eq(4)')[0]['innerText'];
             const harga_jual = $(this).find('td:eq(5)')[0]['innerText'];
             const total_harga = $(this).find('td:eq(6)')[0]['innerText'];
             const keterangan = $(this).find('td:eq(7)')[0]['innerText'];
+
+            let nama_barang = nama.toUpperCase();
 
             data.push({
                 nama_barang,

@@ -62,23 +62,23 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
+                    <a href="{{ route('pembelian.index') }}" class="sidebar-link">
+                        <i class="bi bi-box-fill"></i>
+                        <span>Pembelian</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
                     <a href="{{ route('penjualan.index') }}" class="sidebar-link">
                         <i class="bi bi-cash"></i>
                         <span>Penjualan</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a href="{{ route('pembelian.index') }}" class="sidebar-link">
-                        <i class="bi bi-cash-stack"></i>
-                        <span>Pembelian</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
+                {{-- <li class="sidebar-item">
                     <a href="{{ route('stok.index') }}" class="sidebar-link">
                         <i class="bi bi-box-fill"></i>
                         <span>Stok Barang</span>
                     </a>
-                </li>
+                </li> --}}
                 <li class="sidebar-item">
                     <a href="{{ route('laporan.index') }}" class="sidebar-link">
                         <i class="bi bi-newspaper"></i>

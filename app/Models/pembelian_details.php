@@ -5,24 +5,27 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pembelian extends Model
+class pembelian_details extends Model
 {
     use HasFactory;
 
-    protected $table = 'pembelian';
+    protected $table = 'pembelian_detail';
     protected $primaryKey = 'id';
     protected $guarded = [];
 
     protected $fillable = [
-        'keterangan',
-        'total_bayar',
+        'id_pembelian',
+        'id_product',
+        'harga_beli',
+        'harga_jual',
+        'total_harga',
         'jumlah_barang',
         'created_at',
         'updated_at',
     ];
 
-    public function product_to_pembelian()
+    public function product()
     {
-        return $this->hasMany(Products::class, 'id_pembelian');
+        return $this->hasMany(Products::class, 'id', 'id_product');
     }
 }
