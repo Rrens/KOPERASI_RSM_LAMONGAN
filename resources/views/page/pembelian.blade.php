@@ -17,7 +17,7 @@
 
         body.theme-dark a {
             /* text-decoration: none !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        color: white; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            color: white; */
             color: inherit;
             text-decoration: none !important;
         }
@@ -122,8 +122,8 @@
                                                 </td>
                                                 <td>
                                                     <a class="tagA btn btn-outline-warning" href="#"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#modalEditAdmin{{ $item->id }}">
+                                                        data-bs-toggle="modal" data-bs-target="#modalEditAdmin"
+                                                        data-id="{{ $item->id }}" onclick="modal(this)">
                                                         <i class="bi bi-pencil-fill"></i>
                                                     </a>
                                                     <a class="tagA btn btn-outline-danger" href="#"
@@ -245,132 +245,99 @@
     </div>
 
     {{-- MODAL EDIT --}}
-    @foreach ($data as $item)
-        <div class="modal fade" id="modalEditAdmin{{ $item->id }}" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-                <div class="modal-content">
-                    <div class="modal-header d-flex justify-content-center">
-                        <h5 class="modal-title" id="exampleModalScrollableTitle">Edit Pembelian {{ $item->id }}</h5>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                <div class="form-group mb-3">
-                                    <label for="basicInput">Nama Barang</label>
-                                    <input type="number" id="id_pembelian" value="{{ $item->id }}" hidden>
-                                    <input type="text" class="form-control mt-3" id="nama_barang_edit"
-                                        name="nama_barang">
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="basicInput">Kategori</label>
-                                    <fieldset class="form-group mt-3">
-                                        <select class="form-select" id="kategori_edit" name="kategori">
-                                            <button hidden>Pilih Kategori</button>
-                                            <option value="makanan">Makanan</option>
-                                            <option value="minuman">Minuman</option>
-                                        </select>
-                                    </fieldset>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="basicInput">Jumlah Barang</label>
-                                    <input type="text" class="form-control mt-3" id="jumlah_barang_edit"
-                                        name="jumlah_barang">
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="basicInput">Keterangan</label>
-                                    <textarea type="text" class="form-control mt-3" id="keterangan_edit" name="keterangan">{{ $item->keterangan }}</textarea>
-                                </div>
+    <div class="modal fade" id="modalEditAdmin" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header d-flex justify-content-center">
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Edit Pembelian</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group mb-3">
+                                <label for="basicInput">Nama Barang</label>
+                                <input type="number" id="id_pembelian" value="" hidden>
+                                <input type="text" class="form-control mt-3" id="nama_barang_edit"
+                                    name="nama_barang">
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                <div class="form-group mb-3">
-                                    <label for="basicInput">Harga Beli</label>
-                                    <input type="text" class="form-control mt-3" id="harga_beli_edit"
-                                        name="harga_beli">
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="basicInput">Harga Jual</label>
-                                    <input type="text" class="form-control mt-3" id="harga_jual_edit"
-                                        name="harga_jual">
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="basicInput">Total Harga</label>
-                                    <input type="text" class="form-control mt-3" id="total_harga_edit"
-                                        name="total_harga">
-                                </div>
-                                <div class="form-group mb-3">
-                                    <a href="#" class="btn btn-primary mt-5" id="simpan_sementara_edit"
-                                        onclick="tambahBarisEdit()">Tambah</a>
-                                </div>
+                            <div class="form-group mb-3">
+                                <label for="basicInput">Kategori</label>
+                                <fieldset class="form-group mt-3">
+                                    <select class="form-select" id="kategori_edit" name="kategori">
+                                        <button hidden>Pilih Kategori</button>
+                                        <option value="makanan">Makanan</option>
+                                        <option value="minuman">Minuman</option>
+                                    </select>
+                                </fieldset>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="basicInput">Jumlah Barang</label>
+                                <input type="text" class="form-control mt-3" id="jumlah_barang_edit"
+                                    name="jumlah_barang">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="basicInput">Keterangan</label>
+                                <textarea type="text" class="form-control mt-3" id="keterangan_edit" name="keterangan"></textarea>
                             </div>
                         </div>
-
-
-                        <div class="table-responsive" id="table_edit">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Action</th>
-                                        <th>Nama Barang</th>
-                                        <th>Kategori</th>
-                                        <th>Harga Beli</th>
-                                        <th>Harga Jual</th>
-                                        <th>Jumlah Barang</th>
-                                        <th>Total Harga</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($pembelian_detail->where('id_pembelian', $item->id) as $row)
-                                        <tr>
-                                            <td class="text-bold-500">
-                                                <a href="#" class="btn btn-outline-warning" name="edit_row"
-                                                    onclick="editRowEdit(this)" {{-- data-id="{{ empty($item->id) != null ? $item->id : '' }}" --}}
-                                                    data-value="{{ $row->product[0]->nama }}" id="edit_id_product">
-                                                    <i class="bi bi-pencil-fill"></i>
-                                                </a>
-                                                <a href="#" class="btn btn-outline-danger" name="delete_row"
-                                                    onclick="deleteRowEdit(this)">
-                                                    <i class="bi bi-trash-fill"></i>
-                                                </a>
-                                            </td>
-                                            <td class="text-bold-500">
-                                                {{ $row->product[0]->nama }}
-                                            </td>
-                                            <td class="text-bold-500">
-                                                {{ $row->product[0]->kategori }}
-                                            </td>
-                                            <td class="text-bold-500">
-                                                {{ $row->harga_beli }}
-                                            </td>
-                                            <td class="text-bold-500">
-                                                {{ $row->harga_jual }}
-                                            </td>
-                                            <td class="text-bold-500">
-                                                {{ $row->jumlah_barang }}
-                                            </td>
-                                            <td class="text-bold-500">
-                                                {{ $row->jumlah_barang * $row->harga_beli }}
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group mb-3">
+                                <label for="basicInput">Harga Beli</label>
+                                <input type="text" class="form-control mt-3" id="harga_beli_edit" name="harga_beli">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="basicInput">Harga Jual</label>
+                                <input type="text" class="form-control mt-3" id="harga_jual_edit" name="harga_jual">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="basicInput">Total Harga</label>
+                                <input type="text" class="form-control mt-3" id="total_harga_edit"
+                                    name="total_harga">
+                            </div>
+                            <div class="form-group mb-3">
+                                <a href="#" class="btn btn-primary mt-5" id="simpan_sementara_edit"
+                                    onclick="tambahBarisEdit()">Tambah</a>
+                            </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                            <i class="bx bx-x d-block d-sm-none"></i>
-                            <span class="d-none d-sm-block">Batal</span>
-                        </button>
-                        <button type="submit" class="btn btn-primary ml-1" id="btn_save_edit">
-                            <i class="bx bx-check d-block d-sm-none"></i>
-                            <span class="d-none d-sm-block">Simpan</span>
-                        </button>
+
+
+                    <div class="table-responsive" id="table_edit">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Action</th>
+                                    <th>Nama Barang</th>
+                                    <th>Kategori</th>
+                                    <th>Harga Beli</th>
+                                    <th>Harga Jual</th>
+                                    <th>Jumlah Barang</th>
+                                    <th>Total Harga</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{-- @foreach ($pembelian_detail->where('id_pembelian', $item->id) as $row) --}}
+
+                                {{-- @endforeach --}}
+                            </tbody>
+                        </table>
                     </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                        <i class="bx bx-x d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Batal</span>
+                    </button>
+                    <button type="submit" class="btn btn-primary ml-1" id="btn_save_edit">
+                        <i class="bx bx-check d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Simpan</span>
+                    </button>
                 </div>
             </div>
         </div>
-    @endforeach
+    </div>
+    {{-- @endforeach --}}
 
     {{-- MODAL EDIT --}}
     @foreach ($data as $item)

@@ -7,6 +7,7 @@ use App\Models\pembelian_details;
 use App\Models\Products;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PembelianController extends Controller
 {
@@ -24,6 +25,30 @@ class PembelianController extends Controller
     {
         $product = Products::where('nama', $nama)->first();
         return response()->json($product);
+    }
+
+    public function get_pembelian_detail($id)
+    {
+        $pembelian_detail = DB::table('pembelian_detail as pd')
+            ->join('pembelian as p', 'p.id', '=', 'pd.id_pembelian')
+            ->join('products as pr', 'pr.id', '=', 'pd.id_product')
+            ->where('p.id', $id)
+            ->select(
+                'pr.nama as nama_barang',
+                'pr.kategori as kategori_barang',
+                'pd.jumlah_barang',
+                'p.keterangan',
+                'pd.harga_beli',
+                'pd.harga_jual',
+                'p.total_bayar',
+                'pd.id as id_pembelian_detail'
+            )
+            ->get();
+
+
+
+        // $pembelian_detail = pembelian_details::where('id_pembelian', $id)->get();
+        return response()->json($pembelian_detail);
     }
 
     public function store(Request $request)

@@ -2,6 +2,79 @@
     // $('#harga_beli_edit').on('change', function() {
     //     alert('1212');
     // })
+
+    function modal(btn) {
+        var row = btn.getAttribute('data-id');
+        console.log(row);
+
+        let newRow = '';
+
+        $('#table_kasir_edit tbody').append(newRow);
+
+        $.ajax({
+            url: `pembelian/get-pembelian-detail/${row}`,
+            method: 'GET',
+            success: function(get_data) {
+                // console.log(get_data);
+
+
+                $('#nama_barang_edit').val(get_data[0]['nama_barang']);
+                $('#kategori_edit').val(get_data[0]['kategori_barang']);
+                $('#jumlah_barang_edit').val(get_data[0]['jumlah_barang']);
+                $('#keterangan_edit').val(get_data[0]['keterangan']);
+                $('#harga_beli_edit').val(get_data[0]['harga_beli']);
+                $('#harga_jual_edit').val(get_data[0]['harga_jual']);
+                $('#total_harga_edit').val(get_data[0]['total_bayar']);
+
+                // console.log('ya')
+                let i = 0;
+                get_data.forEach(value => {
+                    let newRow = `
+                            <tr>
+                                <td class="text-bold-500">
+                                    <a href="#" class="btn btn-outline-warning"
+                                        name="edit_row" onclick="editRowEdit(this)"
+                                        data-id="${i}"
+                                        data-value="${value['nama_barang']}"
+                                        id="edit_id_product">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-outline-danger"
+                                        name="delete_row"
+                                        onclick="deleteRowEdit(this)">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </a>
+                                </td>
+                                <td class="text-bold-500">
+                                    ${value['nama_barang']}
+                                </td>
+                                <td class="text-bold-500">
+                                    ${value['kategori_barang']}
+                                </td>
+                                <td class="text-bold-500">
+                                    ${value['harga_beli']}
+                                </td>
+                                <td class="text-bold-500">
+                                    ${value['harga_jual']}
+                                </td>
+                                <td class="text-bold-500">
+                                    ${value['jumlah_barang']}
+                                </td>
+                                <td class="text-bold-500">
+                                    ${value['total_bayar']}
+                                </td>
+                            </tr>
+                        `;
+
+                    $('#table_edit tbody').append(newRow);
+                    i++;
+                })
+
+            }
+        })
+
+    }
+
     function changeKoma(string) {
         // Menggunakan metode replace() dengan ekspresi reguler untuk mengganti koma dengan titik
         var hasil = string.replace(/,/g, '.');
@@ -66,9 +139,10 @@
     }
 
     function editRowEdit(btn) {
-        var row = btn.getAttribute('data-id');
+        console.log(btn);
+        // var row = btn.getAttribute('data-id');
         var for_nama_barang = btn.getAttribute('data-value');
-        // console.log(for_id_barang);
+        console.log(for_nama_barang);
         // console.log(row);
         let data = [];
 
@@ -93,6 +167,7 @@
                 });
             }
         });
+        console.log(data);
 
         // console.log(data, `IKI: ${data.length == 0 ? 0 : data.length - 1}`);
         data.forEach(value => {

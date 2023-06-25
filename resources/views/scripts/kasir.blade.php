@@ -121,8 +121,8 @@
         // console.log(`UANG BAYAR: ${uang_bayar} NOMINAL BAYAR ${nominal_bayar}`)
 
         if (uang_bayar < nominal_bayar) {
-            alert('Uang kurang ' + (nominal_bayar - uang_bayar))
             $('#kembalian').val('');
+            alert('Uang kurang ' + (nominal_bayar - uang_bayar))
         } else {
             $('#kembalian').val(uang_bayar - nominal_bayar);
         }
@@ -210,7 +210,7 @@
             }
         })
 
-        location.reload();
+        // location.reload();
     })
 
     function tambahBaris() {

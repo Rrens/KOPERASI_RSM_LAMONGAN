@@ -34,4 +34,10 @@ class Penjualan extends Model
     {
         return $this->belongsTo(Penjualan_details::class);
     }
+
+    public function detail()
+    {
+        // return $this->belongsToMany(Penjualan::class, 'penjualan_details', 'id', 'id_penjualan');
+        return $this->belongsTo(Penjualan_details::class, 'id', 'id_penjualan');
+    }
 }
