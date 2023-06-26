@@ -25,7 +25,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::redirect('/', 'dashboard');
+Route::redirect('/', 'login');
 
 Route::get('login', [AuthConroller::class, 'index'])->name('login');
 Route::get('logout', [AuthConroller::class, 'logout'])->name('logout');
