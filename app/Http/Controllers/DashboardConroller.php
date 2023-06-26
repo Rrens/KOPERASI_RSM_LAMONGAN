@@ -8,6 +8,7 @@ class DashboardConroller extends Controller
 {
     public function index()
     {
-        return view('page.dashboard');
+        $active = 'dashboard';
+        return view('page.dashboard', compact('active'));
     }
 }

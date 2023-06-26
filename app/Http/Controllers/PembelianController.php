@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\lap_pembelian;
 use App\Models\Pembelian;
 use App\Models\pembelian_details;
 use App\Models\Products;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,12 +15,13 @@ class PembelianController extends Controller
 {
     public function index()
     {
+        $active = 'pembelian';
         // $data = Pembelian::with('product_to_pembelian')->get();
         $data = Pembelian::all();
         // dd($data);
         $product = Products::all();
         $pembelian_detail = pembelian_details::with('product')->get();
-        return view('page.pembelian', compact('data', 'product', 'pembelian_detail'));
+        return view('page.pembelian', compact('data', 'product', 'pembelian_detail', 'active'));
     }
 
     public function get_product($nama)
@@ -61,7 +64,15 @@ class PembelianController extends Controller
             $pembelian->jumlah_barang = $data->sum('jumlah_barang');
             $pembelian->keterangan = $request->data[0]['keterangan'];
             $pembelian->save();
-            //
+
+            $lap_pembelian = new lap_pembelian();
+            $lap_pembelian->id_pembelian = $pembelian->id;
+            $lap_pembelian->barang_dibeli = $pembelian->jumlah_barang;
+            $lap_pembelian->pengeluaran = $pembelian->total_bayar;
+            $lap_pembelian->keterangan = $pembelian->keterangan;
+            $lap_pembelian->tanggal = Carbon::now();
+
+            $lap_pembelian->save();
 
             $group_data = collect($request->data)->groupBy('nama_barang');
 
@@ -111,29 +122,6 @@ class PembelianController extends Controller
                     'status' => 'Success',
                 ],
             ], 200);
-
-            // foreach ($request->data as $item) {
-            //     $Product_id = Products::where('nama', $item['nama_barang'])->get();
-
-            //     if (empty($Product_id)) {
-            //         $product = new Products();
-            //         $product->id_pembelian = $pembelian->id;
-            //         $product->nama = (int) $item['nama_barang'];
-
-            //         $product->harga = (int) $item['harga_beli'];
-            //         $product->kategori = $item['kategori'];
-            //         $product->stok = (int) $item['jumlah_barang'];
-            //         $product->save();
-            //     } else {
-            //         return response()->json($request->all());
-            //         $Product_id->id_pembelian = $pembelian->id;
-            //         $Product_id->nama = $item['nama_barang'];
-            //         $Product_id->harga = (int) $item['harga_beli'];
-            //         $Product_id->kategori = $item['kategori'];
-            //         $Product_id->stok = (int) $item['jumlah_barang'] + $Product_id->stok;
-            //         $Product_id->save();
-            //     }
-            // }
         } catch (Exception $error) {
             return response()->json([
                 'meta' => [
@@ -149,13 +137,20 @@ class PembelianController extends Controller
     {
         try {
             $data = collect($request->data);
+
             $pembelian = Pembelian::findOrFail($data[0]['id_pembelian']);
             $pembelian->total_bayar = $data->sum('total_harga');
             $pembelian->jumlah_barang = $data->sum('jumlah_barang');
             $pembelian->keterangan = $data->first()['keterangan'];
-            // $pembelian->save();
-            // return response()->json($data);
-            // $pembelian->keterangan = $request->data[0]['keterangan'];
+            $pembelian->save();
+            // return response()->json($pembelian);
+
+            $lap_pembelian = lap_pembelian::where('id_pembelian', $pembelian->id)->first();
+            $lap_pembelian->id_pembelian = $pembelian->id;
+            $lap_pembelian->barang_dibeli = $pembelian->jumlah_barang;
+            $lap_pembelian->pengeluaran = $pembelian->total_bayar;
+            $lap_pembelian->keterangan = $pembelian->keterangan;
+            $lap_pembelian->save();
 
             foreach ($data->groupBy('nama_barang') as $item) {
 
@@ -166,8 +161,6 @@ class PembelianController extends Controller
                 // return response()->json($harga);
 
                 $checkSameProduct = Products::where('nama', $nama_produk)->first();
-
-
 
                 if (empty($checkSameProduct)) {
                     $product = new Products();

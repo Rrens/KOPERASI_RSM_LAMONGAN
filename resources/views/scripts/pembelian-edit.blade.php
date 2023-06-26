@@ -17,7 +17,6 @@
             success: function(get_data) {
                 // console.log(get_data);
 
-
                 $('#nama_barang_edit').val(get_data[0]['nama_barang']);
                 $('#kategori_edit').val(get_data[0]['kategori_barang']);
                 $('#jumlah_barang_edit').val(get_data[0]['jumlah_barang']);
@@ -25,6 +24,7 @@
                 $('#harga_beli_edit').val(get_data[0]['harga_beli']);
                 $('#harga_jual_edit').val(get_data[0]['harga_jual']);
                 $('#total_harga_edit').val(get_data[0]['total_bayar']);
+                $('#id_pembelian').val(row)
 
                 // console.log('ya')
                 let i = 0;

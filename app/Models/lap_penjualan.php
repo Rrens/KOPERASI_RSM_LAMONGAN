@@ -22,8 +22,9 @@ class lap_penjualan extends Model
         'updated_at',
     ];
 
-    public function penjualan()
+    public function penjualan_detail()
     {
-        return $this->belongsTo(Penjualan::class, 'id', 'id_penjualan');
+        return $this->hasMany(Penjualan_details::class, 'id', 'id_penjualan_detail');
+        // return $this->belongsToMany(Penjualan_details::class, 'penjualan', 'id', 'id_penjualan');
     }
 }

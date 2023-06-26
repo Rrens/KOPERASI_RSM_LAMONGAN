@@ -18,6 +18,7 @@ return new class extends Migration
             $table->bigInteger('barang_dibeli')->nullable();
             $table->bigInteger('pengeluaran')->nullable();
             $table->string('keterangan')->nullable();
+            $table->date('tanggal')->nullable();
             $table->timestamps();
         });
     }

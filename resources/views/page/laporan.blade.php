@@ -17,7 +17,7 @@
 
         body.theme-dark a {
             /* text-decoration: none !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            color: white; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        color: white; */
             color: inherit;
             text-decoration: none !important;
         }
@@ -130,34 +130,35 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <td class="text-bold-500">
-                                                                    1
-                                                                </td>
-
-                                                                <td class="text-bold-500">
-                                                                    1229199
-                                                                </td>
-                                                                <td class="text-bold-500">
-                                                                    Rahma Anjani
-                                                                </td>
-                                                                <td class="text-bold-500">
-                                                                    RahmaPaheho123
-                                                                </td>
-                                                                <td class="text-bold-500">
-                                                                    Perempuan
-                                                                </td>
-                                                                <td class="text-bold-500">
-                                                                    081288812877
-                                                                </td>
-                                                                <td>
-                                                                    <a class="tagA btn btn-primary" href="#"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#ModalAnggota"><i
-                                                                            class="bi bi-exclamation-triangle-fill"></i>
-                                                                    </a>
-                                                                </td>
-                                                            </tr>
+                                                            @foreach ($lap_anggota as $item)
+                                                                <tr>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $loop->iteration }}
+                                                                    </td>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $item->tanggal }}
+                                                                    </td>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $item->id }}
+                                                                    </td>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $item->user[0]->credit }}
+                                                                    </td>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $item->credit_masuk }}
+                                                                    </td>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $item->credit_keluar }}
+                                                                    </td>
+                                                                    <td>
+                                                                        <a class="tagA btn btn-primary" href="#"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#ModalAnggota{{ $item->id }}"><i
+                                                                                class="bi bi-exclamation-triangle-fill"></i>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -178,39 +179,36 @@
                                                                 <th>No Laporan</th>
                                                                 <th>Barang Terjual</th>
                                                                 <th>Pemasukan</th>
-                                                                <th>Keterangan</th>
                                                                 <th>Opsi</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <td class="text-bold-500">
-                                                                    1
-                                                                </td>
-
-                                                                <td class="text-bold-500">
-                                                                    1229199
-                                                                </td>
-                                                                <td class="text-bold-500">
-                                                                    Rahma Anjani
-                                                                </td>
-                                                                <td class="text-bold-500">
-                                                                    RahmaPaheho123
-                                                                </td>
-                                                                <td class="text-bold-500">
-                                                                    Perempuan
-                                                                </td>
-                                                                <td class="text-bold-500">
-                                                                    081288812877
-                                                                </td>
-                                                                <td>
-                                                                    <a class="tagA btn btn-primary" href="#"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#ModalPenjualan"><i
-                                                                            class="bi bi-exclamation-triangle-fill"></i>
-                                                                    </a>
-                                                                </td>
-                                                            </tr>
+                                                            @foreach ($lap_penjualan as $item)
+                                                                <tr>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $loop->iteration }}
+                                                                    </td>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $item->tanggal }}
+                                                                    </td>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $item->id }}
+                                                                    </td>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $penjualan_detail->where('id', $item->id_penjualan_detail)->sum('jumlah_barang') }}
+                                                                    </td>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $penjualan_detail->where('id', $item->id_penjualan_detail)->sum('harga_akhir') }}
+                                                                    </td>
+                                                                    <td>
+                                                                        <a class="tagA btn btn-primary" href="#"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#ModalPenjualan{{ $item->id }}"><i
+                                                                                class="bi bi-exclamation-triangle-fill"></i>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -236,34 +234,36 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <td class="text-bold-500">
-                                                                    1
-                                                                </td>
+                                                            @foreach ($lap_pembelian as $item)
+                                                                <tr>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $loop->iteration }}1
+                                                                    </td>
 
-                                                                <td class="text-bold-500">
-                                                                    1229199
-                                                                </td>
-                                                                <td class="text-bold-500">
-                                                                    Rahma Anjani
-                                                                </td>
-                                                                <td class="text-bold-500">
-                                                                    RahmaPaheho123
-                                                                </td>
-                                                                <td class="text-bold-500">
-                                                                    Perempuan
-                                                                </td>
-                                                                <td class="text-bold-500">
-                                                                    081288812877
-                                                                </td>
-                                                                <td>
-                                                                    <a class="tagA btn btn-primary" href="#"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#ModalPembelian"><i
-                                                                            class="bi bi-exclamation-triangle-fill"></i>
-                                                                    </a>
-                                                                </td>
-                                                            </tr>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $item->tanggal }}
+                                                                    </td>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $item->id }}
+                                                                    </td>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $item->barang_dibeli }}
+                                                                    </td>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $item->pengeluaran }}
+                                                                    </td>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $item->keterangan }}
+                                                                    </td>
+                                                                    <td>
+                                                                        <a class="tagA btn btn-primary" href="#"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#ModalPembelian{{ $item->id }}"><i
+                                                                                class="bi bi-exclamation-triangle-fill"></i>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -281,15 +281,15 @@
     </div>
 
     {{-- MODAL ANGGOTA --}}
-    <div class="modal fade" id="ModalAnggota" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header d-flex justify-content-center">
-                    <h5 class="modal-title" id="exampleModalScrollableTitle">laporan Anggota</h5>
-                </div>
-                <form action="" method="post">
-                    @csrf
+    @foreach ($lap_anggota as $item)
+        <div class="modal fade" id="ModalAnggota{{ $item->id }}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header d-flex justify-content-center">
+                        <h5 class="modal-title" id="exampleModalScrollableTitle">laporan Anggota
+                            {{ $item->user[0]->nama }}</h5>
+                    </div>
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-lg-6 col-md-12 col-sm-12">
@@ -301,12 +301,12 @@
                                                     <fieldset class="form-group">
                                                         <label for="basicInput">No Laporan</label>
                                                         <input type="number" class="form-control mb-3 mt-2"
-                                                            name="no_laporan" readonly>
+                                                            name="no_laporan" value="{{ $item->id }}" readonly>
                                                     </fieldset>
                                                     <fieldset class="form-group">
                                                         <label for="basicInput">Tanggal</label>
                                                         <input type="date" class="form-control mb-3 mt-2"
-                                                            name="tanggal" readonly>
+                                                            name="tanggal" value="{{ $item->tanggal }}" readonly>
                                                     </fieldset>
                                                     <fieldset class="form-group">
                                                         <label for="basicInput">Anggota Baru</label>
@@ -363,36 +363,42 @@
                                                         <th>Kredit</th>
                                                         <th>Waktu</th>
                                                         <th>Keterangan</th>
-                                                        <th>Akhir</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td class="text-bold-500">
-                                                            1
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            1229199
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            Rahma Anjani
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            RahmaPaheho123
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            Perempuan
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            081288812877
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            Sebelahe omah ketek gede
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            Sebelahe omah ketek gede
-                                                        </td>
-                                                    </tr>
+                                                    @foreach ($lap_anggota as $row)
+                                                        <tr>
+                                                            <td class="text-bold-500">
+                                                                {{ $loop->iteration }}
+                                                            </td>
+                                                            <td class="text-bold-500">
+                                                                {{ $row->user[0]->id }}
+                                                            </td>
+                                                            <td class="text-bold-500">
+                                                                {{ $row->user[0]->name }}
+                                                            </td>
+                                                            <td class="text-bold-500">
+                                                                {{ $row->user[0]->poin }}
+                                                            </td>
+                                                            <td class="text-bold-500">
+                                                                {{ $row->user[0]->credit }}
+                                                            </td>
+                                                            <td class="text-bold-500">
+                                                                {{ $row->tanggal }}
+                                                            </td>
+                                                            <td class="text-bold-500">
+                                                                @php
+                                                                    if ($row->credit_keluar != 0) {
+                                                                        echo 'keluar';
+                                                                    } elseif ($row->credit_masuk != 0) {
+                                                                        echo 'masuk';
+                                                                    } else {
+                                                                        echo '-';
+                                                                    }
+                                                                @endphp
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
@@ -411,39 +417,45 @@
                                                         <th>ID Anggota</th>
                                                         <th>Nama</th>
                                                         <th>Poin</th>
-                                                        <th>Kredit</th>
+                                                        <th>tambahan</th>
                                                         <th>Waktu</th>
                                                         <th>Keterangan</th>
-                                                        <th>Akhir</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td class="text-bold-500">
-                                                            1
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            1229199
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            Rahma Anjani
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            RahmaPaheho123
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            Perempuan
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            081288812877
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            Sebelahe omah ketek gede
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            Sebelahe omah ketek gede
-                                                        </td>
-                                                    </tr>
+                                                    @foreach ($lap_anggota as $row)
+                                                        <tr>
+                                                            <td class="text-bold-500">
+                                                                {{ $loop->iteration }}
+                                                            </td>
+                                                            <td class="text-bold-500">
+                                                                {{ $row->user[0]->id }}
+                                                            </td>
+                                                            <td class="text-bold-500">
+                                                                {{ $row->user[0]->name }}
+                                                            </td>
+                                                            <td class="text-bold-500">
+                                                                {{ $row->user[0]->poin }}
+                                                            </td>
+                                                            <td class="text-bold-500">
+                                                                {{ empty($row->poin_masuk) ? 0 : $row->poin_masuk }}
+                                                            </td>
+                                                            <td class="text-bold-500">
+                                                                {{ $row->tanggal }}
+                                                            </td>
+                                                            <td class="text-bold-500">
+                                                                @php
+                                                                    if ($row->poin_keluar != 0) {
+                                                                        echo 'keluar';
+                                                                    } elseif ($row->poin_masuk != 0) {
+                                                                        echo 'masuk';
+                                                                    } else {
+                                                                        echo '-';
+                                                                    }
+                                                                @endphp
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
@@ -452,223 +464,229 @@
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Batal</span>
+                </button>
+                <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">
+                    <i class="bx bx-check d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Simpan</span>
+                </button>
             </div>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                <i class="bx bx-x d-block d-sm-none"></i>
-                <span class="d-none d-sm-block">Batal</span>
-            </button>
-            <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">
-                <i class="bx bx-check d-block d-sm-none"></i>
-                <span class="d-none d-sm-block">Simpan</span>
-            </button>
-        </div>
-    </div>
+    @endforeach
 
     {{-- MODAL PENJUALAN --}}
-    <div class="modal fade" id="ModalPenjualan" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header d-flex justify-content-center">
-                    <h5 class="modal-title" id="exampleModalScrollableTitle">laporan Penjualan</h5>
-                </div>
-                <form action="" method="post">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-lg-6 col-md-12 col-sm-12">
-                                <div class="card row-color">
-                                    <div class="card-content">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <fieldset class="form-group">
-                                                        <label for="basicInput">No Laporan</label>
-                                                        <input type="number" class="form-control mb-3 mt-2"
-                                                            name="no_laporan" readonly>
-                                                    </fieldset>
-                                                    <fieldset class="form-group">
-                                                        <label for="basicInput">No Transaksi</label>
-                                                        <input type="number" class="form-control mb-3 mt-2"
-                                                            name="no_transaksi" readonly>
-                                                    </fieldset>
-                                                    <fieldset class="form-group">
-                                                        <label for="basicInput">Tanggal</label>
-                                                        <input type="date" class="form-control mb-3 mt-2"
-                                                            name="tanggal">
-                                                    </fieldset>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-12 col-sm-12">
-                                <div class="card row-color">
-                                    <div class="card-content">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <fieldset class="form-group">
-                                                        <label for="basicInput">Sub Total</label>
-                                                        <input type="number" class="form-control mb-3 mt-2"
-                                                            name="sub_total" required>
-                                                    </fieldset>
-                                                    <fieldset class="form-group">
-                                                        <label for="basicInput">Diskon</label>
-                                                        <div class="row">
-                                                            <div class="col-5">
-                                                                <input type="number" class="form-control mb-3 mt-2"
-                                                                    name="diskon">
-                                                            </div>
-                                                            <div class="col-1">
-                                                                <p class="text-center">%=</p>
-                                                            </div>
-                                                            <div class="col-6">
-                                                                <input type="number" class="form-control mb-3 mt-2"
-                                                                    name="hasil_diskon">
-                                                            </div>
-
-                                                    </fieldset>
-                                                    <fieldset class="form-group">
-                                                        <label for="basicInput">Total Pendapatan</label>
-                                                        <input type="number" class="form-control mb-3 mt-2"
-                                                            name="total_pendapatan">
-                                                    </fieldset>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="table-responsive">
-                                            <p>Anggota</p>
-                                            <table class="table table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th>No</th>
-                                                        <th>ID Barang</th>
-                                                        <th>Kategori</th>
-                                                        <th>Nama Barang</th>
-                                                        <th>Jumlah Barang</th>
-                                                        <th>Subtotal</th>
-                                                        <th>Metode</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="text-bold-500">
-                                                            1
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            1229199
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            Rahma Anjani
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            RahmaPaheho123
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            RahmaPaheho123
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            Perempuan
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            081288812877
-                                                        </td>
-
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="table-responsive">
-                                            <p>Non Anggota</p>
-                                            <table class="table table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th>No</th>
-                                                        <th>ID Barang</th>
-                                                        <th>Kategori</th>
-                                                        <th>Nama Barang</th>
-                                                        <th>Jumlah Barang</th>
-                                                        <th>Harga Jual</th>
-                                                        <th>Harga Akhir</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="text-bold-500">
-                                                            1
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            1229199
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            Rahma Anjani
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            RahmaPaheho123
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            RahmaPaheho123
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            Perempuan
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            081288812877
-                                                        </td>
-
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+    @foreach ($lap_penjualan as $item)
+        <div class="modal fade" id="ModalPenjualan{{ $item->id }}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header d-flex justify-content-center">
+                        <h5 class="modal-title" id="exampleModalScrollableTitle">laporan Penjualan</h5>
                     </div>
-                </form>
+                    <form action="" method="post">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-12 col-sm-12">
+                                    <div class="card row-color">
+                                        <div class="card-content">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <fieldset class="form-group">
+                                                            <label for="basicInput">No Laporan</label>
+                                                            <input type="number" class="form-control mb-3 mt-2"
+                                                                name="no_laporan" value="{{ $item->id }}" readonly>
+                                                        </fieldset>
+                                                        <fieldset class="form-group">
+                                                            <label for="basicInput">No Transaksi</label>
+                                                            <input type="number" class="form-control mb-3 mt-2"
+                                                                name="no_transaksi" value="{{ $item->id_penjualan }}"
+                                                                readonly>
+                                                        </fieldset>
+                                                        <fieldset class="form-group">
+                                                            <label for="basicInput">Tanggal</label>
+                                                            <input type="date" class="form-control mb-3 mt-2"
+                                                                name="tanggal" value="{{ $item->tanggal }}">
+                                                        </fieldset>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12">
+                                    <div class="card row-color">
+                                        <div class="card-content">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <fieldset class="form-group">
+                                                            <label for="basicInput">Sub Total</label>
+                                                            <input type="number" class="form-control mb-3 mt-2"
+                                                                name="sub_total" value="{{ $item->total_bayar }}"
+                                                                required>
+                                                        </fieldset>
+                                                        <fieldset class="form-group">
+                                                            <label for="basicInput">Diskon</label>
+                                                            <div class="row">
+                                                                <div class="col-5">
+                                                                    <input type="number" class="form-control mb-3 mt-2"
+                                                                        name="diskon">
+                                                                </div>
+                                                                <div class="col-1">
+                                                                    <p class="text-center">%=</p>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <input type="number" class="form-control mb-3 mt-2"
+                                                                        name="hasil_diskon">
+                                                                </div>
+
+                                                        </fieldset>
+                                                        <fieldset class="form-group">
+                                                            <label for="basicInput">Total Pendapatan</label>
+                                                            <input type="number" class="form-control mb-3 mt-2"
+                                                                name="total_pendapatan">
+                                                        </fieldset>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                @if (empty($item->id_user))
+                                    <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <p>Non Anggota</p>
+                                                    <table class="table table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>No</th>
+                                                                <th>ID Barang</th>
+                                                                <th>Kategori</th>
+                                                                <th>Nama Barang</th>
+                                                                <th>Jumlah Barang</th>
+                                                                <th>Subtotal</th>
+                                                                <th>Metode</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="text-bold-500">
+                                                                    {{ $loop->iteration }}
+                                                                </td>
+                                                                <td class="text-bold-500">
+                                                                    {{ $item->id_product }}
+                                                                </td>
+                                                                <td class="text-bold-500">
+                                                                    {{ $item->kategori }}
+                                                                </td>
+                                                                <td class="text-bold-500">
+                                                                    {{ $item->nama }}
+                                                                </td>
+                                                                <td class="text-bold-500">
+                                                                    {{ $item->jumlah_barang }}
+                                                                </td>
+                                                                <td class="text-bold-500">
+                                                                    {{ $item->subtotal }}
+                                                                </td>
+                                                                <td class="text-bold-500">
+                                                                    {{ $item->metode_pembayaran }}
+                                                                </td>
+
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @else
+                                    <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <p>Anggota</p>
+                                                    <table class="table table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>No</th>
+                                                                <th>ID Barang</th>
+                                                                <th>Kategori</th>
+                                                                <th>Nama Barang</th>
+                                                                <th>Jumlah Barang</th>
+                                                                <th>Subtotal</th>
+                                                                <th>Metode</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="text-bold-500">
+                                                                    {{ $loop->iteration }}
+                                                                </td>
+                                                                <td class="text-bold-500">
+                                                                    {{ $item->id_product }}
+                                                                </td>
+                                                                <td class="text-bold-500">
+                                                                    {{ $item->kategori }}
+                                                                </td>
+                                                                <td class="text-bold-500">
+                                                                    {{ $item->nama }}
+                                                                </td>
+                                                                <td class="text-bold-500">
+                                                                    {{ $item->jumlah_barang }}
+                                                                </td>
+                                                                <td class="text-bold-500">
+                                                                    {{ $item->subtotal }}
+                                                                </td>
+                                                                <td class="text-bold-500">
+                                                                    {{ $item->metode_pembayaran }}
+                                                                </td>
+
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Batal</span>
+                </button>
+                <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">
+                    <i class="bx bx-check d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Simpan</span>
+                </button>
             </div>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                <i class="bx bx-x d-block d-sm-none"></i>
-                <span class="d-none d-sm-block">Batal</span>
-            </button>
-            <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">
-                <i class="bx bx-check d-block d-sm-none"></i>
-                <span class="d-none d-sm-block">Simpan</span>
-            </button>
-        </div>
-    </div>
+    @endforeach
 
     {{-- MODAL PEMBELIAN --}}
-    <div class="modal fade" id="ModalPembelian" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header d-flex justify-content-center">
-                    <h5 class="modal-title" id="exampleModalScrollableTitle">laporan Pembelian</h5>
-                </div>
-                <form action="" method="post">
-                    @csrf
+    @foreach ($lap_pembelian as $item)
+        <div class="modal fade" id="ModalPembelian{{ $item->id }}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header d-flex justify-content-center">
+                        <h5 class="modal-title" id="exampleModalScrollableTitle">laporan Pembelian</h5>
+                    </div>
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12">
@@ -680,17 +698,18 @@
                                                     <fieldset class="form-group">
                                                         <label for="basicInput">No Laporan</label>
                                                         <input type="number" class="form-control mb-3 mt-2"
-                                                            name="no_laporan" readonly>
+                                                            name="no_laporan" value="{{ $item->id }}" readonly>
                                                     </fieldset>
                                                     <fieldset class="form-group">
                                                         <label for="basicInput">No Transaksi</label>
                                                         <input type="number" class="form-control mb-3 mt-2"
-                                                            name="no_transaksi" readonly>
+                                                            name="no_transaksi" value="{{ $item->id_pembelian }}"
+                                                            readonly>
                                                     </fieldset>
                                                     <fieldset class="form-group">
                                                         <label for="basicInput">Waktu</label>
                                                         <input type="date" class="form-control mb-3 mt-2"
-                                                            name="waktu">
+                                                            name="waktu" value="{{ $item->tanggal }}">
                                                     </fieldset>
                                                 </div>
                                             </div>
@@ -704,7 +723,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="table-responsive">
-                                            <p>Credit</p>
+                                            <p>Barang Dibeli</p>
                                             <table class="table table-striped">
                                                 <thead>
                                                     <tr>
@@ -718,29 +737,31 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td class="text-bold-500">
-                                                            1
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            1229199
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            Rahma Anjani
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            RahmaPaheho123
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            Perempuan
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            081288812877
-                                                        </td>
-                                                        <td class="text-bold-500">
-                                                            Sebelahe omah ketek gede
-                                                        </td>
-                                                    </tr>
+                                                    @foreach ($pembelian_detail->where('id_pembelian', $item->id_pembelian) as $row)
+                                                        <tr>
+                                                            <td class="text-bold-500">
+                                                                {{ $loop->iteration }}
+                                                            </td>
+                                                            <td class="text-bold-500">
+                                                                {{ $row->product[0]->nama }}
+                                                            </td>
+                                                            <td class="text-bold-500">
+                                                                {{ $row->product[0]->kategori }}
+                                                            </td>
+                                                            <td class="text-bold-500">
+                                                                {{ $row->harga_beli }}
+                                                            </td>
+                                                            <td class="text-bold-500">
+                                                                {{ $row->jumlah_barang }}
+                                                            </td>
+                                                            <td class="text-bold-500">
+                                                                {{ $row->harga_beli * $row->jumlah_barang }}
+                                                            </td>
+                                                            <td class="text-bold-500">
+                                                                {{ $item->keterangan }}
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
@@ -749,20 +770,17 @@
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-success" data-bs-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Tutup</span>
+                </button>
             </div>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                <i class="bx bx-x d-block d-sm-none"></i>
-                <span class="d-none d-sm-block">Batal</span>
-            </button>
-            <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">
-                <i class="bx bx-check d-block d-sm-none"></i>
-                <span class="d-none d-sm-block">Simpan</span>
-            </button>
-        </div>
-    </div>
+    @endforeach
+
 
 
 @endsection

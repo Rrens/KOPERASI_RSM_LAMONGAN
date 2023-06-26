@@ -42,51 +42,56 @@
         <div class="sidebar-menu">
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
+                @if (auth()->user()->role == 0)
+                    <li class="sidebar-item {{ $active == 'dashboard' ? 'active' : '' }}">
+                        <a href="{{ route('dashboard.index') }}" class="sidebar-link">
+                            <i class="bi bi-grid-fill"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item {{ $active == 'admin' ? 'active' : '' }}">
+                        <a href="{{ route('admin.index') }}" class="sidebar-link">
+                            <i class="bi bi-person-badge-fill"></i>
+                            <span>Admin</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item {{ $active == 'anggota' ? 'active' : '' }}">
+                        <a href="{{ route('anggota.index') }}" class="sidebar-link">
+                            <i class="bi bi-card-checklist"></i>
+                            <span>Anggota</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item {{ $active == 'pembelian' ? 'active' : '' }}">
+                        <a href="{{ route('pembelian.index') }}" class="sidebar-link">
+                            <i class="bi bi-box-fill"></i>
+                            <span>Pembelian</span>
+                        </a>
+                    </li>
+                @elseif (auth()->user()->role == 1)
+                    <li class="sidebar-item {{ $active == 'penjualan' ? 'active' : '' }}">
+                        <a href="{{ route('penjualan.index') }}" class="sidebar-link">
+                            <i class="bi bi-cash"></i>
+                            <span>Penjualan</span>
+                        </a>
+                    </li>
 
-                <li class="sidebar-item">
-                    <a href="{{ route('dashboard.index') }}" class="sidebar-link">
-                        <i class="bi bi-grid-fill"></i>
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="{{ route('admin.index') }}" class="sidebar-link">
-                        <i class="bi bi-person-badge-fill"></i>
-                        <span>Admin</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="{{ route('anggota.index') }}" class="sidebar-link">
-                        <i class="bi bi-card-checklist"></i>
-                        <span>Anggota</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="{{ route('pembelian.index') }}" class="sidebar-link">
-                        <i class="bi bi-box-fill"></i>
-                        <span>Pembelian</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="{{ route('penjualan.index') }}" class="sidebar-link">
-                        <i class="bi bi-cash"></i>
-                        <span>Penjualan</span>
-                    </a>
-                </li>
-                {{-- <li class="sidebar-item">
+
+                    {{-- <li class="sidebar-item {{ $active == 'dashboard' ? 'active' : '' }}">
                     <a href="{{ route('stok.index') }}" class="sidebar-link">
                         <i class="bi bi-box-fill"></i>
                         <span>Stok Barang</span>
                     </a>
                 </li> --}}
+                    <li class="sidebar-item {{ $active == 'laporan' ? 'active' : '' }}">
+                        <a href="{{ route('laporan.index') }}" class="sidebar-link">
+                            <i class="bi bi-newspaper"></i>
+                            <span>Laporan</span>
+                        </a>
+                    </li>
+                @endif
+
                 <li class="sidebar-item">
-                    <a href="{{ route('laporan.index') }}" class="sidebar-link">
-                        <i class="bi bi-newspaper"></i>
-                        <span>Laporan</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="{{ route('logout') }}" class="sidebar-link">
                         <i class="bi bi-arrow-left-circle-fill"></i>
                         <span>Logout</span>
                     </a>

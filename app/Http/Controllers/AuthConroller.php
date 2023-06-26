@@ -23,23 +23,24 @@ class AuthConroller extends Controller
         // dd($request->all());
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'password' => 'required'
+            'pin' => 'required'
         ]);
 
         if ($validator->fails()) {
             Alert::error($validator->messages()->all());
-            return redirect()->route('dashboard');
+            return redirect()->route('login');
         }
         $data = [
             'name' => $request->name,
-            'password' => $request->password
+            'password' => $request->pin
         ];
+        // dd(!Auth::attempt());
 
         if (!Auth::attempt($data)) {
-            Session::flash('error', 'Name or Password is wrong');
+            Session::flash('error', 'Name or pin is wrong');
             Alert::error(
                 'error',
-                'Name or Password is wrong'
+                'Name or pin is wrong'
             );
             return redirect()->route('login');
         }

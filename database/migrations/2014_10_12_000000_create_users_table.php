@@ -15,7 +15,7 @@ return new class extends Migration
             // $table->string('id')->primary();
             $table->id();
             $table->string('name');
-            $table->string('pin');
+            $table->string('password');
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
             $table->string('nik')->nullable();

@@ -17,6 +17,7 @@ class lap_pembelian extends Model
         'barang_dibeli',
         'pengeluaran',
         'keterangan',
+        'tanggal',
         'created_at',
         'updated_at',
     ];

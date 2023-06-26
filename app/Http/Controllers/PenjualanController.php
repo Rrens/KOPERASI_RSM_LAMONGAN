@@ -18,6 +18,7 @@ class PenjualanController extends Controller
 {
     public function index()
     {
+        $active = 'penjualan';
         // $data = Penjualan::with('user')->whereHas('user', function ($query) {
         //     $query->where('role', '!=', 0);
         // })->get();
@@ -25,7 +26,7 @@ class PenjualanController extends Controller
         $penjualan_detail = Penjualan_details::with('product')->get();
 
         $date = Carbon::now()->toDateString();
-        return view('page.penjualan', compact('data', 'date', 'penjualan_detail'));
+        return view('page.penjualan', compact('data', 'date', 'penjualan_detail', 'active'));
     }
 
     public function get_id_anggota($id)
@@ -261,6 +262,7 @@ class PenjualanController extends Controller
             }
 
             $lap_anggota->id_penjualan_detail = $penjualan_detail->id;
+            $lap_anggota->credit_keluar = 0;
             $lap_anggota->save();
 
             $lap_penjualan = new lap_penjualan();

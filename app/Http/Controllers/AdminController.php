@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -12,7 +13,7 @@ class AdminController extends Controller
 {
     public function index()
     {
-
+        $active = 'admin';
         $data = User::where('role', 0)->get();
         // foreach ($data as $item) {
         //     $item['kode'] = $item['id'];
@@ -22,7 +23,7 @@ class AdminController extends Controller
 
 
         // dd($data, $forID);
-        return view('page.admin', compact('data'));
+        return view('page.admin', compact('data', 'active'));
     }
 
     public function store(Request $request)
@@ -57,7 +58,7 @@ class AdminController extends Controller
             // $user_for_creating_database->id = $request->id;
             $user_for_creating_database->nik = $request->nik;
             $user_for_creating_database->name = $request->nama_lengkap;
-            $user_for_creating_database->pin = $request->pin;
+            $user_for_creating_database->password = Hash::make($request->pin);
             $user_for_creating_database->phone = $request->telp;
             $user_for_creating_database->tempat_lahir = $request->tempat_lahir;
             $user_for_creating_database->tanggal_lahir = $request->tanggal_lahir;

@@ -12,7 +12,7 @@ class AnggotaController extends Controller
 {
     public function index()
     {
-
+        $active = 'anggota';
         $data = User::where('role', 1)->get();
         // foreach ($data as $item) {
         //     $item['kode'] = $item['id'];
@@ -22,7 +22,7 @@ class AnggotaController extends Controller
 
 
         // dd($data, $forID);
-        return view('page.anggota', compact('data'));
+        return view('page.anggota', compact('data', 'active'));
     }
 
     public function store(Request $request)
