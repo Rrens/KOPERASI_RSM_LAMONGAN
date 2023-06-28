@@ -26,8 +26,9 @@ class PembelianController extends Controller
 
     public function get_product($nama)
     {
-        $product = Products::where('nama', $nama)->first();
-        return response()->json($product);
+        $product = Products::where('nama', $nama)->select('id')->first();
+        $pembelian_detail = pembelian_details::with('pembelian', 'product')->where('id_product', $product->id)->get();
+        return response()->json($pembelian_detail);
     }
 
     public function get_pembelian_detail($id)

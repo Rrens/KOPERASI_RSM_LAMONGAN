@@ -25,4 +25,9 @@ class Pembelian extends Model
     {
         return $this->hasMany(Products::class, 'id_pembelian');
     }
+
+    public function pembelian_detail()
+    {
+        return $this->belongsTo(pembelian_details::class);
+    }
 }

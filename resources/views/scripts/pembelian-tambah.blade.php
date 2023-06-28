@@ -104,4 +104,32 @@
         // alert(harga_beli);
         // console.log(harga_beli);
     })
+
+    $('#nama_barang').on('change', function(e) {
+        let nama_barang = e.target.value;
+
+        $.ajax({
+            url: `pembelian/get-product/${nama_barang}`,
+            method: 'GET',
+            success: function(get_data) {
+                console.log(get_data);
+                $('#kategori').val(get_data[0]['product'][0]['kategori']);
+                $('#keterangan').val(get_data[0]['pembelian'][0]['keterangan']);
+                $('#harga_jual').val(get_data[0]['harga_jual']);
+                $('#keterangan').attr('readonly', true);
+                $('#harga_jual').attr('readonly', true);
+
+                // var conceptName = $('#aioConceptName').find(":selected").val();
+
+            },
+            error: function() {
+                console.log('gaada data');
+                $('#kategori').val('');
+                $('#keterangan').val('');
+                $('#harga_jual').val('');
+                $('#keterangan').attr('readonly', false);
+                $('#harga_jual').attr('readonly', false);
+            }
+        })
+    })
 </script>

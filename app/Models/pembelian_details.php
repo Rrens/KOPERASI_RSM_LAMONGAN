@@ -28,4 +28,9 @@ class pembelian_details extends Model
     {
         return $this->hasMany(Products::class, 'id', 'id_product');
     }
+
+    public function pembelian()
+    {
+        return $this->hasMany(Pembelian::class, 'id', 'id_pembelian');
+    }
 }
