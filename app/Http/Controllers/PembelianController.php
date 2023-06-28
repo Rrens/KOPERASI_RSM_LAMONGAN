@@ -167,7 +167,7 @@ class PembelianController extends Controller
                     $product->nama = $nama_produk;
                     $product->harga = $harga;
                     $product->kategori = $kategori;
-                    $product->stok = $stok;
+                    // $product->stok = $stok;
                     $product->save();
 
                     $pembelian_details = new pembelian_details();
@@ -181,7 +181,7 @@ class PembelianController extends Controller
                     $checkSameProduct->nama = $nama_produk;
                     $checkSameProduct->harga = $harga;
                     $checkSameProduct->kategori = $kategori;
-                    $checkSameProduct->stok = $stok + $checkSameProduct->stok;
+                    // $checkSameProduct->stok = $stok + $checkSameProduct->stok;
                     // return response()->json($checkSameProduct);
                     $checkSameProduct->save();
 
@@ -196,7 +196,7 @@ class PembelianController extends Controller
                         $pembelian_details->jumlah_barang = $stok;
                         $pembelian_details->save();
                     } else {
-                        $checkSameIDProduct->id_pembelian = $pembelian->id;
+                        // $checkSameIDProduct->id_pembelian = $pembelian->id;
                         $checkSameIDProduct->id_product  = $checkSameProduct->id;
                         $checkSameIDProduct->harga_beli = $item->first()['harga_beli'];
                         $checkSameIDProduct->harga_jual = $harga;
@@ -205,6 +205,20 @@ class PembelianController extends Controller
                     }
                 }
             }
+
+            $pembelian_details_for_product = pembelian_details::select('id_product', DB::raw('SUM(jumlah_barang) as jumlah_barang'))
+                ->groupBy('id_product')
+                ->get();
+
+
+            // $pembelian_details_for_product = pembelian_details::all();
+            foreach ($pembelian_details_for_product as $item) {
+                $product = Products::findOrFail($item->id_product);
+                $product->stok = (int) $item->jumlah_barang;
+                $product->save();
+            }
+            // return response()->json($item);
+
             return response()->json([
                 'meta' => [
                     'status' => 'Success',

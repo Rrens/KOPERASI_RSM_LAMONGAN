@@ -1,5 +1,5 @@
 @extends('components.master')
-@section('title', 'PEMBELIAn')
+@section('title', 'PEMBELIAN')
 @push('head')
     <style>
         .color-card {
@@ -17,7 +17,7 @@
 
         body.theme-dark a {
             /* text-decoration: none !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            color: white; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            color: white; */
             color: inherit;
             text-decoration: none !important;
         }
@@ -86,7 +86,6 @@
                                 <div class="flex-end">
                                     <button class="btn btn-primary" data-bs-toggle="modal"
                                         data-bs-target="#modalTambah">Tambah</button>
-
                                 </div>
                             </div>
                             <div class="card-body">
@@ -201,10 +200,11 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label for="basicInput">Total Harga</label>
-                                <input type="number" class="form-control mt-3" id="total_harga" name="total_harga">
+                                <input type="number" class="form-control mt-3" id="total_harga" name="total_harga"
+                                    readonly>
                             </div>
                             <div class="form-group mb-3">
-                                <a href="#" class="btn btn-primary mt-5" id="tambah_tabel"
+                                <a href="#" class="btn btn-primary mt-5" id="tambah_tabel" hidden
                                     onclick="tambahBaris()">Tambah</a>
                             </div>
                         </div>

@@ -28,6 +28,7 @@
 
                 // console.log('ya')
                 let i = 0;
+                $('#table_edit tbody').empty();
                 get_data.forEach(value => {
                     let newRow = `
                             <tr>
@@ -67,6 +68,7 @@
                         `;
 
                     $('#table_edit tbody').append(newRow);
+
                     i++;
                 })
 
@@ -225,10 +227,32 @@
                 console.log(error, xhr, status);
             }
         })
+
+        // location.reload();
     })
 
     function deleteRowEdit(btn) {
         var row = btn.closest('tr');
         row.remove();
     }
+
+    $('#harga_beli_edit').on('change', function(e) {
+        let harga_beli = e.target.value;
+        let jumlah_barang = $('#jumlah_barang_edit').val();
+
+
+        $('#total_harga_edit').val(harga_beli * jumlah_barang);
+        // alert(harga_beli);
+        // console.log(harga_beli);
+    })
+
+    $('#jumlah_barang_edit').on('change', function(e) {
+        let jumlah_barang = e.target.value;
+        let harga_beli = $('#harga_beli_edit').val();
+
+
+        $('#total_harga_edit').val(harga_beli * jumlah_barang);
+        // alert(harga_beli);
+        // console.log(harga_beli);
+    })
 </script>

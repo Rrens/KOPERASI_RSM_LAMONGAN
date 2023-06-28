@@ -21,7 +21,7 @@
 
             let newRow = '';
 
-            $('#table_kasir_edit tbody').append(newRow);
+            // $('#table_kasir_edit tbody').append(newRow);
 
             $.ajax({
                 url: `penjualan/get-id-penjualan/${row}`,
@@ -48,6 +48,8 @@
                         $('#id_anggota_edit').val('');
                     }
 
+
+                    $('#table_kasir_edit tbody').empty();
 
                     data.forEach(value => {
                         // console.log(value);

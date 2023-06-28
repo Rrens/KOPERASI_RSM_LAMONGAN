@@ -53,6 +53,7 @@ class PenjualanController extends Controller
                     'pr.nama as nama_product',
                     'pd.jumlah_barang',
                     'pd.harga_akhir',
+                    'p.id as id_penjualan'
                 )
                 ->join('penjualan as p', 'p.id', '=', 'pd.id_penjualan')
                 ->join('products as pr', 'pr.id', '=', 'pd.id_product')
@@ -75,6 +76,7 @@ class PenjualanController extends Controller
                     'pr.harga as harga_product',
                     'pd.jumlah_barang',
                     'pd.harga_akhir',
+                    'p.id as id_penjualan'
                 )
                 ->join('penjualan as p', 'p.id', '=', 'pd.id_penjualan')
                 ->join('users as u', 'u.id', '=', 'p.id_user')

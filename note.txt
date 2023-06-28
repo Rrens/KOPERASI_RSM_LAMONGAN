@@ -3,3 +3,6 @@ FIX BARIS TABLE EDIT KASIR
 UBAH EDIT KE PAGE BARU
 ATAU
 BUAT function untuk menampilkan data
+
+
+JIKA ada nama yang sama, maka tampilkan data kategori, keterangan, harga Jual

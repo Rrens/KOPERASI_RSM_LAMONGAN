@@ -25,7 +25,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::redirect('/', 'dashboard');
+Route::redirect('/', 'login');
 
 Route::get('login', [AuthConroller::class, 'index'])->name('login');
 Route::get('logout', [AuthConroller::class, 'logout'])->name('logout');
@@ -47,7 +47,7 @@ Route::group(
         Route::post('anggota/delete', [AnggotaController::class, 'delete'])->name('anggota.delete');
         Route::get('pembelian', [PembelianController::class, 'index'])->name('pembelian.index');
         Route::post('pembelian', [PembelianController::class, 'store'])->name('pembelian.store');
-        Route::get('pembelian/get_product/{nama}', [PembelianController::class, 'get_product']);
+        Route::get('pembelian/get-product/{nama}', [PembelianController::class, 'get_product']);
         Route::get('pembelian/get-pembelian-detail/{id}', [PembelianController::class, 'get_pembelian_detail']);
         Route::post('pembelian/update', [PembelianController::class, 'update'])->name('pembelian.update');
     }

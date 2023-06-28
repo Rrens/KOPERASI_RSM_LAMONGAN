@@ -39,6 +39,8 @@
                 console.log(error, xhr, status);
             }
         })
+
+        location.reload();
     })
 
     function tambahBaris() {
@@ -84,10 +86,22 @@
         `
 
         $('#table_tambah tbody').append(newRow);
+
     }
 
     function deleteRow(btn) {
         var row = btn.closest('tr');
         row.remove();
     }
+
+    $('#harga_beli').on('change', function(e) {
+        let harga_beli = e.target.value;
+        let jumlah_barang = $('#jumlah_barang').val();
+
+
+        $('#total_harga').val(harga_beli * jumlah_barang);
+        $('#tambah_tabel').attr('hidden', false);
+        // alert(harga_beli);
+        // console.log(harga_beli);
+    })
 </script>
