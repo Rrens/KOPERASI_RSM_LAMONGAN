@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -66,6 +67,7 @@ class AdminController extends Controller
             $user_for_creating_database->role = 0;
             $user_for_creating_database->gender = $request->jenis_kelamin;
             $user_for_creating_database->address = $request->alamat;
+            $user_for_creating_database->tanggal = Carbon::now();
             // dd($user_for_creating_database);
             $user_for_creating_database->save();
             Alert::toast('Success Add Admin', 'success');

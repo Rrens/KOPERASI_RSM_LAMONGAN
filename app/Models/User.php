@@ -28,6 +28,7 @@ class User extends Authenticatable
         'poin',
         'role',
         'status_pernikahan',
+        'tanggal',
     ];
 
     /**
@@ -50,8 +51,13 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function user()
+    // public function user()
+    // {
+    //     return $this->belongsTo(User::class);
+    // }
+
+    public function lap_anggota_detail()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(lap_anggota_detail::class);
     }
 }

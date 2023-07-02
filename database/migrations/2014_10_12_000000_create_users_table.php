@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('poin')->nullable()->default(0);
             $table->integer('role');
             $table->string('status_pernikahan')->nullable();
+            $table->date('tanggal')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

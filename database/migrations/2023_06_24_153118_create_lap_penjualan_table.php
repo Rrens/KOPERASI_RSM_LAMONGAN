@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('lap_penjualan', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_penjualan_detail')->nullable();
-            $table->foreign('id_penjualan_detail')->references('id')->on('penjualan_details');
+            $table->unsignedBigInteger('id_penjualan')->nullable();
+            $table->foreign('id_penjualan')->references('id')->on('penjualan');
             // $table->bigInteger('barang_terjual')->nullable();
             // $table->bigInteger('pemasukan')->nullable();
             $table->string('keterangan')->nullable();

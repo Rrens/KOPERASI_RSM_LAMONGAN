@@ -460,27 +460,27 @@
             <th>Nama Pemesan</th>
         </tr>
 
-        @foreach ($order as $item)
-            <tr class="odd">
-                <td>ini</td>
+        {{-- @foreach ($order as $item) --}}
+        <tr class="odd">
+            <td>ini</td>
 
-                <td>
-                    ini<br>
-                </td>
-                <td>
-                    ini<br>
-                </td>
-                <td>ini</td>
-                <td>ini</td>
-                <td>ini</td>
-                {{-- <td>{{ $order->type_order }}</td> --}}
-                <td>ini</td>
-            </tr>
-        @endforeach
+            <td>
+                ini<br>
+            </td>
+            <td>
+                ini<br>
+            </td>
+            <td>ini</td>
+            <td>ini</td>
+            <td>ini</td>
+            {{-- <td>{{ $order->type_order }}</td> --}}
+            <td>ini</td>
+        </tr>
+        {{-- @endforeach --}}
 
     </table>
     <br /><br />
-    <p style="text-align:right">Total: Rp.{{ $total }}</p>
+    <p style="text-align:right">Total: Rp.</p>
 
     <script>
         // window.print();

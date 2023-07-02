@@ -40,4 +40,14 @@ class Penjualan extends Model
         // return $this->belongsToMany(Penjualan::class, 'penjualan_details', 'id', 'id_penjualan');
         return $this->belongsTo(Penjualan_details::class, 'id', 'id_penjualan');
     }
+
+    // public function lap_anggota()
+    // {
+    //     return $this->belongsTo(lap_anggota::class);
+    // }
+
+    public function lap_anggota_detail()
+    {
+        return $this->belongsTo(lap_anggota_detail::class);
+    }
 }

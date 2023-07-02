@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\lap_anggota;
+use App\Models\lap_anggota_detail;
 use App\Models\lap_penjualan;
 use App\Models\Pembelian;
 use App\Models\Penjualan;
@@ -104,31 +105,44 @@ class PenjualanController extends Controller
             $penjualan->metode_pembayaran = $request->data[0]['metode_pembayaran_edit'];
             $user = User::findOrFail($penjualan->id_user);
 
-            $check_id_penjualan_detail = Penjualan_details::where('id_penjualan', $penjualan->id)->select('id')->first();
+            // $check_id_penjualan_detail = Penjualan_details::where('id_penjualan', $penjualan->id)->select('id')->first();
 
-            $lap_anggota = lap_anggota::where('id_user', $user->id)->where('id_penjualan_detail', $check_id_penjualan_detail->id)->first();
+            // return response()->json($check_id_penjualan_detail);
+
+
             if (!empty($user)) {
+
+                $lap_anggota = lap_anggota::whereDate('tanggal', Carbon::now()->today())->get();
+                if ($lap_anggota == null) {
+                    return response()->json('tidak ada');
+                } else {
+                    return response()->json('ada');
+                }
+
+                $lap_anggota_detail = lap_anggota_detail::where('id_user', $user->id)->where('id_penjualan', $penjualan->id)->first();
                 if ($request->data[0]['metode_pembayaran_edit'] == 'kredit') {
                     $user->credit = $user->credit + (int) $request->data[0]['nominal_bayar_edit'];
+                    $penjualan->total_bayar = (int) $request->data[0]['nominal_bayar_edit'];
                     // $user->save();
 
-                    $lap_anggota->credit_masuk = (int) $request->data[0]['nominal_bayar_edit'];
+                    $lap_anggota_detail->credit_masuk = (int) $request->data[0]['nominal_bayar_edit'];
                 } else {
-                    $lap_anggota->credit_masuk = 0;
+
+                    $lap_anggota_detail->credit_masuk = 0;
                 }
                 if ($request->data[0]['jumlah_poin_edit'] != null) {
                     if (!empty($user->poin)) {
-                        // $lap_anggota->poin_keluar = 0;
+                        // $lap_anggota_detail->poin_keluar = 0;
                         // return response()->json($user->poin);
-                        $lap_anggota->poin_keluar = $user->poin;
+                        $lap_anggota_detail->poin_keluar = $user->poin;
                     }
                     // $user = User::findOrFail($penjualan->id_user);
                     $user->poin = (int) $penjualan->poin_tambah;
 
                     // $user->save();
 
-                    // $lap_anggota->poin_masuk = 0;
-                    $lap_anggota->poin_masuk = (int) $penjualan->poin_tambah;
+                    // $lap_anggota_detail->poin_masuk = 0;
+                    $lap_anggota_detail->poin_masuk = (int) $penjualan->poin_tambah;
                 } else {
 
 
@@ -136,12 +150,13 @@ class PenjualanController extends Controller
                     $user->poin = (int) $penjualan->poin_tambah + $user->poin;
                     // $user->save();
                 }
+                $user->save();
+                // return response()->json($lap_anggota_detail);
+                $lap_anggota_detail->tanggal = Carbon::now();
+                $lap_anggota_detail->save();
             }
 
-            $user->save();
-            // return response()->json($lap_anggota);
-            $lap_anggota->tanggal = Carbon::now();
-            $lap_anggota->save();
+
             $penjualan->save();
 
             $group_data = collect($request->data_detail)->groupBy('id_barang');
@@ -170,12 +185,19 @@ class PenjualanController extends Controller
                 $penjualan_detail->save();
             }
 
-            $lap_penjualan = lap_penjualan::where('id_penjualan_detail', $penjualan_detail->id)->first();
+            $lap_penjualan = lap_penjualan::where('id_penjualan', $penjualan->id)->first();
             // $lap_penjualan->barang_terjual = $penjualan_detail->jumlah_barang;
             // $lap_penjualan->pemasukan = Penjualan_details::where('id', $penjualan_detail->id)->sum('harga_jual');
             $lap_penjualan->keterangan = $request->data[0]['metode_pembayaran_edit'];
             $lap_penjualan->tanggal = Carbon::now();
             $lap_penjualan->save();
+
+            return response()->json([
+                'meta' => [
+                    'status' => 'Success',
+                    'message' => 'Success Add Data'
+                ],
+            ], 200);
 
 
 
@@ -203,34 +225,47 @@ class PenjualanController extends Controller
             $penjualan->poin_tambah = (int) $request->data[0]['tambahan_poin'];
             $penjualan->metode_pembayaran = $request->data[0]['metode_pembayaran'];
 
-            $lap_anggota = new lap_anggota();
+            $lap_anggota = lap_anggota::whereDate('tanggal', Carbon::now()->today())->first();
+            if (empty($lap_anggota)) {
+                $lap_anggota = new lap_anggota();
+                $lap_anggota->tanggal = Carbon::now();
+                // return response()->json($lap_anggota);
+            }
+
+            $lap_anggota->save();
+
+            $lap_anggota_detail = new lap_anggota_detail();
+            $lap_anggota_detail->total_bayar = $penjualan->total_bayar;
+            $lap_anggota_detail->id_lap_anggota = $lap_anggota->id;
 
             if ($request->data[0]['id_anggota'] != null) {
                 // return response()->json($request->data[0]['id_anggota']);
                 $penjualan->id_user = $request->data[0]['id_anggota'];
                 $user = User::findOrFail($penjualan->id_user);
                 // return response()->json($user);
-                $lap_anggota->id_user = $user->id;
+                $lap_anggota_detail->id_user = $user->id;
 
                 if ($request->data[0]['metode_pembayaran'] == 'kredit') {
                     $user->credit = $user->credit + (int) $request->data[0]['nominal_bayar'];
                     $user->save();
 
-                    $lap_anggota->credit_masuk = (int) $request->data[0]['nominal_bayar'];
+                    $penjualan->total_bayar = (int) $request->data[0]['nominal_bayar'];
+
+                    $lap_anggota_detail->credit_masuk = (int) $request->data[0]['nominal_bayar'];
                 } else {
-                    $lap_anggota->credit_masuk = 0;
+                    $lap_anggota_detail->credit_masuk = 0;
                 }
                 if ($request->data[0]['jumlah_poin'] != null) {
-                    $lap_anggota->poin_keluar = $user->poin;
-                    $lap_anggota->poin_masuk = 0;
+                    $lap_anggota_detail->poin_keluar = $user->poin;
+                    $lap_anggota_detail->poin_masuk = 0;
                     $user->poin =  $penjualan->poin_tambah;
 
                     $user->save();
                 } else {
                     // $user = User::findOrFail($penjualan->id_user);
                     $user->poin = $penjualan->poin_tambah + $user->poin;
-                    $lap_anggota->poin_masuk = $penjualan->poin_tambah;
-                    $lap_anggota->poin_keluar = 0;
+                    $lap_anggota_detail->poin_masuk = $penjualan->poin_tambah;
+                    $lap_anggota_detail->poin_keluar = 0;
                     // return response()->json($user);
                     $user->save();
                 }
@@ -238,8 +273,8 @@ class PenjualanController extends Controller
                 $penjualan->id_user = $request->data[0]['id_anggota'];
             }
             $check_id_penjualan_detail = Penjualan_details::where('id_penjualan', $penjualan->id)->select('id')->first();
-            $lap_anggota->tanggal = Carbon::now();
-            // $lap_anggota->id_penjualan_detail = $check_id_penjualan_detail->id;
+            $lap_anggota_detail->tanggal = Carbon::now();
+            // $lap_anggota_detail->id_penjualan_detail = $check_id_penjualan_detail->id;
 
             $penjualan->save();
             $group_data = collect($request->data_detail)->groupBy('id_barang');
@@ -263,12 +298,12 @@ class PenjualanController extends Controller
                 $penjualan_detail->save();
             }
 
-            $lap_anggota->id_penjualan_detail = $penjualan_detail->id;
-            $lap_anggota->credit_keluar = 0;
-            $lap_anggota->save();
+            $lap_anggota_detail->id_penjualan = $penjualan->id;
+            $lap_anggota_detail->credit_keluar = 0;
+            $lap_anggota_detail->save();
 
             $lap_penjualan = new lap_penjualan();
-            $lap_penjualan->id_penjualan_detail = $penjualan_detail->id;
+            $lap_penjualan->id_penjualan = $penjualan->id;
             // $lap_penjualan->barang_terjual = $penjualan_detail->jumlah_barang;
             // $lap_penjualan->pemasukan = Penjualan_details::where('id', $penjualan_detail->id)->sum('harga_jual');
             $lap_penjualan->keterangan = $request->data[0]['metode_pembayaran'];
@@ -276,6 +311,13 @@ class PenjualanController extends Controller
             $lap_penjualan->save();
             // return response()->json($lap_penjualan->save());
 
+
+            return response()->json([
+                'meta' => [
+                    'status' => 'Success',
+                    'message' => 'Success Add Data'
+                ],
+            ], 200);
             // return response()->json([
             //     'meta' => [
             //         'status' => 'Success',

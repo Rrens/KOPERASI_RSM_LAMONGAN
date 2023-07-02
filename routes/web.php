@@ -31,6 +31,9 @@ Route::get('login', [AuthConroller::class, 'index'])->name('login');
 Route::get('logout', [AuthConroller::class, 'logout'])->name('logout');
 Route::post('post_login', [AuthConroller::class, 'post_login'])->name('post_login');
 Route::get('dashboard', [DashboardConroller::class, 'index'])->name('dashboard.index');
+Route::get('print', function () {
+    return view('page.print');
+});
 
 Route::group(
     [
@@ -50,6 +53,7 @@ Route::group(
         Route::get('pembelian/get-product/{nama}', [PembelianController::class, 'get_product']);
         Route::get('pembelian/get-pembelian-detail/{id}', [PembelianController::class, 'get_pembelian_detail']);
         Route::post('pembelian/update', [PembelianController::class, 'update'])->name('pembelian.update');
+        Route::post('pembelian/delete', [PembelianController::class, 'delete'])->name('pembelian.delete');
     }
 );
 
@@ -65,7 +69,11 @@ Route::group(
         Route::post('penjualan', [PenjualanController::class, 'post_table_kasir'])->name('post_table_kasir');
         Route::post('penjualan/update', [PenjualanController::class, 'update_table_kasir'])->name('update_table_kasir');
         Route::post('penjualan/delete', [PenjualanController::class, 'delete_table_kasir'])->name('delete_table_kasir');
+        Route::get('penjualan/print/{id}', [PenjualanController::class, 'print'])->name('penjualan.print');
         Route::get('laporan', [LaporanController::class, 'index'])->name('laporan.index');
+        Route::get('laporan/anggota/{id}', [LaporanController::class, 'print_anggota'])->name('laporan.anggota.print');
+        Route::get('laporan/pembelian/{id}', [LaporanController::class, 'print_pembelian'])->name('laporan.pembelian.print');
+        Route::get('laporan/penjualan/{id}', [LaporanController::class, 'print_penjualan'])->name('laporan.penjualan.print');
     }
 );
 

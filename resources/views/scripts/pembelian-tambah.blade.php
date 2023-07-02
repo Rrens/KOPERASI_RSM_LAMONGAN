@@ -112,7 +112,7 @@
             url: `pembelian/get-product/${nama_barang}`,
             method: 'GET',
             success: function(get_data) {
-                console.log(get_data);
+                // console.log(get_data);
                 $('#kategori').val(get_data[0]['product'][0]['kategori']);
                 $('#keterangan').val(get_data[0]['pembelian'][0]['keterangan']);
                 $('#harga_jual').val(get_data[0]['harga_jual']);
@@ -123,7 +123,7 @@
 
             },
             error: function() {
-                console.log('gaada data');
+                // console.log('gaada data');
                 $('#kategori').val('');
                 $('#keterangan').val('');
                 $('#harga_jual').val('');

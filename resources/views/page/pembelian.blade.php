@@ -17,7 +17,7 @@
 
         body.theme-dark a {
             /* text-decoration: none !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            color: white; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        color: white; */
             color: inherit;
             text-decoration: none !important;
         }
@@ -133,7 +133,7 @@
                                                 </td>
                                                 <td>
                                                     <a class="tagA btn btn-primary" href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalToggleDetail"><i
+                                                        data-bs-target="#modalViewAdmin{{ $item->id }}"><i
                                                             class="bi bi-exclamation-triangle-fill"></i>
                                                     </a>
                                                 </td>
@@ -339,7 +339,7 @@
     </div>
     {{-- @endforeach --}}
 
-    {{-- MODAL EDIT --}}
+    {{-- MODAL DELETE --}}
     @foreach ($data as $item)
         <div class="modal fade" id="modalDeleteAdmin{{ $item->id }}" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -353,15 +353,80 @@
                             <i class="bx bx-x d-block d-sm-none"></i>
                             <span class="d-none d-sm-block">Batal</span>
                         </button>
-                        <a href="#" class="btn btn-danger ml-1" data-bs-dismiss="modal">
-                            <i class="bx bx-check d-block d-sm-none"></i>
-                            <span class="d-none d-sm-block">Hapus</span>
-                        </a>
+                        <form action="{{ route('pembelian.delete') }}" method="post">
+                            @csrf
+                            <input type="number" name="id_pembelian" value="{{ $item->id }}" hidden>
+                            <button type="submit" class="btn btn-danger ml-1">
+                                <i class="bx bx-check d-block d-sm-none"></i>
+                                <span class="d-none d-sm-block">Hapus</span>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     @endforeach
+
+    @foreach ($data as $item)
+        <div class="modal fade" id="modalViewAdmin{{ $item->id }}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header d-flex justify-content-center">
+                        <h5 class="modal-title" id="exampleModalScrollableTitle">View Pembelian</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive" id="tableView">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Nama Barang</th>
+                                        <th>Kategori</th>
+                                        <th>Harga Beli</th>
+                                        <th>Harga Jual</th>
+                                        <th>Jumlah Barang</th>
+                                        <th>Total Harga</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($pembelian_detail->where('id_pembelian', $item->id) as $row)
+                                        <tr>
+                                            <td class="text-bold-500">
+                                                {{ $row->product[0]->nama }}
+                                            </td>
+                                            <td class="text-bold-500">
+                                                {{ $row->product[0]->kategori }}
+                                            </td>
+                                            <td class="text-bold-500">
+                                                {{ $row->harga_beli }}
+                                            </td>
+                                            <td class="text-bold-500">
+                                                {{ $row->harga_jual }}
+                                            </td>
+                                            <td class="text-bold-500">
+                                                {{ $row->jumlah_barang }}
+                                            </td>
+                                            <td class="text-bold-500">
+                                                {{ $row->jumlah_barang * $row->harga_beli }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-success" data-bs-dismiss="modal">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Tutup</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
 
 @endsection
 

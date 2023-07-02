@@ -32,9 +32,4 @@ class Penjualan_details extends Model
     {
         return $this->hasMany(Products::class, 'id', 'id_product');
     }
-
-    public function lap_penjualan()
-    {
-        return $this->belongsTo(lap_penjualan::class);
-    }
 }

@@ -17,7 +17,7 @@
 
         body.theme-dark a {
             /* text-decoration: none !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        color: white; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            color: white; */
             color: inherit;
             text-decoration: none !important;
         }
@@ -142,17 +142,21 @@
                                                                         {{ $item->id }}
                                                                     </td>
                                                                     <td class="text-bold-500">
-                                                                        {{ $item->user[0]->credit }}
+                                                                        {{ $lap_anggota_detail[0]->user[0]->credit }}
                                                                     </td>
                                                                     <td class="text-bold-500">
-                                                                        {{ $item->credit_masuk }}
+                                                                        {{ $lap_anggota_detail->where('id_lap_anggota', $item->id)->sum('credit_masuk') }}
                                                                     </td>
                                                                     <td class="text-bold-500">
-                                                                        {{ $item->credit_keluar }}
+                                                                        {{ $lap_anggota_detail->where('id_lap_anggota', $item->id)->sum('credit_keluar') }}
                                                                     </td>
                                                                     <td>
-                                                                        <a class="tagA btn btn-primary" href="#"
-                                                                            data-bs-toggle="modal"
+                                                                        <a class="tagA btn btn-success"
+                                                                            href="{{ route('laporan.anggota.print', $item->id) }}"
+                                                                            target="_blank">Cetak
+                                                                        </a>
+                                                                        <a class="tagA btn btn-primary"
+                                                                            href="javascript:void" data-bs-toggle="modal"
                                                                             data-bs-target="#ModalAnggota{{ $item->id }}"><i
                                                                                 class="bi bi-exclamation-triangle-fill"></i>
                                                                         </a>
@@ -184,6 +188,9 @@
                                                         </thead>
                                                         <tbody>
                                                             @foreach ($lap_penjualan as $item)
+                                                                @php
+                                                                    // dd($lap_penjualan);
+                                                                @endphp
                                                                 <tr>
                                                                     <td class="text-bold-500">
                                                                         {{ $loop->iteration }}
@@ -195,12 +202,15 @@
                                                                         {{ $item->id }}
                                                                     </td>
                                                                     <td class="text-bold-500">
-                                                                        {{ $penjualan_detail->where('id', $item->id_penjualan_detail)->sum('jumlah_barang') }}
+                                                                        {{ $penjualan_detail->where('id_penjualan', $item->id_penjualan)->sum('jumlah_barang') }}
                                                                     </td>
                                                                     <td class="text-bold-500">
-                                                                        {{ $penjualan_detail->where('id', $item->id_penjualan_detail)->sum('harga_akhir') }}
+                                                                        {{ $penjualan_detail->where('id_penjualan', $item->id_penjualan)->sum('harga_akhir') }}
                                                                     </td>
                                                                     <td>
+                                                                        <a class="tagA btn btn-success"
+                                                                            href="{{ route('laporan.pembelian.print', $item->id) }}">Cetak
+                                                                        </a>
                                                                         <a class="tagA btn btn-primary" href="#"
                                                                             data-bs-toggle="modal"
                                                                             data-bs-target="#ModalPenjualan{{ $item->id }}"><i
@@ -231,6 +241,7 @@
                                                                 <th>Pengeluaran</th>
                                                                 <th>Keterangan</th>
                                                                 <th>Opsi</th>
+                                                                <th>Cetak</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -262,6 +273,10 @@
                                                                                 class="bi bi-exclamation-triangle-fill"></i>
                                                                         </a>
                                                                     </td>
+                                                                    <td>
+                                                                        <a href="#"
+                                                                            class="btn btn-success">Cetak</a>
+                                                                    </td>
                                                                 </tr>
                                                             @endforeach
                                                         </tbody>
@@ -288,7 +303,7 @@
                 <div class="modal-content">
                     <div class="modal-header d-flex justify-content-center">
                         <h5 class="modal-title" id="exampleModalScrollableTitle">laporan Anggota
-                            {{ $item->user[0]->nama }}</h5>
+                            {{ $lap_anggota_detail[0]->user[0]->nama }}</h5>
                     </div>
                     <div class="modal-body">
                         <div class="row">
@@ -311,7 +326,9 @@
                                                     <fieldset class="form-group">
                                                         <label for="basicInput">Anggota Baru</label>
                                                         <input type="text" class="form-control mb-3 mt-2"
-                                                            name="anggota_baru">
+                                                            name="anggota_baru"
+                                                            value="{{ $user->where('tanggal', $item->tanggal)->count('tanggal') }}"
+                                                            readonly>
                                                     </fieldset>
                                                 </div>
                                             </div>
@@ -328,17 +345,23 @@
                                                     <fieldset class="form-group">
                                                         <label for="basicInput">Jumlah</label>
                                                         <input type="number" class="form-control mb-3 mt-2"
-                                                            name="jumlah" readonly>
+                                                            name="jumlah"
+                                                            value="{{ $lap_anggota_detail->where('id_lap_anggota', $item->id)->count('id') }}"
+                                                            readonly>
                                                     </fieldset>
                                                     <fieldset class="form-group">
                                                         <label for="basicInput">Anggota Bayar</label>
                                                         <input type="text" class="form-control mb-3 mt-2"
-                                                            name="anggota_bayar" readonly>
+                                                            name="anggota_bayar" style="color: red"
+                                                            value="{{ $lap_anggota_detail->where('id_lap_anggota', $item->id)->sum('total_bayar') }}"
+                                                            readonly>
                                                     </fieldset>
                                                     <fieldset class="form-group">
                                                         <label for="basicInput">Total Pendapatan</label>
                                                         <input type="text" class="form-control mb-3 mt-2"
-                                                            name="total_pendapatan" readonly>
+                                                            name="total_pendapatan"
+                                                            value="{{ $lap_anggota_detail->where('id_lap_anggota', $item->id)->sum('total_bayar') }}"
+                                                            readonly>
                                                     </fieldset>
                                                 </div>
                                             </div>
@@ -366,7 +389,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($lap_anggota as $row)
+                                                    @foreach ($lap_anggota_detail->where('id_lap_anggota', $item->id) as $row)
                                                         <tr>
                                                             <td class="text-bold-500">
                                                                 {{ $loop->iteration }}
@@ -423,7 +446,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($lap_anggota as $row)
+                                                    @foreach ($lap_anggota_detail->where('id_lap_anggota', $item->id) as $row)
                                                         <tr>
                                                             <td class="text-bold-500">
                                                                 {{ $loop->iteration }}
@@ -481,6 +504,9 @@
 
     {{-- MODAL PENJUALAN --}}
     @foreach ($lap_penjualan as $item)
+        @php
+            // dd($item);
+        @endphp
         <div class="modal fade" id="ModalPenjualan{{ $item->id }}" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
@@ -512,7 +538,7 @@
                                                         <fieldset class="form-group">
                                                             <label for="basicInput">Tanggal</label>
                                                             <input type="date" class="form-control mb-3 mt-2"
-                                                                name="tanggal" value="{{ $item->tanggal }}">
+                                                                name="tanggal" value="{{ $item->tanggal }}" readonly>
                                                         </fieldset>
                                                     </div>
                                                 </div>
@@ -529,29 +555,29 @@
                                                         <fieldset class="form-group">
                                                             <label for="basicInput">Sub Total</label>
                                                             <input type="number" class="form-control mb-3 mt-2"
-                                                                name="sub_total" value="{{ $item->total_bayar }}"
-                                                                required>
+                                                                name="sub_total" value="{{ $item->subtotal }}" required>
                                                         </fieldset>
                                                         <fieldset class="form-group">
                                                             <label for="basicInput">Diskon</label>
                                                             <div class="row">
                                                                 <div class="col-5">
                                                                     <input type="number" class="form-control mb-3 mt-2"
-                                                                        name="diskon">
+                                                                        name="diskon"
+                                                                        value="{{ $item->diskon != null ? 10 : '' }}">
                                                                 </div>
                                                                 <div class="col-1">
                                                                     <p class="text-center">%=</p>
                                                                 </div>
                                                                 <div class="col-6">
                                                                     <input type="number" class="form-control mb-3 mt-2"
-                                                                        name="hasil_diskon">
+                                                                        name="hasil_diskon" value="{{ $item->diskon }}">
                                                                 </div>
 
                                                         </fieldset>
                                                         <fieldset class="form-group">
                                                             <label for="basicInput">Total Pendapatan</label>
                                                             <input type="number" class="form-control mb-3 mt-2"
-                                                                name="total_pendapatan">
+                                                                name="total_pendapatan" readonly>
                                                         </fieldset>
                                                     </div>
                                                 </div>
@@ -575,35 +601,36 @@
                                                                 <th>Kategori</th>
                                                                 <th>Nama Barang</th>
                                                                 <th>Jumlah Barang</th>
-                                                                <th>Subtotal</th>
+                                                                <th>Harga Total</th>
                                                                 <th>Metode</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <td class="text-bold-500">
-                                                                    {{ $loop->iteration }}
-                                                                </td>
-                                                                <td class="text-bold-500">
-                                                                    {{ $item->id_product }}
-                                                                </td>
-                                                                <td class="text-bold-500">
-                                                                    {{ $item->kategori }}
-                                                                </td>
-                                                                <td class="text-bold-500">
-                                                                    {{ $item->nama }}
-                                                                </td>
-                                                                <td class="text-bold-500">
-                                                                    {{ $item->jumlah_barang }}
-                                                                </td>
-                                                                <td class="text-bold-500">
-                                                                    {{ $item->subtotal }}
-                                                                </td>
-                                                                <td class="text-bold-500">
-                                                                    {{ $item->metode_pembayaran }}
-                                                                </td>
-
-                                                            </tr>
+                                                            @foreach ($penjualan_detail->where('id_penjualan', $item->id_penjualan) as $row)
+                                                                <tr>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $loop->iteration }}
+                                                                    </td>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $row->id_product }}
+                                                                    </td>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $row->product[0]->kategori }}
+                                                                    </td>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $row->product[0]->nama }}
+                                                                    </td>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $row->jumlah_barang }}
+                                                                    </td>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $item->harga_akhir }}
+                                                                    </td>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $item->metode_pembayaran }}
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -624,35 +651,36 @@
                                                                 <th>Kategori</th>
                                                                 <th>Nama Barang</th>
                                                                 <th>Jumlah Barang</th>
-                                                                <th>Subtotal</th>
+                                                                <th>Harga Total</th>
                                                                 <th>Metode</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <td class="text-bold-500">
-                                                                    {{ $loop->iteration }}
-                                                                </td>
-                                                                <td class="text-bold-500">
-                                                                    {{ $item->id_product }}
-                                                                </td>
-                                                                <td class="text-bold-500">
-                                                                    {{ $item->kategori }}
-                                                                </td>
-                                                                <td class="text-bold-500">
-                                                                    {{ $item->nama }}
-                                                                </td>
-                                                                <td class="text-bold-500">
-                                                                    {{ $item->jumlah_barang }}
-                                                                </td>
-                                                                <td class="text-bold-500">
-                                                                    {{ $item->subtotal }}
-                                                                </td>
-                                                                <td class="text-bold-500">
-                                                                    {{ $item->metode_pembayaran }}
-                                                                </td>
-
-                                                            </tr>
+                                                            @foreach ($penjualan_detail->where('id_penjualan', $item->id_penjualan) as $row)
+                                                                <tr>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $loop->iteration }}
+                                                                    </td>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $row->id_product }}
+                                                                    </td>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $row->product[0]->kategori }}
+                                                                    </td>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $row->product[0]->nama }}
+                                                                    </td>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $row->jumlah_barang }}
+                                                                    </td>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $item->harga_akhir }}
+                                                                    </td>
+                                                                    <td class="text-bold-500">
+                                                                        {{ $item->metode_pembayaran }}
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -774,6 +802,10 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-success" data-bs-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Cetak</span>
+                </button>
+                <button type="button" class="btn btn-light-primary" data-bs-dismiss="modal">
                     <i class="bx bx-x d-block d-sm-none"></i>
                     <span class="d-none d-sm-block">Tutup</span>
                 </button>

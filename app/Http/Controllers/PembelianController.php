@@ -10,6 +10,8 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PembelianController extends Controller
 {
@@ -234,5 +236,35 @@ class PembelianController extends Controller
                 'data' => $error->getMessage()
             ], 500);
         }
+    }
+
+    public function delete(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id_pembelian' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            Alert::toast($validator->messages()->all(), 'error');
+            return redirect()->route('pembelian.index');
+        }
+
+        $id = (int) $request->id_pembelian;
+        $pembelian_detail = pembelian_details::where('id_pembelian', $id)->get();
+        $pembelian = Pembelian::findOrFail($id);
+        foreach ($pembelian_detail as $item) {
+            // dd($pembelian_detail);
+            $product = Products::findOrFail($item->id_product);
+            $product->stok = $product->stok - $item->jumlah_barang;
+            $product->save();
+            $lap_pembelian = lap_pembelian::where('id_pembelian', $id)->delete();
+            pembelian_details::where('id_pembelian', $id)->delete();
+            // $lap_pembelian->delete();
+            $pembelian->delete();
+        }
+
+        Alert::toast('Successfully Delete', 'success');
+        return redirect()->route('pembelian.index');
+        // dd($pembelian_detail);
     }
 }

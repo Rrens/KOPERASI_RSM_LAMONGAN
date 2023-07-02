@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -57,7 +58,7 @@ class AnggotaController extends Controller
             // $user_for_creating_database->id = $request->id;
             $user_for_creating_database->nik = $request->nik;
             $user_for_creating_database->name = $request->nama_lengkap;
-            $user_for_creating_database->pin = $request->pin;
+            $user_for_creating_database->password = $request->pin;
             $user_for_creating_database->phone = $request->telp;
             $user_for_creating_database->tempat_lahir = $request->tempat_lahir;
             $user_for_creating_database->tanggal_lahir = $request->tanggal_lahir;
@@ -65,6 +66,7 @@ class AnggotaController extends Controller
             $user_for_creating_database->role = 1;
             $user_for_creating_database->gender = $request->jenis_kelamin;
             $user_for_creating_database->address = $request->alamat;
+            $user_for_creating_database->tanggal = Carbon::now();
             // dd($user_for_creating_database);
             $user_for_creating_database->save();
             Alert::toast('Success Add anggota' . $user_for_creating_database->name, 'success');
