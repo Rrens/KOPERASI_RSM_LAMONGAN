@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-    <title>Reztopia</title>
+    <title>RUMAH SAKIT MUHAMMADIYAH LAMONGAN</title>
     <style>
         .box {
             display: block;
@@ -429,7 +429,8 @@
     <hr noshade="noshade" style="border-color:black;height: 0px;" size="1" />
 
 
-    <p style="text-align:center;font-weight: bold;font-size: 14px;margin-bottom:3px;padding-bottom:0px ">KANTIN COWOK
+    <p style="text-align:center;font-weight: bold;font-size: 14px;margin-bottom:3px;padding-bottom:0px ">KOPERASI RUMAH
+        SAKIT MUHAMMADIYAH LAMONGAN
     </p>
     <p style="text-align:center;font-weight:normal;margin-top:0px;padding-top:0px" id="date"></p>
     <p style="text-align:center;font-weight:normal;margin-top:0px;padding-top:0px" id="time"></p>
@@ -437,12 +438,31 @@
     <br />
     <table>
         <tr>
-            <td>ID TENANT </td>
-            <td>: ini</td>
+            {{-- @php
+                dd($data);
+            @endphp --}}
+            <td>NO LAPORAN </td>
+            <td>: {{ $data->id }}</td>
         </tr>
         <tr>
-            <td>NAMA TENANT </td>
-            <td>: ini</td>
+            <td>NO TRANSAKSI </td>
+            <td>: {{ $data->id_penjualan }}</td>
+        </tr>
+        <tr>
+            <td>TANGGAL </td>
+            <td>: {{ $data->tanggal }}</td>
+        </tr>
+        <tr>
+            <td>SUB TOTAL </td>
+            <td>: {{ $data->penjualan[0]->subtotal }}</td>
+        </tr>
+        <tr>
+            <td>DISKON </td>
+            <td>: {{ $data->penjualan[0]->diskon }}</td>
+        </tr>
+        <tr>
+            <td>TOTAL PENDAPATAN </td>
+            <td>: {{ $data->penjualan[0]->total_bayar }}</td>
         </tr>
     </table>
 
@@ -450,40 +470,37 @@
 
     <table class="sicycatablemanual">
         <tr>
-            <th>Tanggal</th>
-            <th>Nama Produk</th>
-            <th>Jumlah</th>
-            <th>Nomor Meja</th>
-            <th>Payment Code</th>
-            <th>Total Order</th>
-            {{-- <th>Type Order</th> --}}
-            <th>Nama Pemesan</th>
+            <th>No</th>
+            <th>ID Barang</th>
+            <th>Kategori</th>
+            <th>Nama Barang</th>
+            <th>Jumlah Barahg</th>
+            <th>Harga Total</th>
+            <th>Metode</th>
         </tr>
 
-        {{-- @foreach ($order as $item) --}}
-        <tr class="odd">
-            <td>ini</td>
+        @foreach ($penjualan_detail as $item)
+            <tr class="odd">
+                <td>{{ $loop->iteration }}</td>
 
-            <td>
-                ini<br>
-            </td>
-            <td>
-                ini<br>
-            </td>
-            <td>ini</td>
-            <td>ini</td>
-            <td>ini</td>
-            {{-- <td>{{ $order->type_order }}</td> --}}
-            <td>ini</td>
-        </tr>
-        {{-- @endforeach --}}
+                <td>
+                    {{ $item->id_product }}<br>
+                </td>
+                <td>
+                    {{ $item->product[0]->kategori }}<br>
+                </td>
+                <td>{{ $item->product[0]->nama }}</td>
+                <td>{{ $item->jumlah_barang }}</td>
+                <td>{{ $item->penjualan[0]->total_bayar }}</td>
+                <td>{{ $item->penjualan[0]->metode_pembayaran }}</td>
+            </tr>
+        @endforeach
 
     </table>
     <br /><br />
-    <p style="text-align:right">Total: Rp.</p>
 
     <script>
-        // window.print();
+        window.print();
     </script>
     <script type="text/javascript">
         var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',

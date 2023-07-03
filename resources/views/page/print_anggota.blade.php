@@ -429,7 +429,8 @@
     <hr noshade="noshade" style="border-color:black;height: 0px;" size="1" />
 
 
-    <p style="text-align:center;font-weight: bold;font-size: 14px;margin-bottom:3px;padding-bottom:0px ">KANTIN COWOK
+    <p style="text-align:center;font-weight: bold;font-size: 14px;margin-bottom:3px;padding-bottom:0px ">KOPERASI RUMAH
+        SAKIT MUHAMMADIYAH LAMONGAN
     </p>
     <p style="text-align:center;font-weight:normal;margin-top:0px;padding-top:0px" id="date"></p>
     <p style="text-align:center;font-weight:normal;margin-top:0px;padding-top:0px" id="time"></p>

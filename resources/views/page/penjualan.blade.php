@@ -12,7 +12,7 @@
 
         body.theme-dark a {
             /* text-decoration: none !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    color: white; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        color: white; */
             color: inherit;
             text-decoration: none !important;
         }
@@ -145,7 +145,7 @@
                                                 </td>
                                                 <td>
                                                     <a class="tagA btn btn-primary" href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalToggleDetail"><i
+                                                        data-bs-target="#modalDetail{{ $item->id }}"><i
                                                             class="bi bi-exclamation-triangle-fill"></i>
                                                     </a>
                                                 </td>
@@ -402,6 +402,153 @@
             </div>
         </div>
     </div>
+
+    {{-- MODAL DETAIL --}}
+    @foreach ($data as $item)
+        <div class="modal fade" id="modalDetail{{ $item->id }}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                <div class="modal-content">
+                    <div>
+                        <div class="modal-header d-flex justify-content-center">
+                            <h5 class="modal-title" id="exampleModalScrollableTitle">Kasir</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-5 col-md-12 col-sm-12">
+                                    <div class="card row-color">
+                                        <div class="card-content">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <fieldset class="form-group">
+                                                            <label for="basicInput">ID Pelanggan</label>
+                                                            <input type="number" class="form-control mb-3 mt-2"
+                                                                name="id_pelanggan"
+                                                                value="{{ $item->id_user == null ? '' : $item->id_user }}"
+                                                                readonly>
+                                                        </fieldset>
+                                                        <fieldset class="form-group">
+                                                            <label for="basicInput">Tanggal</label>
+                                                            <input type="date" class="form-control mb-3 mt-2"
+                                                                name="tanggal"
+                                                                value="{{ $item->created_at == null ? '' : $item->created_at->toDateString() }}"
+                                                                readonly>
+                                                        </fieldset>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 col-md-12 col-sm-12">
+                                    <div class="card row-color">
+                                        <div class="card-header header-color">
+                                            <h4 class="card-title text-center">Keterangan Anggota</h4>
+                                        </div>
+                                        <div class="card-content">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                                        <fieldset class="form-group">
+                                                            <label for="basicInput">ID ANGGOTA</label>
+                                                            <input type="number" class="form-control mb-3 mt-2"
+                                                                name="id_anggota"
+                                                                value="{{ $item->id_user == null ? '' : $item->id_user }}"
+                                                                readonly>
+                                                        </fieldset>
+                                                        <fieldset class="form-group">
+                                                            <label for="basicInput">Nama</label>
+                                                            <input type="text"
+                                                                value="{{ $item->id_user == null ? '' : $item->user[0]->name }}"
+                                                                class="form-control mb-3 mt-2" name="nama" readonly>
+                                                        </fieldset>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                                        <fieldset class="form-group">
+                                                            <label for="basicInput">Poin</label>
+                                                            <input type="number" class="form-control mb-3 mt-2"
+                                                                name="poin"
+                                                                value="{{ $item->id_user == null ? '' : $item->user[0]->poin }}"
+                                                                readonly>
+                                                        </fieldset>
+                                                        <fieldset class="form-group">
+                                                            <label for="basicInput">Credit</label>
+                                                            <input type="number" class="form-control mb-3 mt-2"
+                                                                name="credit"
+                                                                value="{{ $item->id_user == null ? '' : $item->user[0]->credit }}"
+                                                                readonly>
+                                                        </fieldset>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- TABLE --}}
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>ID Barang</th>
+                                                            <th>Kategori</th>
+                                                            <th>Nama Barang</th>
+                                                            <th>Jumlah Barang</th>
+                                                            <th>Harga Jual</th>
+                                                            <th>Harga Akhir</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($penjualan_detail->where('id_penjualan', $item->id) as $row)
+                                                            @php
+                                                            @endphp
+                                                            <tr>
+                                                                <td class="text-bold-500">
+                                                                    {{ $row->id_product }}
+                                                                </td>
+                                                                <td class="text-bold-500">
+                                                                    {{ $row->product[0]->kategori }}
+                                                                </td>
+                                                                <td class="text-bold-500">
+                                                                    {{ $row->product[0]->nama }}
+                                                                </td>
+                                                                <td class="text-bold-500">
+                                                                    {{ $row->jumlah_barang }}
+                                                                </td>
+                                                                <td class="text-bold-500">
+                                                                    {{ $row->harga_jual }}
+                                                                </td>
+                                                                <td class="text-bold-500">
+                                                                    {{ $row->harga_akhir }}
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light-success" data-bs-dismiss="modal">
+                                <i class="bx bx-x d-block d-sm-none"></i>
+                                <span class="d-none d-sm-block">Tutup</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
 
     {{-- MODAL EDIT --}}
     {{-- @foreach ($data as $item) --}}

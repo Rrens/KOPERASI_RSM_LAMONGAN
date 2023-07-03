@@ -17,7 +17,7 @@
 
         body.theme-dark a {
             /* text-decoration: none !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            color: white; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                color: white; */
             color: inherit;
             text-decoration: none !important;
         }
@@ -208,12 +208,12 @@
                                                                         {{ $penjualan_detail->where('id_penjualan', $item->id_penjualan)->sum('harga_akhir') }}
                                                                     </td>
                                                                     <td>
-                                                                        <a class="tagA btn btn-success"
-                                                                            href="{{ route('laporan.pembelian.print', $item->id) }}">Cetak
+                                                                        <a class="tagA btn btn-success" target="_blank"
+                                                                            href="{{ route('laporan.penjualan.print', $item->id_penjualan) }}">Cetak
                                                                         </a>
                                                                         <a class="tagA btn btn-primary" href="#"
                                                                             data-bs-toggle="modal"
-                                                                            data-bs-target="#ModalPenjualan{{ $item->id }}"><i
+                                                                            data-bs-target="#ModalPenjualan{{ $item->id_penjualan }}"><i
                                                                                 class="bi bi-exclamation-triangle-fill"></i>
                                                                         </a>
                                                                     </td>
@@ -274,7 +274,8 @@
                                                                         </a>
                                                                     </td>
                                                                     <td>
-                                                                        <a href="#"
+                                                                        <a href="{{ route('laporan.pembelian.print', $item->id) }}"
+                                                                            target="_blank"
                                                                             class="btn btn-success">Cetak</a>
                                                                     </td>
                                                                 </tr>
@@ -505,9 +506,9 @@
     {{-- MODAL PENJUALAN --}}
     @foreach ($lap_penjualan as $item)
         @php
-            // dd($item);
+            // dd($lap_penjualan);
         @endphp
-        <div class="modal fade" id="ModalPenjualan{{ $item->id }}" tabindex="-1" role="dialog"
+        <div class="modal fade" id="ModalPenjualan{{ $item->id_penjualan }}" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
                 <div class="modal-content">
@@ -577,7 +578,8 @@
                                                         <fieldset class="form-group">
                                                             <label for="basicInput">Total Pendapatan</label>
                                                             <input type="number" class="form-control mb-3 mt-2"
-                                                                name="total_pendapatan" readonly>
+                                                                name="total_pendapatan" value="{{ $item->total_bayar }}"
+                                                                readonly>
                                                         </fieldset>
                                                     </div>
                                                 </div>
@@ -657,6 +659,9 @@
                                                         </thead>
                                                         <tbody>
                                                             @foreach ($penjualan_detail->where('id_penjualan', $item->id_penjualan) as $row)
+                                                                @php
+                                                                    // dd($penjualan_detail->where('id_penjualan', 5));
+                                                                @endphp
                                                                 <tr>
                                                                     <td class="text-bold-500">
                                                                         {{ $loop->iteration }}

@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('lap_anggota', function (Blueprint $table) {
             $table->id();
-
+            $table->unsignedBigInteger('id_penjualan')->nullable();
+            $table->foreign('id_penjualan')->references('id')->on('penjualan');
             $table->date('tanggal')->nullable();
             $table->timestamps();
         });

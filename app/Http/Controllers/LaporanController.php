@@ -56,13 +56,17 @@ class LaporanController extends Controller
 
     public function print_pembelian($id)
     {
-        $data = Pembelian::where('id', $id)->get();
-        return view('page.print_pembelian', compact('data'));
+        $data = lap_pembelian::where('id_pembelian', $id)->first();
+        $pembelian = pembelian_details::with('product', 'pembelian')->where('id_pembelian', $id)->get();
+        // dd($data);
+        return view('page.print_pembelian', compact('data', 'pembelian'));
     }
 
     public function print_penjualan($id)
     {
-        $data = Penjualan::where('id', $id)->get();
-        return view('page.print_penjualan', compact('data'));
+        $data = lap_penjualan::with('penjualan')->where('id_penjualan', (int) $id)->first();
+        $penjualan_detail = Penjualan_details::with('product', 'penjualan')->where('id_penjualan', (int) $id)->get();
+        // dd($penjualan_detail);
+        return view('page.print_penjualan', compact('data', 'penjualan_detail'));
     }
 }

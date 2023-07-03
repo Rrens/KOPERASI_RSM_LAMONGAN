@@ -14,7 +14,7 @@ class lap_anggota extends Model
 
     protected $fillable = [
         // 'id_user',
-        // 'id_penjualan',
+        'id_penjualan',
 
         'tanggal',
         'created_at',

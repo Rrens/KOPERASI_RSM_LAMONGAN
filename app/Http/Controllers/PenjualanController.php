@@ -14,6 +14,8 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PenjualanController extends Controller
 {
@@ -23,7 +25,7 @@ class PenjualanController extends Controller
         // $data = Penjualan::with('user')->whereHas('user', function ($query) {
         //     $query->where('role', '!=', 0);
         // })->get();
-        $data = Penjualan::get();
+        $data = Penjualan::with('user')->get();
         $penjualan_detail = Penjualan_details::with('product')->get();
 
         $date = Carbon::now()->toDateString();
@@ -112,11 +114,11 @@ class PenjualanController extends Controller
 
             if (!empty($user)) {
 
-                $lap_anggota = lap_anggota::whereDate('tanggal', Carbon::now()->today())->get();
-                if ($lap_anggota == null) {
-                    return response()->json('tidak ada');
-                } else {
-                    return response()->json('ada');
+                $lap_anggota = lap_anggota::whereDate('tanggal', Carbon::now()->today())->first();
+                if (empty($lap_anggota)) {
+                    $lap_anggota = new lap_anggota();
+                    $lap_anggota->tanggal = Carbon::now();
+                    // return response()->json($lap_anggota);
                 }
 
                 $lap_anggota_detail = lap_anggota_detail::where('id_user', $user->id)->where('id_penjualan', $penjualan->id)->first();
@@ -158,6 +160,8 @@ class PenjualanController extends Controller
 
 
             $penjualan->save();
+            $lap_anggota->id_penjualan = $penjualan->id;
+            $lap_anggota->save();
 
             $group_data = collect($request->data_detail)->groupBy('id_barang');
             // $penjualan_detail = Penjualan_details::where('id_penjualan', $penjualan->id)->delete();
@@ -232,7 +236,8 @@ class PenjualanController extends Controller
                 // return response()->json($lap_anggota);
             }
 
-            $lap_anggota->save();
+
+
 
             $lap_anggota_detail = new lap_anggota_detail();
             $lap_anggota_detail->total_bayar = $penjualan->total_bayar;
@@ -276,7 +281,10 @@ class PenjualanController extends Controller
             $lap_anggota_detail->tanggal = Carbon::now();
             // $lap_anggota_detail->id_penjualan_detail = $check_id_penjualan_detail->id;
 
+            $lap_anggota->id_penjualan = $penjualan->id;
+            $lap_anggota->save();
             $penjualan->save();
+
             $group_data = collect($request->data_detail)->groupBy('id_barang');
 
             foreach ($group_data as $item) {
@@ -340,17 +348,46 @@ class PenjualanController extends Controller
 
     public function delete_table_kasir(Request $request)
     {
-        try {
-            return response()->json($request->all());
-        } catch (Exception $error) {
-            return response()->json([
-                'meta' => [
-                    'status' => 'error',
-                    'message' => 'Something went wrong'
-                ],
-                'data' => $error->getMessage()
-            ], 500);
+        // try {
+        $validator = Validator::make($request->all(), [
+            'id_penjualan' => 'required',
+        ]);
+        if ($validator->fails()) {
+            Alert::toast($validator->messages()->all(), 'error');
+            return redirect()->route('penjualan.index');
         }
+
+        $id = $request->id_penjualan;
+        $penjualan_detail = Penjualan_details::where('id_penjualan', $id)->get();
+        $penjualan = Penjualan::findOrFail($id);
+        foreach ($penjualan_detail as $item) {
+            // dd($pembelian_detail);
+            $product = Products::findOrFail($item->id_product);
+            $product->stok = $product->stok + $item->jumlah_barang;
+            $product->save();
+            // $lap_pembelian->delete();
+        }
+        lap_penjualan::where('id_penjualan', $id)->delete();
+        Penjualan_details::where('id_penjualan', $id)->delete();
+        lap_anggota_detail::where('id_penjualan', $id)->delete();
+        lap_anggota::where('id_penjualan', $id)->delete();
+
+        $penjualan->delete();
+
+        Alert::toast('Successfully Delete', 'success');
+        return redirect()->route('penjualan.index');
+
+
+        // return response()->json($request->all());
+        // } catch (Exception $error) {
+        //     return response()->json([
+        //         'meta' => [
+        //             'status' => 'error',
+        //             'message' => 'Something went wrong'
+        //         ],
+        //         'data' => $error->getMessage()
+        //     ], 500);
+        // }
     }
 
     // public function
