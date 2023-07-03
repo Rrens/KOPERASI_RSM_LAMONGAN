@@ -16,7 +16,6 @@
                     data_id,
                 });
             });
-            // console.log(data)
 
 
             let newRow = '';
@@ -58,7 +57,7 @@
                             let i = 1;
                             get_data.forEach(value => {
 
-
+                                console.log(value);
                                 let newRow = `
                             <tr>
                                 <td class="text-bold-500">
@@ -88,7 +87,7 @@
                                     ${value['jumlah_barang']}
                                 </td>
                                 <td class="text-bold-500">
-                                    ${value['harga_product']}
+                                    ${value['harga_jual']}
                                 </td>
                                 <td class="text-bold-500">
                                     ${value['harga_akhir']}
@@ -320,7 +319,7 @@
                 }
             })
 
-            // location.reload();
+            location.reload();
         })
 
         function tambahBarisEdit() {

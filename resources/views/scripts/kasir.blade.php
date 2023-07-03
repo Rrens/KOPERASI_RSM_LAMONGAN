@@ -210,7 +210,7 @@
             }
         })
 
-        // location.reload();
+        location.reload();
     })
 
     function tambahBaris() {

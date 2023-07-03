@@ -23,8 +23,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             ProductsSeeder::class,
-            PenjualanSeeder::class,
-            PenjualanDetailsSeeder::class,
+            // PenjualanSeeder::class,
+            // PenjualanDetailsSeeder::class,
         ]);
     }
 }

@@ -228,7 +228,7 @@
             }
         })
 
-        // location.reload();
+        location.reload();
     })
 
     function deleteRowEdit(btn) {

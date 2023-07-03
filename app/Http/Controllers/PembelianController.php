@@ -175,7 +175,7 @@ class PembelianController extends Controller
 
                     $pembelian_details = new pembelian_details();
                     $pembelian_details->id_pembelian = $pembelian->id;
-                    $pembelian_details->id_product  = $product->id;
+                    $pembelian_details->id_product = $product->id;
                     $pembelian_details->harga_beli = $item->first()['harga_beli'];
                     $pembelian_details->harga_jual = $harga;
                     $pembelian_details->jumlah_barang = $stok;

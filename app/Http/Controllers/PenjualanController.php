@@ -56,6 +56,7 @@ class PenjualanController extends Controller
                     'pr.nama as nama_product',
                     'pd.jumlah_barang',
                     'pd.harga_akhir',
+                    'pd.harga_jual',
                     'p.id as id_penjualan'
                 )
                 ->join('penjualan as p', 'p.id', '=', 'pd.id_penjualan')
@@ -105,14 +106,15 @@ class PenjualanController extends Controller
             $penjualan->kembalian = $request->data[0]['kembalian_edit'];
             $penjualan->poin_tambah = $request->data[0]['tambahan_poin_edit'];
             $penjualan->metode_pembayaran = $request->data[0]['metode_pembayaran_edit'];
-            $user = User::findOrFail($penjualan->id_user);
 
             // $check_id_penjualan_detail = Penjualan_details::where('id_penjualan', $penjualan->id)->select('id')->first();
 
             // return response()->json($check_id_penjualan_detail);
 
 
-            if (!empty($user)) {
+            if ($request->data[0]['id_anggota_edit'] != null) {
+
+                $user = User::findOrFail($penjualan->id_user);
 
                 $lap_anggota = lap_anggota::whereDate('tanggal', Carbon::now()->today())->first();
                 if (empty($lap_anggota)) {
@@ -156,23 +158,53 @@ class PenjualanController extends Controller
                 // return response()->json($lap_anggota_detail);
                 $lap_anggota_detail->tanggal = Carbon::now();
                 $lap_anggota_detail->save();
+
+                $penjualan->save();
+                $lap_anggota->id_penjualan = $penjualan->id;
+                $lap_anggota->save();
+            } else {
+                $penjualan->save();
             }
 
 
-            $penjualan->save();
-            $lap_anggota->id_penjualan = $penjualan->id;
-            $lap_anggota->save();
 
             $group_data = collect($request->data_detail)->groupBy('id_barang');
             // $penjualan_detail = Penjualan_details::where('id_penjualan', $penjualan->id)->delete();
             // return response()->json($group_data);
+            // $penjualan_details_for_product = Penjualan_details::select('id_product', DB::raw('SUM(jumlah_barang) as jumlah_barang'))
+            // ->groupBy('id_product')
+            // ->get();
+
+            $penjualan_details_for_product = Penjualan_details::all();
             foreach ($group_data as $item) {
                 $productID = $item->first()['id_barang'];
                 $total_stok = $item->sum('jumlah_barang');
                 $total_harga = $item->sum('harga_akhir');
                 $harga_jual = $item->first()['harga_jual'];
 
+                // $product = Products::findOrFail($productID);
+                // $product->stok = $product->stok - (int) $total_stok;
+                // $product->save();
 
+
+                $product = Products::findOrFail($productID);
+                if ($total_stok > $penjualan_details_for_product->where('id_product', $productID)->sum('jumlah_barang')) {
+                    // return response()->json($item);
+                    $product->stok =  ($penjualan_details_for_product->where('id_product', $productID)->sum('jumlah_barang')  + $product->stok) - $total_stok;
+                    // return response()->json($product->stok);
+                } else {
+                    // return response()->json($total_stok);
+                    // return response()->json($penjualan_details_for_product->where('id_product', $productID)->sum('jumlah_barang'));
+                    $product->stok =  ($penjualan_details_for_product->where('id_product', $productID)->sum('jumlah_barang')  + $product->stok) - $total_stok;
+                    // return response()->json($product->stok);
+                }
+                $product->save();
+
+                // foreach ($penjualan_details_for_product as $item) {
+                //     $product = Products::findOrFail($item->id_product);
+                //     $product->stok = $total_stok - ((int) $item->jumlah_barang  + $product->stok);
+                //     $product->save();
+                // }
                 // $penjualan_detail = new Penjualan_details();
                 $penjualan_detail = Penjualan_details::where('id_penjualan', $penjualan->id)->where('id_product', $productID)->first();
                 $penjualan_detail->id_penjualan = $penjualan->id;
@@ -181,13 +213,23 @@ class PenjualanController extends Controller
                 // return response()->json($penjualan_detail);
                 $penjualan_detail->harga_akhir = $total_harga;
 
-                $product = Products::findOrFail($productID);
-                // return response()->json($product->stok + $penjualan_detail->jumlah_barang);
-                $product->stok = $product->stok - $total_stok;
-                $penjualan_detail->jumlah_barang = $total_stok;
-                $product->save();
                 $penjualan_detail->save();
             }
+
+            // $penjualan_details_for_product = Penjualan_details::select('id_product', DB::raw('SUM(jumlah_barang) as jumlah_barang'))
+            //     ->groupBy('id_product')
+            //     ->get();
+
+            // foreach ($penjualan_details_for_product as $item) {
+            //     $product = Products::findOrFail($item->id_product);
+            //     $product->stok = $total_stok - ((int) $item->jumlah_barang  + $product->stok);
+            //     $product->save();
+            // }
+            // $product = Products::findOrFail($productID);
+            // // return response()->json($product->stok + $penjualan_detail->jumlah_barang);
+            // $product->stok = $product->stok - $total_stok;
+            // $penjualan_detail->jumlah_barang = $total_stok;
+            // $product->save();
 
             $lap_penjualan = lap_penjualan::where('id_penjualan', $penjualan->id)->first();
             // $lap_penjualan->barang_terjual = $penjualan_detail->jumlah_barang;
@@ -293,10 +335,6 @@ class PenjualanController extends Controller
                 $total_harga = $item->sum('harga_akhir');
                 $harga_jual = $item->first()['harga_jual'];
 
-                $product = Products::findOrFail($productID);
-                $product->stok -= $total_stok;
-                $product->save();
-
                 $penjualan_detail = new Penjualan_details();
                 $penjualan_detail->id_penjualan = $penjualan->id;
                 $penjualan_detail->id_product = $productID;
@@ -305,6 +343,17 @@ class PenjualanController extends Controller
                 $penjualan_detail->harga_akhir = $total_harga;
                 $penjualan_detail->save();
             }
+
+            $penjualan_details_for_product = Penjualan_details::select('id_product', DB::raw('SUM(jumlah_barang) as jumlah_barang'))
+                ->groupBy('id_product')
+                ->get();
+
+            foreach ($penjualan_details_for_product as $item) {
+                $product = Products::findOrFail($item->id_product);
+                $product->stok = $product->stok - (int) $item->jumlah_barang;
+                $product->save();
+            }
+
 
             $lap_anggota_detail->id_penjualan = $penjualan->id;
             $lap_anggota_detail->credit_keluar = 0;

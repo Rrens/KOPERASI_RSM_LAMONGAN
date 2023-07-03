@@ -19,7 +19,11 @@ class LaporanController extends Controller
     public function index()
     {
         $active = 'laporan';
-        $lap_anggota_detail = lap_anggota_detail::with('user', 'penjualan')->get();
+        $lap_anggota_detail = lap_anggota_detail::with('user', 'penjualan')
+            ->whereHas('user',  function ($query) {
+                return $query->where('id', '!=', null);
+            })
+            ->get();
         $lap_anggota = lap_anggota::all();
 
         // $lap_penjualan = lap_penjualan::with('penjualan')
