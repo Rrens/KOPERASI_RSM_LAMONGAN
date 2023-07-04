@@ -80,6 +80,7 @@ class PenjualanController extends Controller
                     'pr.harga as harga_product',
                     'pd.jumlah_barang',
                     'pd.harga_akhir',
+                    'pd.harga_jual',
                     'p.id as id_penjualan'
                 )
                 ->join('penjualan as p', 'p.id', '=', 'pd.id_penjualan')
@@ -125,35 +126,66 @@ class PenjualanController extends Controller
 
                 $lap_anggota_detail = lap_anggota_detail::where('id_user', $user->id)->where('id_penjualan', $penjualan->id)->first();
                 if ($request->data[0]['metode_pembayaran_edit'] == 'kredit') {
-                    $user->credit = $user->credit + (int) $request->data[0]['nominal_bayar_edit'];
+                    $user->credit += (int) $request->data[0]['nominal_bayar_edit'];
                     $penjualan->total_bayar = (int) $request->data[0]['nominal_bayar_edit'];
                     // $user->save();
 
-                    $lap_anggota_detail->credit_masuk = (int) $request->data[0]['nominal_bayar_edit'];
+                    $lap_anggota_detail->credit_keluar = (int) $request->data[0]['nominal_bayar_edit'];
+                } else if ($user->credit <= 0) {
+                    $user->credit = 0;
+                    $lap_anggota_detail->credit_keluar = 0;
                 } else {
-
-                    $lap_anggota_detail->credit_masuk = 0;
+                    $user->credit -= (int) $request->data[0]['nominal_bayar_edit'];
+                    $lap_anggota_detail->credit_keluar -= (int) $request->data[0]['nominal_bayar_edit'];
                 }
-                if ($request->data[0]['jumlah_poin_edit'] != null) {
-                    if (!empty($user->poin)) {
-                        // $lap_anggota_detail->poin_keluar = 0;
-                        // return response()->json($user->poin);
+
+                // return response()->json($request->data[0]);
+                if (!empty($user->poin)) {
+                    if ($request->data[0]['jumlah_poin_edit'] != null) {
                         $lap_anggota_detail->poin_keluar = $user->poin;
+                        $lap_anggota_detail->poin += $request->data[0]['jumlah_poin_edit'];
+                        $user->poin -= $request->data[0]['jumlah_poin_edit'];
+                    } else {
+                        // return response()->json($request->data[0]['jumlah_poin_edit']);
+                        $lap_anggota_detail->poin += $request->data[0]['jumlah_poin_edit'];
+                        $user->poin += $request->data[0]['tambahan_poin_edit'];
+                        $lap_anggota_detail->poin_keluar = 0;
                     }
-                    // $user = User::findOrFail($penjualan->id_user);
-                    $user->poin = (int) $penjualan->poin_tambah;
-
-                    // $user->save();
-
-                    // $lap_anggota_detail->poin_masuk = 0;
-                    $lap_anggota_detail->poin_masuk = (int) $penjualan->poin_tambah;
                 } else {
-
-
-                    // $user = User::findOrFail($penjualan->id_user);
-                    $user->poin = (int) $penjualan->poin_tambah + $user->poin;
-                    // $user->save();
+                    if ($request->data[0]['jumlah_poin_edit'] != null) {
+                        // AMAN
+                        $lap_anggota_detail->poin_keluar = $user->poin;
+                        $lap_anggota_detail->poin -= $request->data[0]['jumlah_poin_edit'];
+                        $user->poin -= $request->data[0]['jumlah_poin_edit'];
+                    } else {
+                        // AMAN
+                        $lap_anggota_detail->poin += $request->data[0]['jumlah_poin_edit'];
+                        $user->poin += $request->data[0]['tambahan_poin_edit'];
+                        $lap_anggota_detail->poin_keluar = 0;
+                    }
                 }
+
+                // if ($request->data[0]['jumlah_poin_edit'] != null) {
+                //     if (!empty($user->poin)) {
+                //         // $lap_anggota_detail->poin_keluar = 0;
+                //         // return response()->json($user->poin);
+                //         $lap_anggota_detail->poin_keluar = $user->poin;
+                //     } else {
+                //         $user->poin = (int) $penjualan->poin_tambah;
+                //     }
+                //     // $user = User::findOrFail($penjualan->id_user);
+
+                //     // $user->save();
+
+                //     // $lap_anggota_detail->poin_masuk = 0;
+                //     $lap_anggota_detail->poin_masuk = (int) $penjualan->poin_tambah;
+                // } else {
+
+                //     $lap_anggota_detail->poin_keluar = 0;
+                //     // $user = User::findOrFail($penjualan->id_user);
+                //     $user->poin = (int) $penjualan->poin_tambah + $user->poin;
+                //     // $user->save();
+                // }
                 $user->save();
                 // return response()->json($lap_anggota_detail);
                 $lap_anggota_detail->tanggal = Carbon::now();
@@ -283,7 +315,6 @@ class PenjualanController extends Controller
 
             $lap_anggota_detail = new lap_anggota_detail();
             $lap_anggota_detail->total_bayar = $penjualan->total_bayar;
-            $lap_anggota_detail->id_lap_anggota = $lap_anggota->id;
 
             if ($request->data[0]['id_anggota'] != null) {
                 // return response()->json($request->data[0]['id_anggota']);
@@ -298,19 +329,21 @@ class PenjualanController extends Controller
 
                     $penjualan->total_bayar = (int) $request->data[0]['nominal_bayar'];
 
-                    $lap_anggota_detail->credit_masuk = (int) $request->data[0]['nominal_bayar'];
+                    $lap_anggota_detail->credit_keluar = (int) $request->data[0]['nominal_bayar'];
                 } else {
-                    $lap_anggota_detail->credit_masuk = 0;
+                    $lap_anggota_detail->credit_keluar = 0;
                 }
                 if ($request->data[0]['jumlah_poin'] != null) {
                     $lap_anggota_detail->poin_keluar = $user->poin;
                     $lap_anggota_detail->poin_masuk = 0;
                     $user->poin =  $penjualan->poin_tambah;
+                    $lap_anggota_detail->poin = $penjualan->poin_tambah;
 
                     $user->save();
                 } else {
                     // $user = User::findOrFail($penjualan->id_user);
-                    $user->poin = $penjualan->poin_tambah + $user->poin;
+                    $lap_anggota_detail->poin += $penjualan->poin_tambah;
+                    $user->poin += $penjualan->poin_tambah;
                     $lap_anggota_detail->poin_masuk = $penjualan->poin_tambah;
                     $lap_anggota_detail->poin_keluar = 0;
                     // return response()->json($user);
@@ -323,9 +356,12 @@ class PenjualanController extends Controller
             $lap_anggota_detail->tanggal = Carbon::now();
             // $lap_anggota_detail->id_penjualan_detail = $check_id_penjualan_detail->id;
 
+            $penjualan->save();
+
             $lap_anggota->id_penjualan = $penjualan->id;
             $lap_anggota->save();
-            $penjualan->save();
+            $lap_anggota_detail->id_lap_anggota = $lap_anggota->id;
+
 
             $group_data = collect($request->data_detail)->groupBy('id_barang');
 
@@ -356,7 +392,7 @@ class PenjualanController extends Controller
 
 
             $lap_anggota_detail->id_penjualan = $penjualan->id;
-            $lap_anggota_detail->credit_keluar = 0;
+            $lap_anggota_detail->credit_masuk = 0;
             $lap_anggota_detail->save();
 
             $lap_penjualan = new lap_penjualan();

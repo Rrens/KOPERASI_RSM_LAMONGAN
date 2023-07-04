@@ -5,6 +5,7 @@ use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\AuthConroller;
 use App\Http\Controllers\DashboardConroller;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\PembayaranKreditController;
 use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\StokBarangController;
@@ -48,6 +49,9 @@ Route::group(
         Route::post('anggota', [AnggotaController::class, 'store'])->name('anggota.store');
         Route::post('anggota/update', [AnggotaController::class, 'update'])->name('anggota.update');
         Route::post('anggota/delete', [AnggotaController::class, 'delete'])->name('anggota.delete');
+        Route::get('pembayaran-kredit', [PembayaranKreditController::class, 'index'])->name('kredit.index');
+        Route::post('pembayaran-kredit', [PembayaranKreditController::class, 'store']);
+        Route::get('pembayaran-kredit/get-user-id/{id}', [PembayaranKreditController::class, 'get_user_id']);
         Route::get('pembelian', [PembelianController::class, 'index'])->name('pembelian.index');
         Route::post('pembelian', [PembelianController::class, 'store'])->name('pembelian.store');
         Route::get('pembelian/get-product/{nama}', [PembelianController::class, 'get_product']);

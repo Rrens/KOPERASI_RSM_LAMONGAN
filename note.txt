@@ -1,25 +1,33 @@
 
-FIX ADD USER, ADMIN
-FIX POST Lap PENJUALAN ke penjualan_detail
+BUAT KASIR PADA TABLE ADMIN
+PASSWORD UNTUK ANGGOTA DIHILANGKAN
+CEK UNTUK LOGIN PADA ANGGOTA DIHILANGKAN
 
 
+OTOMATIS CETAK UNTUK BAYAR CREDIT
 
-LAPORAN ANGGOTA DIBUAT PER HARI,
-RECORD LAPORAN ANGGOTA MASUK KE LAPORAN ANGGOTA DETAIL,
-IF(DATE(LAPORAN_ANGGOTA == TODAY)){
-    INSERT LAPORAN DETAIL
-}ELSE{
-    BUAT LAPORAN ANGGOTA
+KASIR dan EDIT KASIR CETAK SETELAH TRANSAKSI SELESAI
+
+CHECK KREDIT UPDATE PENJUALAN
+CHECK KREDIT KELUAR DAN MASUK ADA DI LAPORAN
+
+jika poin ada, maka poin lap anggota ditambah
+
+
+poin_user ada{
+    poin tambah ada {
+        lap_anggota = poin_user
+        user_poin += poin ada
+    }else{
+        lap_anggota = 0
+}
+}else{
+    poin tambah ada {
+        lap_anggota = poin_user
+        user_poin += poin ada
+    }else{
+        lap_anggota = 0
+    }
 }
 
 
-RUBAH DI {
-    PENJUALAN CONTROLLER,
-    LAPORAN CONTROLLER,
-    VIEW LAPORAN
-}
- TTG LAPORAN ANGGOTA
-
-
-UPDATE PENJUALAN, STOK Barang
-CEK JUGA PEMBELIAN

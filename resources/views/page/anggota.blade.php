@@ -6,20 +6,20 @@
             background-color: rgb(14, 12, 27);
         }
 
-        .img-container {
-            /* position: relative; */
-            /* padding-top: 100%; */
-        }
-
         img {
             max-width: 500px;
         }
 
         body.theme-dark a {
             /* text-decoration: none !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                color: white; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    color: white; */
             color: inherit;
             text-decoration: none !important;
+        }
+
+        .row-color,
+        .header-color {
+            background-color: #19191c !important;
         }
     </style>
     <style>
@@ -58,6 +58,21 @@
             .card img {
                 height: 11em;
             }
+
+            .for-flex {
+                display: flex;
+                justify-content: space-around;
+                flex-wrap: wrap;
+            }
+
+        }
+
+        @media (min-width: 1200px) {
+            .for-flex {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+            }
         }
     </style>
     <link rel="stylesheet" href="{{ asset('assets/extensions/simple-datatables/style.css') }}">
@@ -77,9 +92,15 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header d-flex justify-content-between">
-                                <p>Anggota Table</p>
-                                <button class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#modalTambahAnggota">Tambah</button>
+                                <div class="flex-start">
+                                    <p>Anggota Table</p>
+                                </div>
+                                <div class="flex-end">
+                                    <a class="btn btn-success" href="{{ route('kredit.index') }}">Pembayaran Kredit</a>
+                                    <button class="btn btn-primary ml-3" data-bs-toggle="modal"
+                                        data-bs-target="#modalTambahAnggota">Tambah</button>
+                                </div>
+
                             </div>
                             <div class="card-body">
                                 <table class="table table-striped" id="table1">
@@ -187,10 +208,7 @@
                                     <input type="date" class="form-control mt-3"round id="basicInput"
                                         name="tanggal_lahir" value="{{ old('tanggal_lahir') }}">
                                 </div>
-                                <div class="form-group mb-3">
-                                    <label for="basicInput">Alamat Lengkap</label>
-                                    <textarea type="text" class="form-control mt-3"round id="basicInput" name="alamat">{{ old('alamat') }}</textarea>
-                                </div>
+
                             </div>
                             <div class="flex-end">
                                 <div class="form-group mb-3">
@@ -219,14 +237,8 @@
                                     </select>
                                 </div>
                                 <div class="form-group mb-3">
-                                    <label for="basicInput">Password</label>
-                                    <input type="number" class="form-control mt-3"round id="basicInput" name="pin"
-                                        value="{{ old('pin') }}">
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="basicInput">Re-type Password</label>
-                                    <input type="number" class="form-control mt-3"round id="basicInput"
-                                        name="rpassword">
+                                    <label for="basicInput">Alamat Lengkap</label>
+                                    <textarea type="text" class="form-control mt-3"round id="basicInput" name="alamat">{{ old('alamat') }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -281,11 +293,7 @@
                                         <label for="basicInput">Alamat Lengkap</label>
                                         <textarea type="text" class="form-control mt-3"round id="basicInput" name="alamat">{{ $item->address }}</textarea>
                                     </div>
-                                    <div class="form-group mb-3">
-                                        <label for="basicInput">Tanggal Lahir</label>
-                                        <input type="date" class="form-control mt-3"round id="basicInput"
-                                            value="{{ $item->tanggal_lahir }}" name="tanggal_lahir">
-                                    </div>
+
                                 </div>
                                 <div class="flex-end">
                                     <div class="form-group mb-3">
@@ -314,9 +322,9 @@
                                         </select>
                                     </div>
                                     <div class="form-group mb-3">
-                                        <label for="basicInput">PIN</label>
-                                        <input type="number" class="form-control mt-3"round id="basicInput"
-                                            value="{{ $item->pin }}" name="pin">
+                                        <label for="basicInput">Tanggal Lahir</label>
+                                        <input type="date" class="form-control mt-3"round id="basicInput"
+                                            value="{{ $item->tanggal_lahir }}" name="tanggal_lahir">
                                     </div>
 
                                 </div>
@@ -446,22 +454,11 @@
 
 @push('scripts')
     <script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            $('#tableLaporan').DataTable();
-        }); <
-        script src = "https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity = "sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin = "anonymous" >
-    </script>
-    {{-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
-    </script> --}}
     <script src="{{ asset('assets/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
     <script src="{{ asset('assets/js/pages/simple-datatables.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+        integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     {{-- <script type="text/javascript">
         document.forms['filter_date'].submit();
     </script> --}}

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->bigInteger('total_bayar')->nullable();
             $table->bigInteger('credit_masuk')->nullable();
             $table->bigInteger('credit_keluar')->nullable();
+            $table->bigInteger('poin')->nullable();
             $table->bigInteger('poin_masuk')->nullable();
             $table->bigInteger('poin_keluar')->nullable();
             $table->date('tanggal')->nullable();

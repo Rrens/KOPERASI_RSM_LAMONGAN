@@ -319,7 +319,7 @@
                 }
             })
 
-            location.reload();
+            // location.reload();
         })
 
         function tambahBarisEdit() {

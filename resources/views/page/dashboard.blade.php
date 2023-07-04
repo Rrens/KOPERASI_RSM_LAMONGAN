@@ -40,24 +40,25 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {{-- @foreach ($total_product as $row) --}}
-                                            <tr>
-                                                <td class="col-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <p class="font-bold ms-3 mb-0">ini</p>
-                                                    </div>
-                                                </td>
-                                                <td class="col-auto">
-                                                    <p class="mb-0">
-                                                        ini
-                                                    </p>
-                                                </td>
-                                                <td>
-                                                    <div class="col-auto">
-                                                        <p class="mb-0">ini</p>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                            @foreach ($data as $row)
+                                                <tr>
+                                                    <td class="col-3">
+                                                        <div class="d-flex align-items-center">
+                                                            <p class="font-bold ms-3 mb-0">{{ $row->product[0]->nama }}</p>
+                                                        </div>
+                                                    </td>
+                                                    <td class="col-auto">
+                                                        <p class="mb-0">
+                                                            {{ $row->product[0]->harga }}
+                                                        </p>
+                                                    </td>
+                                                    <td>
+                                                        <div class="col-auto">
+                                                            <p class="mb-0">{{ $row->jumlah_barang }}</p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
 

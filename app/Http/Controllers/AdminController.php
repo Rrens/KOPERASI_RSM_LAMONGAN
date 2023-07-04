@@ -16,6 +16,7 @@ class AdminController extends Controller
     {
         $active = 'admin';
         $data = User::where('role', 0)->get();
+        $data_kasir = User::where('role', 1)->get();
         // foreach ($data as $item) {
         //     $item['kode'] = $item['id'];
         //     $item->kode = $item->id;
@@ -24,7 +25,7 @@ class AdminController extends Controller
 
 
         // dd($data, $forID);
-        return view('page.admin', compact('data', 'active'));
+        return view('page.admin', compact('data', 'data_kasir', 'active'));
     }
 
     public function store(Request $request)
@@ -64,13 +65,17 @@ class AdminController extends Controller
             $user_for_creating_database->tempat_lahir = $request->tempat_lahir;
             $user_for_creating_database->tanggal_lahir = $request->tanggal_lahir;
             $user_for_creating_database->status_pernikahan = $request->status_nikah;
-            $user_for_creating_database->role = 0;
+            $user_for_creating_database->role = $request->jenis_user;
             $user_for_creating_database->gender = $request->jenis_kelamin;
             $user_for_creating_database->address = $request->alamat;
             $user_for_creating_database->tanggal = Carbon::now();
             // dd($user_for_creating_database);
             $user_for_creating_database->save();
-            Alert::toast('Success Add Admin', 'success');
+            if ($request->jenis_user == 0) {
+                Alert::toast('Success Add Admin', 'success');
+            } else {
+                Alert::toast('Success Add Kasir', 'success');
+            }
             return redirect()->route('admin.index');
         } catch (Exception $error) {
             Alert::error('error', $error->getMessage());
@@ -103,16 +108,14 @@ class AdminController extends Controller
         $user = User::findOrFail($request->id_admin);
         // dd($user);
         try {
-
-
             $user->nik = $request->nik;
             $user->name = $request->nama_lengkap;
-            $user->pin = $request->pin;
+            $user->password = $request->pin;
             $user->phone = $request->telp;
             $user->tempat_lahir = $request->tempat_lahir;
             $user->tanggal_lahir = $request->tanggal_lahir;
             $user->status_pernikahan = $request->status_nikah;
-            $user->role = 0;
+            $user->role = $request->jenis_user;
             $user->gender = $request->jenis_kelamin;
             $user->address = $request->alamat;
             $user->save();

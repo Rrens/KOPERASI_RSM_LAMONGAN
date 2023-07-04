@@ -14,7 +14,7 @@ class AnggotaController extends Controller
     public function index()
     {
         $active = 'anggota';
-        $data = User::where('role', 1)->get();
+        $data = User::where('role', 2)->get();
         // foreach ($data as $item) {
         //     $item['kode'] = $item['id'];
         //     $item->kode = $item->id;
@@ -39,8 +39,8 @@ class AnggotaController extends Controller
             'nik' => 'required',
             'telp' => 'required',
             'status_nikah' => 'required_if:1,0',
-            'pin' => 'required|min:6',
-            'rpassword' => 'required|min:6'
+            // 'pin' => 'required|min:6',
+            // 'rpassword' => 'required|min:6'
         ]);
 
         if ($validator->fails()) {
@@ -58,12 +58,12 @@ class AnggotaController extends Controller
             // $user_for_creating_database->id = $request->id;
             $user_for_creating_database->nik = $request->nik;
             $user_for_creating_database->name = $request->nama_lengkap;
-            $user_for_creating_database->password = $request->pin;
+            // $user_for_creating_database->password = $request->pin;
             $user_for_creating_database->phone = $request->telp;
             $user_for_creating_database->tempat_lahir = $request->tempat_lahir;
             $user_for_creating_database->tanggal_lahir = $request->tanggal_lahir;
             $user_for_creating_database->status_pernikahan = $request->status_nikah;
-            $user_for_creating_database->role = 1;
+            $user_for_creating_database->role = 2;
             $user_for_creating_database->gender = $request->jenis_kelamin;
             $user_for_creating_database->address = $request->alamat;
             $user_for_creating_database->tanggal = Carbon::now();
@@ -89,7 +89,7 @@ class AnggotaController extends Controller
             'nik' => 'required',
             'telp' => 'required',
             'status_nikah' => 'required_if:1,0',
-            'pin' => 'required|min:6',
+            // 'pin' => 'required|min:6',
         ]);
 
         if ($validator->fails()) {
@@ -102,12 +102,12 @@ class AnggotaController extends Controller
         try {
             $user->nik = $request->nik;
             $user->name = $request->nama_lengkap;
-            $user->pin = $request->pin;
+            // $user->pin = $request->pin;
             $user->phone = $request->telp;
             $user->tempat_lahir = $request->tempat_lahir;
             $user->tanggal_lahir = $request->tanggal_lahir;
             $user->status_pernikahan = $request->status_nikah;
-            $user->role = 1;
+            $user->role = 2;
             $user->gender = $request->jenis_kelamin;
             $user->address = $request->alamat;
             $user->save();

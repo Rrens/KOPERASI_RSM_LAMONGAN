@@ -61,6 +61,12 @@
                             <span>Anggota</span>
                         </a>
                     </li>
+                    <li class="sidebar-item {{ $active == 'kredit' ? 'active' : '' }}">
+                        <a href="{{ route('kredit.index') }}" class="sidebar-link">
+                            <i class="bi bi-credit-card-fill"></i>
+                            <span>Pembayaran Kredit</span>
+                        </a>
+                    </li>
                     <li class="sidebar-item {{ $active == 'pembelian' ? 'active' : '' }}">
                         <a href="{{ route('pembelian.index') }}" class="sidebar-link">
                             <i class="bi bi-box-fill"></i>
