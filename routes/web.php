@@ -31,7 +31,6 @@ Route::redirect('/', 'login');
 Route::get('login', [AuthConroller::class, 'index'])->name('login');
 Route::get('logout', [AuthConroller::class, 'logout'])->name('logout');
 Route::post('post_login', [AuthConroller::class, 'post_login'])->name('post_login');
-Route::get('dashboard', [DashboardConroller::class, 'index'])->name('dashboard.index');
 Route::get('print', function () {
     return view('page.print');
 });
@@ -41,6 +40,7 @@ Route::group(
         'middleware' => ['auth', 'role:0']
     ],
     function () {
+        Route::get('dashboard', [DashboardConroller::class, 'index'])->name('dashboard.index');
         Route::get('admin', [AdminController::class, 'index'])->name('admin.index');
         Route::post('admin', [AdminController::class, 'store'])->name('admin.store');
         Route::post('admin/update', [AdminController::class, 'update'])->name('admin.update');

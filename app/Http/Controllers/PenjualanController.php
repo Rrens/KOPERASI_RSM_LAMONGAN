@@ -342,11 +342,11 @@ class PenjualanController extends Controller
                     $user->save();
                 } else {
                     // $user = User::findOrFail($penjualan->id_user);
+                    // return response()->json($penjualan);
                     $lap_anggota_detail->poin += $penjualan->poin_tambah;
                     $user->poin += $penjualan->poin_tambah;
                     $lap_anggota_detail->poin_masuk = $penjualan->poin_tambah;
                     $lap_anggota_detail->poin_keluar = 0;
-                    // return response()->json($user);
                     $user->save();
                 }
             } else {

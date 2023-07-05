@@ -17,7 +17,7 @@
 
         body.theme-dark a {
             /* text-decoration: none !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                color: white; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                color: white; */
             color: inherit;
             text-decoration: none !important;
         }
@@ -413,19 +413,17 @@
                                                                     {{ $row->user[0]->poin }}
                                                                 </td>
                                                                 <td class="text-bold-500">
-                                                                    {{ $row->user[0]->credit }}
+                                                                    {{ $row->credit_keluar != null ? $row->credit_keluar : $row->credit_masuk }}
                                                                 </td>
                                                                 <td class="text-bold-500">
                                                                     {{ $row->tanggal }}
                                                                 </td>
                                                                 <td class="text-bold-500">
                                                                     @php
-                                                                        if ($row->credit_keluar != 0) {
+                                                                        if ($row->credit_keluar != null) {
                                                                             echo 'keluar';
-                                                                        } elseif ($row->credit_masuk != 0) {
+                                                                        } elseif ($row->credit_masuk != null) {
                                                                             echo 'masuk';
-                                                                        } else {
-                                                                            echo '-';
                                                                         }
                                                                     @endphp
                                                                 </td>
@@ -448,7 +446,7 @@
                                                             <th>No</th>
                                                             <th>ID Anggota</th>
                                                             <th>Nama</th>
-                                                            <th>Poin</th>
+                                                            <th>Poin Keluar</th>
                                                             <th>tambahan</th>
                                                             <th>Waktu</th>
                                                             <th>Keterangan</th>
@@ -467,7 +465,7 @@
                                                                     {{ $row->user[0]->name }}
                                                                 </td>
                                                                 <td class="text-bold-500">
-                                                                    {{ $row->poin }}
+                                                                    {{ empty($row->poin_keluar) ? 0 : $row->poin_keluar }}
                                                                 </td>
                                                                 <td class="text-bold-500">
                                                                     {{ empty($row->poin_masuk) ? 0 : $row->poin_masuk }}

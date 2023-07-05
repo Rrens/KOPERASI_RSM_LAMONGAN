@@ -13,7 +13,11 @@ class AuthConroller extends Controller
     public function index()
     {
         if (Auth::check()) {
-            return redirect()->route('dashboard.index');
+            if (Auth::user()->role == 1) {
+                return redirect()->route('penjualan.index');
+            } else {
+                return redirect()->route('dashboard.index');
+            }
         }
         return view('auth.login');
     }
@@ -45,7 +49,11 @@ class AuthConroller extends Controller
             return redirect()->route('login');
         }
 
-        return redirect()->route('dashboard.index');
+        if (Auth::user()->role == 1) {
+            return redirect()->route('penjualan.index');
+        } else {
+            return redirect()->route('dashboard.index');
+        }
     }
 
     public function logout()

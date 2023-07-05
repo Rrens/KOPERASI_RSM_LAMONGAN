@@ -29,9 +29,10 @@ class PembayaranKreditController extends Controller
     public function store(Request $request)
     {
         try {
-            // return response()->json($request->all());
+            // return response()->json($request->data['jumlah_bayar']);
             $user = User::findOrFail($request->data['id_anggota']);
-            $user->credit = $user->credit - $request->data['jumlah_bayar'];
+            $user->credit -= $request->data['jumlah_bayar'];
+            $user->save();
             $lap_anggota = lap_anggota::whereDate('tanggal', Carbon::now()->today())->first();
             if (empty($lap_anggota)) {
                 $lap_anggota = new lap_anggota();

@@ -75,7 +75,7 @@
                     var areaOptions = {
                         series: [{
                                 name: "Order",
-                                // data: ,
+                                data: {!! json_encode($penjualan_grafik) !!},
                             },
                             // {
                             //     name: "series2",
@@ -94,7 +94,7 @@
                         },
                         xaxis: {
                             type: "datetime",
-                            // categories: ,
+                            categories: {!! json_encode($bulan_grafik) !!},
                         },
                         tooltip: {
                             x: {
