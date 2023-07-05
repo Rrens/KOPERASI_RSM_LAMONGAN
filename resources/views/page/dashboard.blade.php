@@ -27,7 +27,7 @@
                     <div class="col-12 col-xl-6">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Data Penjualan</h4>
+                                <h4>Data Penjualan Product</h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -44,12 +44,12 @@
                                                 <tr>
                                                     <td class="col-3">
                                                         <div class="d-flex align-items-center">
-                                                            <p class="font-bold ms-3 mb-0">{{ $row->product[0]->nama }}</p>
+                                                            <p class="font-bold ms-3 mb-0">{{ $row->nama }}</p>
                                                         </div>
                                                     </td>
                                                     <td class="col-auto">
                                                         <p class="mb-0">
-                                                            {{ $row->product[0]->harga }}
+                                                            {{ $row->harga }}
                                                         </p>
                                                     </td>
                                                     <td>
