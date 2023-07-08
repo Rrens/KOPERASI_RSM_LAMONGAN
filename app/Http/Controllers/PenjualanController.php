@@ -99,23 +99,29 @@ class PenjualanController extends Controller
     {
         try {
             // return response()->json($request->data);
+            $penjualan_old = Penjualan::findOrFail($request->data[0]['id_penjualan_edit']);
             $penjualan = Penjualan::findOrFail($request->data[0]['id_penjualan_edit']);
             $penjualan->id_user = $request->data[0]['id_anggota_edit'];
             $penjualan->subtotal = $request->data[0]['sub_total_edit'];
             $penjualan->diskon = $request->data[0]['hasil_diskon_edit'];
             $penjualan->total_bayar = $request->data[0]['uang_bayar_edit'];
             $penjualan->kembalian = $request->data[0]['kembalian_edit'];
-            $penjualan->poin_tambah = $request->data[0]['tambahan_poin_edit'];
+            if ($request->data[0]['tambahan_poin_edit'] == 1) {
+                $penjualan->poin_tambah = $request->data[0]['tambahan_poin_edit'];
+            } else {
+                $penjualan->poin_tambah = 0;
+            }
             $penjualan->metode_pembayaran = $request->data[0]['metode_pembayaran_edit'];
 
+            // return response()->json($penjualan);
             // $check_id_penjualan_detail = Penjualan_details::where('id_penjualan', $penjualan->id)->select('id')->first();
 
-            // return response()->json($check_id_penjualan_detail);
 
 
             if ($request->data[0]['id_anggota_edit'] != null) {
 
                 $user = User::findOrFail($penjualan->id_user);
+                // $user->poin = Penjualan::where('id_user', $user->id)->sum('poin_tambah');
 
                 $lap_anggota = lap_anggota::whereDate('tanggal', Carbon::now()->today())->first();
                 if (empty($lap_anggota)) {
@@ -131,39 +137,61 @@ class PenjualanController extends Controller
                     // $user->save();
 
                     $lap_anggota_detail->credit_keluar = (int) $request->data[0]['nominal_bayar_edit'];
-                } else if ($user->credit <= 0) {
-                    $user->credit = 0;
-                    $lap_anggota_detail->credit_keluar = 0;
-                } else {
+                }
+                //  else if ($user->credit <= 0) {
+                //     $user->credit = 0;
+                //     $lap_anggota_detail->credit_keluar = 0;
+                // }
+                else {
                     $user->credit -= (int) $request->data[0]['nominal_bayar_edit'];
                     $lap_anggota_detail->credit_keluar -= (int) $request->data[0]['nominal_bayar_edit'];
                 }
 
                 // return response()->json($request->data[0]);
-                if (!empty($user->poin)) {
-                    if ($request->data[0]['jumlah_poin_edit'] != null) {
-                        $lap_anggota_detail->poin_keluar = $user->poin;
-                        $lap_anggota_detail->poin += $request->data[0]['jumlah_poin_edit'];
-                        $user->poin -= $request->data[0]['jumlah_poin_edit'];
-                    } else {
-                        // return response()->json($request->data[0]['jumlah_poin_edit']);
-                        $lap_anggota_detail->poin += $request->data[0]['jumlah_poin_edit'];
+                if ($request->data[0]['tambahan_poin_edit'] == 1) {
+                    if ($penjualan_old->poin_tambah == 0) {
                         $user->poin += $request->data[0]['tambahan_poin_edit'];
-                        $lap_anggota_detail->poin_keluar = 0;
+                        $lap_anggota_detail->poin_masuk = $request->data[0]['tambahan_poin_edit'];
                     }
                 } else {
-                    if ($request->data[0]['jumlah_poin_edit'] != null) {
-                        // AMAN
-                        $lap_anggota_detail->poin_keluar = $user->poin;
-                        $lap_anggota_detail->poin -= $request->data[0]['jumlah_poin_edit'];
-                        $user->poin -= $request->data[0]['jumlah_poin_edit'];
-                    } else {
-                        // AMAN
-                        $lap_anggota_detail->poin += $request->data[0]['jumlah_poin_edit'];
-                        $user->poin += $request->data[0]['tambahan_poin_edit'];
-                        $lap_anggota_detail->poin_keluar = 0;
+                    if ($penjualan_old->poin_tambah == 1) {
+                        $user->poin -= 1;
+                        $lap_anggota_detail->poin_masuk = null;
                     }
                 }
+
+                if ($request->data[0]['jumlah_poin_edit'] != 0) {
+                    $user->poin -= $request->data[0]['jumlah_poin_edit'];
+                    $lap_anggota_detail->poin_keluar = $request->data[0]['jumlah_poin_edit'];
+                    $lap_anggota_detail->poin -= $request->data[0]['jumlah_poin_edit'];
+                } else {
+                    $lap_anggota_detail->poin_keluar = null;
+                }
+
+                // if (!empty($user->poin)) {
+                //     if ($request->data[0]['jumlah_poin_edit'] != null) {
+                //         $lap_anggota_detail->poin_keluar = $user->poin;
+                //         $lap_anggota_detail->poin += $request->data[0]['jumlah_poin_edit'];
+                //         $user->poin -= $request->data[0]['jumlah_poin_edit'];;
+                //     } else {
+                //         // return response()->json($request->data[0]['jumlah_poin_edit']);
+                //         $lap_anggota_detail->poin += $request->data[0]['jumlah_poin_edit'];
+                //         // $user->poin += $request->data[0]['tambahan_poin_edit'];
+                //         $lap_anggota_detail->poin_keluar = 0;
+                //     }
+                // } else {
+                //     if ($request->data[0]['jumlah_poin_edit'] != null) {
+                //         // AMAN
+                //         $lap_anggota_detail->poin_keluar = $user->poin;
+                //         $lap_anggota_detail->poin -= $request->data[0]['jumlah_poin_edit'];
+                //         $user->poin -= $request->data[0]['jumlah_poin_edit'];
+                //     } else {
+                //         // AMAN
+                //         $lap_anggota_detail->poin += $request->data[0]['jumlah_poin_edit'];
+                //         $user->poin += $request->data[0]['tambahan_poin_edit'];
+                //         $lap_anggota_detail->poin_keluar = 0;
+                //     }
+                // }
 
                 // if ($request->data[0]['jumlah_poin_edit'] != null) {
                 //     if (!empty($user->poin)) {

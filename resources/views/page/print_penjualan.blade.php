@@ -474,7 +474,7 @@
             <th>ID Barang</th>
             <th>Kategori</th>
             <th>Nama Barang</th>
-            <th>Jumlah Barahg</th>
+            <th>Jumlah Barang</th>
             <th>Harga Total</th>
             <th>Metode</th>
         </tr>

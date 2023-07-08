@@ -201,6 +201,8 @@
 
                 if ($('#sub_total_edit').val() >= 100000) {
                     $('#tambahan_poin_edit').val(1);
+                } else {
+                    $('#tambahan_poin_edit').val(0);
                 }
                 $('#nominal_bayar_edit').val($('#sub_total_edit').val() - $('#hasil_diskon_edit').val())
             } else {
