@@ -13,7 +13,7 @@ class DashboardConroller extends Controller
         $active = 'dashboard';
         // $grafik =
         $data = Penjualan_details::join('products', 'products.id', '=', 'penjualan_details.id_product')
-            ->select('products.nama', 'products.harga', DB::raw('SUM(penjualan_details.jumlah_barang) as jumlah_barang'))
+            ->select('products.nama', 'products.harga', DB::raw('SUM(penjualan_details.jumlah_barang) as jumlah_barang'), 'products.stok')
             ->groupBy('products.id')
             ->orderBy('jumlah_barang', 'DESC')
             ->get();

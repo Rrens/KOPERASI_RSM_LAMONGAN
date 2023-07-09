@@ -73,7 +73,7 @@ Route::group(
         Route::post('penjualan', [PenjualanController::class, 'post_table_kasir'])->name('post_table_kasir');
         Route::post('penjualan/update', [PenjualanController::class, 'update_table_kasir'])->name('update_table_kasir');
         Route::post('penjualan/delete', [PenjualanController::class, 'delete_table_kasir'])->name('delete_table_kasir');
-        Route::get('penjualan/print/{id}', [PenjualanController::class, 'print'])->name('penjualan.print');
+        Route::get('penjualan/print/{id}', [PenjualanController::class, 'cetak'])->name('penjualan.print');
         Route::get('laporan', [LaporanController::class, 'index'])->name('laporan.index');
         Route::get('laporan/anggota/{id}', [LaporanController::class, 'print_anggota'])->name('laporan.anggota.print');
         Route::get('laporan/pembelian/{id}', [LaporanController::class, 'print_pembelian'])->name('laporan.pembelian.print');

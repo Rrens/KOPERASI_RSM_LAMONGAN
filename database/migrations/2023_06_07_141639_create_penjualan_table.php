@@ -21,6 +21,7 @@ return new class extends Migration
             $table->bigInteger('total_bayar')->nullable();
             $table->bigInteger('kembalian')->nullable();
             $table->bigInteger('poin_tambah')->nullable();
+            $table->bigInteger('poin_pakai')->nullable();
             $table->string('metode_pembayaran')->nullable();
             $table->timestamps();
         });

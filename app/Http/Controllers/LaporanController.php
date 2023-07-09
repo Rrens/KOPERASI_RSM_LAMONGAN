@@ -23,7 +23,11 @@ class LaporanController extends Controller
             ->whereHas('user',  function ($query) {
                 return $query->where('id', '!=', null);
             })
+            // ->whereHas('penjualan', function ($query) {
+            //     return $query->where('metode_pembayaran', "kredit");
+            // })
             ->get();
+        // dd($lap_anggota_detail);
         $lap_anggota = lap_anggota::all();
 
         // $lap_penjualan = lap_penjualan::with('penjualan')
@@ -50,19 +54,43 @@ class LaporanController extends Controller
     {
         // $data = User::where('id', $id)->get();
         $lap_anggota = lap_anggota::findOrFail($id);
+        $tanggal = $lap_anggota->tanggal;
         $data = lap_anggota_detail::with('user')->where('id_lap_anggota', $id)->get();
         $anggota_baru = User::where('tanggal', $lap_anggota->tanggal)->count('tanggal');
         $jumlah = $data->where('id_lap_anggota', $id)->count('id');
-        $total_pendapatan = $data->where('id_lap_anggota', $id)->sum('total_bayar');
+        // $total_pendapatan = Penjualan::where('id_lap_anggota', $id)
+        //     ->where('id', $data)
+        //     ->where('metode_pembayaran', 'kredit')
+        //     ->sum('total_bayar');
+        // $total_pendapatan = lap_anggota_detail::with('penjualan')
+        //     ->select(DB::raw('SUM(penjualan.total_bayar)'))
+        //     ->where('penjualan.metode_pembayaran', 'kredit')
+        //     // ->whereHas('penjualan', function ($query) {
+        //     //     $query->where('metode_pembayaran', 'kredit')->sum('total_bayar');
+        //     // })
+        //     ->get();
 
-        return view('page.print_anggota', compact('data', 'anggota_baru', 'jumlah', 'total_pendapatan'));
+        $total_pendapatan = DB::table('lap_anggota_detail as lap')
+            ->join('penjualan as p', 'p.id', '=', 'lap.id_penjualan')
+            ->where('lap.id_lap_anggota', $id)
+            ->where('p.metode_pembayaran', 'kredit')
+            ->sum('p.total_bayar');
+
+        $anggota_bayar = $data->sum('credit_masuk');
+        // ->get();
+        // dd($total_pendapatan);
+
+        // $total_pendapatan = $data->where('id_lap_anggota', $id)->sum('total_bayar');
+        // $row->penjualan[0]->where('metode_pembayaran', 'kredit')->sum('total_bayar')
+
+        return view('page.print_anggota', compact('data', 'tanggal', 'anggota_bayar', 'anggota_baru', 'jumlah', 'total_pendapatan'));
     }
 
     public function print_pembelian($id)
     {
         $data = lap_pembelian::where('id_pembelian', $id)->first();
         $pembelian = pembelian_details::with('product', 'pembelian')->where('id_pembelian', $id)->get();
-        // dd($data);
+        // $total_pengeluaran = $pembelian->sum()
         return view('page.print_pembelian', compact('data', 'pembelian'));
     }
 

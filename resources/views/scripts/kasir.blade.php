@@ -1,4 +1,19 @@
 <script>
+    window.addEventListener('popstate', function(event) {
+        event.preventDefault();
+        var currentState = history.state;
+        // console.log(currentState)
+
+        // Memeriksa apakah perubahan navigasi adalah mundur (dari state sebelumnya)
+        if (currentState && currentState.previousState) {
+            // Kode yang akan dijalankan saat terjadi perubahan navigasi mundur
+            location.reload()
+            console.log('Navigasi mundur');
+            // Lakukan tindakan yang diinginkan saat terjadi perubahan navigasi mundur
+        }
+    });
+
+
     $('#metode_pembayaran').on('click', function(e) {
         let metode_pembayaran = e.target.value;
         let id_pelanggan = $('#id_pelanggan').val();
@@ -204,6 +219,9 @@
             },
             success: function(response) {
                 console.log(response);
+                _url = `/penjualan/print/${response.data}`
+                // window.open(_url, '_blank');
+                location.href = _url;
             },
             error: function(xhr, status, error) {
                 console.log(error, xhr, status);
@@ -211,7 +229,19 @@
         })
 
         location.reload();
+
+
+
+        // setTimeout(function() {
+        //     window.location.reload();
+        // }, 2000);
+
+        // location.reload();
+
+
     })
+
+
 
     function tambahBaris() {
         var stok = $('#stok').val();

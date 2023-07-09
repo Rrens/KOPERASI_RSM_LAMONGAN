@@ -67,7 +67,6 @@ class AnggotaController extends Controller
             $user_for_creating_database->gender = $request->jenis_kelamin;
             $user_for_creating_database->address = $request->alamat;
             $user_for_creating_database->tanggal = Carbon::now();
-            // dd($user_for_creating_database);
             $user_for_creating_database->save();
             Alert::toast('Success Add anggota' . $user_for_creating_database->name, 'success');
             return redirect()->route('anggota.index');

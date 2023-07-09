@@ -37,6 +37,7 @@
                                                 <th>Product</th>
                                                 <th>Price</th>
                                                 <th>Order</th>
+                                                <th>Stok</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -55,6 +56,11 @@
                                                     <td>
                                                         <div class="col-auto">
                                                             <p class="mb-0">{{ $row->jumlah_barang }}</p>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="col-auto">
+                                                            <p class="mb-0">{{ $row->stok }}</p>
                                                         </div>
                                                     </td>
                                                 </tr>

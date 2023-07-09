@@ -17,7 +17,7 @@
 
         body.theme-dark a {
             /* text-decoration: none !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                color: white; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        color: white; */
             color: inherit;
             text-decoration: none !important;
         }
@@ -359,18 +359,34 @@
                                                                 value="{{ $lap_anggota_detail->where('id_lap_anggota', $item->id)->count('id') }}"
                                                                 readonly>
                                                         </fieldset>
+                                                        @php
+                                                            $anggota_bayar = 0;
+                                                        @endphp
                                                         <fieldset class="form-group">
                                                             <label for="basicInput">Anggota Bayar</label>
+                                                            @foreach ($lap_anggota_detail->where('id_lap_anggota', $item->id)->where('credit_masuk', '!=', 0) as $row)
+                                                                @php
+                                                                    $anggota_bayar = $lap_anggota_detail->where('id_lap_anggota', $item->id)->sum('credit_masuk');
+                                                                @endphp
+                                                            @endforeach
                                                             <input type="text" class="form-control mb-3 mt-2"
-                                                                name="anggota_bayar" style="color: red"
-                                                                value="{{ $lap_anggota_detail->where('id_lap_anggota', $item->id)->sum('total_bayar') }}"
+                                                                name="anggota_bayar" value="{{ $anggota_bayar }}"
                                                                 readonly>
                                                         </fieldset>
+                                                        @php
+                                                            $total_bayar = 0;
+                                                        @endphp
                                                         <fieldset class="form-group">
                                                             <label for="basicInput">Total Pendapatan</label>
+
+                                                            @foreach ($lap_anggota_detail->where('id_lap_anggota', $item->id)->where('credit_masuk', 0) as $row)
+                                                                @php
+                                                                    // dd($row->penjualan[0]->where('metode_pembayaran', 'kredit')->sum('total_bayar'));
+                                                                    $total_bayar = $row->penjualan[0]->where('metode_pembayaran', 'kredit')->sum('total_bayar');
+                                                                @endphp
+                                                            @endforeach
                                                             <input type="text" class="form-control mb-3 mt-2"
-                                                                name="total_pendapatan"
-                                                                value="{{ $lap_anggota_detail->where('id_lap_anggota', $item->id)->sum('total_bayar') }}"
+                                                                name="total_pendapatan" value="{{ $total_bayar }}"
                                                                 readonly>
                                                         </fieldset>
                                                     </div>
@@ -594,6 +610,9 @@
                                 </div>
                             </div>
                             <div class="row">
+                                @php
+                                    // dd($penjualan_detail->where('id_penjualan', $item->id_penjualan), $item);
+                                @endphp
                                 @if (empty($item->id_user))
                                     <div class="col-lg-12">
                                         <div class="card">
@@ -631,7 +650,7 @@
                                                                         {{ $row->jumlah_barang }}
                                                                     </td>
                                                                     <td class="text-bold-500">
-                                                                        {{ $item->harga_akhir }}
+                                                                        {{ $row->harga_akhir }}
                                                                     </td>
                                                                     <td class="text-bold-500">
                                                                         {{ $item->metode_pembayaran }}
@@ -664,9 +683,6 @@
                                                         </thead>
                                                         <tbody>
                                                             @foreach ($penjualan_detail->where('id_penjualan', $item->id_penjualan) as $row)
-                                                                @php
-                                                                    // dd($penjualan_detail->where('id_penjualan', 5));
-                                                                @endphp
                                                                 <tr>
                                                                     <td class="text-bold-500">
                                                                         {{ $loop->iteration }}
@@ -684,7 +700,7 @@
                                                                         {{ $row->jumlah_barang }}
                                                                     </td>
                                                                     <td class="text-bold-500">
-                                                                        {{ $item->harga_akhir }}
+                                                                        {{ $row->harga_akhir }}
                                                                     </td>
                                                                     <td class="text-bold-500">
                                                                         {{ $item->metode_pembayaran }}

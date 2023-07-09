@@ -17,7 +17,7 @@
 
         body.theme-dark a {
             /* text-decoration: none !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            color: white; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                color: white; */
             color: inherit;
             text-decoration: none !important;
         }
@@ -186,7 +186,13 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label for="basicInput">Keterangan</label>
-                                <textarea type="text" class="form-control mt-3" id="keterangan" name="keterangan"></textarea>
+                                <select class="form-select" aria-label="Default select example" name="keterangan"
+                                    id="keterangan">
+                                    <option selected hidden>Pilih Keterangan</option>
+                                    <option value="Fast Moving">Fast Moving</option>
+                                    <option value="Slow Moving">Slow Moving</option>
+                                </select>
+                                {{-- <textarea type="text" class="form-control mt-3" id="keterangan" name="keterangan"></textarea> --}}
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12">
@@ -278,7 +284,12 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label for="basicInput">Keterangan</label>
-                                <textarea type="text" class="form-control mt-3" id="keterangan_edit" name="keterangan"></textarea>
+                                {{-- <textarea type="text" class="form-control mt-3" id="keterangan_edit" name="keterangan"></textarea> --}}
+                                <select class="form-select" aria-label="Default select example" name="keterangan"
+                                    id="keterangan_edit">
+                                    <option value="Fast Moving">Fast Moving</option>
+                                    <option value="Slow Moving">Slow Moving</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12">

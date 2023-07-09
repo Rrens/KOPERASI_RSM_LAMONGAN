@@ -1,4 +1,18 @@
     <script>
+        window.addEventListener('popstate', function(event) {
+            event.preventDefault();
+            var currentState = history.state;
+            // console.log(currentState)
+
+            // Memeriksa apakah perubahan navigasi adalah mundur (dari state sebelumnya)
+            if (currentState && currentState.previousState) {
+                // Kode yang akan dijalankan saat terjadi perubahan navigasi mundur
+                location.reload()
+                console.log('Navigasi mundur');
+                // Lakukan tindakan yang diinginkan saat terjadi perubahan navigasi mundur
+            }
+        });
+
         function modal(btn) {
             // var row = btn.closest('tr');
             // row.remove();

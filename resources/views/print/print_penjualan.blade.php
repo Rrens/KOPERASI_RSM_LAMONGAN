@@ -434,70 +434,90 @@
     </p>
     <p style="text-align:center;font-weight:normal;margin-top:0px;padding-top:0px" id="date"></p>
     <p style="text-align:center;font-weight:normal;margin-top:0px;padding-top:0px" id="time"></p>
+    @php
+        // dd($data);
+    @endphp
 
     <br />
     <table>
         <tr>
-            {{-- @php
-                dd($data);
-            @endphp --}}
+            <td>TANGGAL</td>
+            <td>: </td>
+        </tr>
+        <tr>
             <td>NO LAPORAN </td>
-            <td>: {{ $data->id }}</td>
+            <td>:</td>
         </tr>
         <tr>
-            <td>NO TRANSAKSI </td>
-            <td>: {{ $data->id_penjualan }}</td>
+            <td>NAMA ANGGOTA </td>
+            <td>: </td>
         </tr>
         <tr>
-            <td>TANGGAL </td>
-            <td>: {{ $data->tanggal }}</td>
+            <td>ANGGOTA BARU </td>
+            <td>: </td>
         </tr>
         <tr>
-            <td>SUB TOTAL </td>
-            <td>: {{ $data->penjualan[0]->subtotal }}</td>
+            <td>JUMLAH </td>
+            <td>: </td>
         </tr>
         <tr>
-            <td>DISKON </td>
-            <td>: {{ $data->penjualan[0]->diskon }}</td>
+            <td>ANGGOTA BAYAR </td>
+            <td>: </td>
         </tr>
         <tr>
             <td>TOTAL PENDAPATAN </td>
-            <td>: {{ $data->penjualan[0]->total_bayar }}</td>
+            <td>: </td>
         </tr>
     </table>
 
-
+    <br /><br />
+    <p>Credit</p>
 
     <table class="sicycatablemanual">
         <tr>
             <th>No</th>
-            <th>ID Barang</th>
-            <th>Kategori</th>
-            <th>Nama Barang</th>
-            <th>Jumlah Barang</th>
-            <th>Harga Total</th>
-            <th>Metode</th>
+            <th>Id Anggota </th>
+            <th>Nama</th>
+            <th>Poin</th>
+            <th>Credit</th>
+            <th>Waktu</th>
+            <th>Keterangan</th>
         </tr>
 
-        @foreach ($penjualan_detail as $item)
-            <tr class="odd">
-                <td>{{ $loop->iteration }}</td>
+        {{-- @foreach ($data as $item) --}}
+        @php
+            // dd($item);
+        @endphp
+        <tr class="odd">
+            <td></td>
 
-                <td>
-                    {{ $item->id_product }}<br>
-                </td>
-                <td>
-                    {{ $item->product[0]->kategori }}<br>
-                </td>
-                <td>{{ $item->product[0]->nama }}</td>
-                <td>{{ $item->jumlah_barang }}</td>
-                <td>{{ $item->harga_akhir }}</td>
-                <td>{{ $item->penjualan[0]->metode_pembayaran }}</td>
-            </tr>
-        @endforeach
+            <td>
+                <br>
+            </td>
+            <td>
+                <br>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                {{-- @php
+                        if ($item->credit_keluar != 0) {
+                            echo 'keluar';
+                        } elseif ($item->credit_masuk != 0) {
+                            echo 'masuk';
+                        } else {
+                            echo '-';
+                        }
+                    @endphp --}}
+            </td>
+        </tr>
+        {{-- @endforeach --}}
 
     </table>
-    <br /><br />
+
+    </table>
+    {{-- <p style="text-align:right">Total: Rp.</p> --}}
 
     <script>
         window.print();

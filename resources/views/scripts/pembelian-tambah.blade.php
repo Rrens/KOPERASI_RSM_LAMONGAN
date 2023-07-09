@@ -1,4 +1,17 @@
 <script>
+    window.addEventListener('popstate', function(event) {
+        event.preventDefault();
+        var currentState = history.state;
+        // console.log(currentState)
+
+        // Memeriksa apakah perubahan navigasi adalah mundur (dari state sebelumnya)
+        if (currentState && currentState.previousState) {
+            // Kode yang akan dijalankan saat terjadi perubahan navigasi mundur
+            location.reload()
+            console.log('Navigasi mundur');
+            // Lakukan tindakan yang diinginkan saat terjadi perubahan navigasi mundur
+        }
+    });
     $('#btn_save').on('click', function() {
         let data = [];
 
@@ -52,7 +65,6 @@
         let harga_beli = $('#harga_beli').val();
         let harga_jual = $('#harga_jual').val();
         let total_harga = $('#total_harga').val();
-        // console.log(nama_barang)
 
         const newRow = `
                 <tr>

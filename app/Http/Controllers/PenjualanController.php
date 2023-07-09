@@ -106,6 +106,7 @@ class PenjualanController extends Controller
             $penjualan->diskon = $request->data[0]['hasil_diskon_edit'];
             $penjualan->total_bayar = $request->data[0]['uang_bayar_edit'];
             $penjualan->kembalian = $request->data[0]['kembalian_edit'];
+            $penjualan->poin_pakai = $request->data[0]['jumlah_poin_edit'];
             if ($request->data[0]['tambahan_poin_edit'] == 1) {
                 $penjualan->poin_tambah = $request->data[0]['tambahan_poin_edit'];
             } else {
@@ -322,6 +323,7 @@ class PenjualanController extends Controller
     public function post_table_kasir(Request $request)
     {
         try {
+            // return response()->json($request->all());
             $penjualan = new Penjualan();
 
             $penjualan->subtotal = $request->data[0]['sub_total'];
@@ -330,6 +332,7 @@ class PenjualanController extends Controller
             $penjualan->kembalian = $request->data[0]['kembalian'];
             $penjualan->poin_tambah = (int) $request->data[0]['tambahan_poin'];
             $penjualan->metode_pembayaran = $request->data[0]['metode_pembayaran'];
+            $penjualan->poin_pakai = $request->data[0]['jumlah_poin'];
 
             $lap_anggota = lap_anggota::whereDate('tanggal', Carbon::now()->today())->first();
             if (empty($lap_anggota)) {
@@ -380,7 +383,7 @@ class PenjualanController extends Controller
             } else {
                 $penjualan->id_user = $request->data[0]['id_anggota'];
             }
-            $check_id_penjualan_detail = Penjualan_details::where('id_penjualan', $penjualan->id)->select('id')->first();
+            // $check_id_penjualan_detail = Penjualan_details::where('id_penjualan', $penjualan->id)->select('id')->first();
             $lap_anggota_detail->tanggal = Carbon::now();
             // $lap_anggota_detail->id_penjualan_detail = $check_id_penjualan_detail->id;
 
@@ -438,16 +441,8 @@ class PenjualanController extends Controller
                     'status' => 'Success',
                     'message' => 'Success Add Data'
                 ],
+                'data' => $penjualan->id
             ], 200);
-            // return response()->json([
-            //     'meta' => [
-            //         'status' => 'Success',
-            //     ],
-            //     'data' => [
-            //         'penjualan' => $penjualan,
-            //         'penjualan_detail' => $penjualan_detail
-            //     ]
-            // ], 200);
         } catch (Exception $error) {
             return response()->json([
                 'meta' => [
@@ -457,6 +452,12 @@ class PenjualanController extends Controller
                 'data' => $error->getMessage()
             ], 500);
         }
+    }
+
+    public function cetak($id)
+    {
+        $penjualan = Penjualan::findOrFail($id);
+        return view('print.print_penjualan', compact('penjualan'));
     }
 
     public function delete_table_kasir(Request $request)

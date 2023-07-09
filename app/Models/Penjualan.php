@@ -20,6 +20,7 @@ class Penjualan extends Model
         'total_bayar',
         'kembalian',
         'poin_tambah',
+        'poin_pakai',
         'metode_pembayaran',
         'created_at',
         'updated_at',

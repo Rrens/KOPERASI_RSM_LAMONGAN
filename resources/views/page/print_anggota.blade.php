@@ -441,6 +441,10 @@
     <br />
     <table>
         <tr>
+            <td>TANGGAL</td>
+            <td>: {{ $tanggal }}</td>
+        </tr>
+        <tr>
             <td>NO LAPORAN </td>
             <td>: {{ $data[0]->id }}</td>
         </tr>
@@ -458,7 +462,7 @@
         </tr>
         <tr>
             <td>ANGGOTA BAYAR </td>
-            <td>: {{ $total_pendapatan }}</td>
+            <td>: {{ $anggota_bayar }}</td>
         </tr>
         <tr>
             <td>TOTAL PENDAPATAN </td>
@@ -481,6 +485,9 @@
         </tr>
 
         @foreach ($data as $item)
+            @php
+                // dd($item);
+            @endphp
             <tr class="odd">
                 <td>{{ $loop->iteration }}</td>
 
@@ -491,7 +498,7 @@
                     {{ $item->user[0]->name }}<br>
                 </td>
                 <td>{{ $item->user[0]->poin }}</td>
-                <td>{{ $item->user[0]->credit }}</td>
+                <td>{{ $item->credit_keluar != null ? $item->credit_keluar : $item->credit_masuk }}</td>
                 <td>{{ $item->tanggal }}</td>
                 <td>
                     @php

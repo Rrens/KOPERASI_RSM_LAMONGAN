@@ -438,6 +438,10 @@
     <br />
     <table>
         <tr>
+            <td>TANGGAL</td>
+            <td>: {{ $data->tanggal }}</td>
+        </tr>
+        <tr>
             <td>NO LAPORAN </td>
             <td>: {{ $data->id }}</td>
         </tr>
@@ -446,9 +450,10 @@
             <td>: {{ $data->id_pembelian }}</td>
         </tr>
         <tr>
-            <td>TANGGAL</td>
-            <td>: {{ $data->tanggal }}</td>
+            <td>TOTAL PENGELUARAN</td>
+            <td>: {{ $data->pembelian[0]->total_bayar }}</td>
         </tr>
+
     </table>
 
 
@@ -477,7 +482,7 @@
                 </td>
                 <td>{{ $item->harga_beli }}</td>
                 <td>{{ $item->jumlah_barang }}</td>
-                <td>{{ $item->pembelian[0]->total_bayar }}</td>
+                <td>{{ $item->harga_beli * $item->jumlah_barang }}</td>
                 {{-- <td>{{ $order->type_order }}</td> --}}
                 <td>ini</td>
             </tr>
