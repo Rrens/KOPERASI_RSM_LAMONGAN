@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pembelian', function (Blueprint $table) {
             $table->id();
-            $table->float('total_bayar')->nullable();
+            $table->bigInteger('total_bayar')->nullable();
             $table->bigInteger('jumlah_barang')->nullable();
             $table->text('keterangan')->nullable();
             $table->timestamps();

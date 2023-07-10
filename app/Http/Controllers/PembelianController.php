@@ -124,6 +124,7 @@ class PembelianController extends Controller
                 'meta' => [
                     'status' => 'Success',
                 ],
+                'data' => $pembelian->id
             ], 200);
         } catch (Exception $error) {
             return response()->json([
@@ -226,6 +227,7 @@ class PembelianController extends Controller
                 'meta' => [
                     'status' => 'Success',
                 ],
+                'data' => $pembelian->id
             ], 200);
         } catch (Exception $error) {
             return response()->json([
@@ -266,5 +268,13 @@ class PembelianController extends Controller
         Alert::toast('Successfully Delete', 'success');
         return redirect()->route('pembelian.index');
         // dd($pembelian_detail);
+    }
+
+    public function print($id)
+    {
+        $data = Pembelian::where('id', $id)->first();
+        $pembelian_detail = pembelian_details::with('product')->where('id_pembelian', $id)->get();
+        // dd($data, $pembelian_detail);
+        return view('print.print_pembelian', compact('data', 'pembelian_detail'));
     }
 }

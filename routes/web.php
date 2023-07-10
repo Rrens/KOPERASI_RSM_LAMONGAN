@@ -9,6 +9,7 @@ use App\Http\Controllers\PembayaranKreditController;
 use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\StokBarangController;
+use App\Models\Pembelian;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -52,12 +53,14 @@ Route::group(
         Route::get('pembayaran-kredit', [PembayaranKreditController::class, 'index'])->name('kredit.index');
         Route::post('pembayaran-kredit', [PembayaranKreditController::class, 'store']);
         Route::get('pembayaran-kredit/get-user-id/{id}', [PembayaranKreditController::class, 'get_user_id']);
+        Route::get('pembayaran-kredit/print/{id}', [PembayaranKreditController::class, 'print']);
         Route::get('pembelian', [PembelianController::class, 'index'])->name('pembelian.index');
         Route::post('pembelian', [PembelianController::class, 'store'])->name('pembelian.store');
         Route::get('pembelian/get-product/{nama}', [PembelianController::class, 'get_product']);
         Route::get('pembelian/get-pembelian-detail/{id}', [PembelianController::class, 'get_pembelian_detail']);
         Route::post('pembelian/update', [PembelianController::class, 'update'])->name('pembelian.update');
         Route::post('pembelian/delete', [PembelianController::class, 'delete'])->name('pembelian.delete');
+        Route::get('pembelian/print/{id}', [PembelianController::class, 'print']);
     }
 );
 

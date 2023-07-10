@@ -416,8 +416,6 @@
 </head>
 
 <body>
-    {{-- <link media="all" rel="stylesheet" href="https://sicyca.dinamika.ac.id/static/css/print_table.css"
-        type="text/css" /> --}}
     <table style="width:670px;">
         <tr style="vertical-align:top">
             <td style="text-align:left">
@@ -433,70 +431,55 @@
         SAKIT MUHAMMADIYAH LAMONGAN
     </p>
 
-
     <br />
     <table>
         <tr>
-            {{-- @php
-                dd($data);
-            @endphp --}}
-            <td>NO LAPORAN </td>
-            <td>: {{ $data->id }}</td>
+            <td>ID ANGGOTA</td>
+            <td>: {{ $laporan->user[0]->id }}</td>
         </tr>
         <tr>
-            <td>NO TRANSAKSI </td>
-            <td>: {{ $data->id_penjualan }}</td>
+            <td>NAMA</td>
+            <td>: {{ $laporan->user[0]->name }}</td>
         </tr>
         <tr>
-            <td>TANGGAL </td>
-            <td>: {{ $data->tanggal }}</td>
-        </tr>
-        <tr>
-            <td>SUB TOTAL </td>
-            <td>: {{ $data->penjualan[0]->subtotal }}</td>
-        </tr>
-        <tr>
-            <td>DISKON </td>
-            <td>: {{ $data->penjualan[0]->diskon }}</td>
-        </tr>
-        <tr>
-            <td>TOTAL PENDAPATAN </td>
-            <td>: {{ $data->penjualan[0]->total_bayar }}</td>
+            <td>ALAMAT</td>
+            <td>: {{ $laporan->user[0]->address }}</td>
         </tr>
     </table>
 
-
+    <br /><br />
+    <p>List Barang dibeli</p>
 
     <table class="sicycatablemanual">
         <tr>
-            <th>No</th>
-            <th>ID Barang</th>
-            <th>Kategori</th>
-            <th>Nama Barang</th>
-            <th>Jumlah Barang</th>
-            <th>Harga Total</th>
-            <th>Metode</th>
+            <th>CREDIT AWAL</th>
+            <th>JUMLAH BAYAR</th>
+            <th>SISA</th>
+            <th>KETERANGAN</th>
         </tr>
 
-        @foreach ($penjualan_detail as $item)
-            <tr class="odd">
-                <td>{{ $loop->iteration }}</td>
-
-                <td>
-                    {{ $item->id_product }}<br>
-                </td>
-                <td>
-                    {{ $item->product[0]->kategori }}<br>
-                </td>
-                <td>{{ $item->product[0]->nama }}</td>
-                <td>{{ $item->jumlah_barang }}</td>
-                <td>{{ $item->harga_akhir }}</td>
-                <td>{{ $item->penjualan[0]->metode_pembayaran }}</td>
-            </tr>
-        @endforeach
+        {{-- @foreach ($laporan as $item) --}}
+        <tr class="odd">
+            <td>
+                Rp. {{ number_format($laporan->user[0]->credit + $laporan->credit_masuk) }}
+                <br>
+            </td>
+            <td>
+                Rp. {{ number_format($laporan->credit_masuk) }}
+                <br>
+            </td>
+            <td>
+                Rp.
+                {{ number_format($laporan->user[0]->credit == 0 ? 0 : $laporan->user[0]->credit - $laporan->credit_masuk) }}
+            </td>
+            <td>{{ $laporan->user[0]->credit == 0 ? 'Lunas' : 'Belum Lunas' }}</td>
+        </tr>
+        {{-- @endforeach --}}
 
     </table>
-    <br /><br />
+
+    </table>
+    {{-- <p style="text-align:right">Total: Rp.</p> --}}
 
     <script>
         window.print();

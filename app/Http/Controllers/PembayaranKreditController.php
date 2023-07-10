@@ -51,6 +51,7 @@ class PembayaranKreditController extends Controller
                 'meta' => [
                     'status' => 'Success',
                 ],
+                'data' => $user->id
             ], 200);
             // return response()->json($user);
         } catch (Exception $error) {
@@ -62,5 +63,15 @@ class PembayaranKreditController extends Controller
                 'data' => $error->getMessage()
             ], 500);
         }
+    }
+
+    public function print($id)
+    {
+        $laporan = lap_anggota_detail::where('id_user', $id)
+            ->where('credit_keluar', null)
+            ->with('user')
+            ->latest()->first();
+        // dd($laporan);
+        return view('print.print_pembayaran_credit', compact('laporan'));
     }
 }

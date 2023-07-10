@@ -562,43 +562,7 @@
     <script>
         window.print();
     </script>
-    <script type="text/javascript">
-        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
-            'August', 'September', 'October', 'November', 'December'
-        ];
-        // var tomorrow = new Date();
-        // tomorrow.setTime(tomorrow.getTime() + (1000 * 3600 * 24));
-        // document.getElementById("spanDate").innerHTML = months[tomorrow.getMonth()] + " " + tomorrow.getDate() + ", " +
-        //     tomorrow.getFullYear();
-        var today = new Date();
-        var day = today.getDate();
-        var month = months[today.getMonth()];
 
-        function appendZero(value) {
-            return "0" + value;
-        }
-
-        function theTime() {
-            var d = new Date();
-            document.getElementById("time").innerHTML = d.toLocaleTimeString("id-ID");
-        }
-
-        if (day < 10) {
-            day = appendZero(day);
-        }
-
-        if (month < 10) {
-            month = appendZero(month);
-        }
-
-        today = day + "/" + month + "/" + today.getFullYear();
-
-        document.getElementById("date").innerHTML = today;
-
-        var myVar = setInterval(function() {
-            theTime();
-        }, 1000);
-    </script>
 </body>
 
 </html>

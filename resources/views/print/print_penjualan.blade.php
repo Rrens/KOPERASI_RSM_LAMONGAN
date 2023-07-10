@@ -432,8 +432,7 @@
     <p style="text-align:center;font-weight: bold;font-size: 14px;margin-bottom:3px;padding-bottom:0px ">KOPERASI RUMAH
         SAKIT MUHAMMADIYAH LAMONGAN
     </p>
-    <p style="text-align:center;font-weight:normal;margin-top:0px;padding-top:0px" id="date"></p>
-    <p style="text-align:center;font-weight:normal;margin-top:0px;padding-top:0px" id="time"></p>
+
     @php
         // dd($data);
     @endphp
@@ -441,78 +440,84 @@
     <br />
     <table>
         <tr>
-            <td>TANGGAL</td>
-            <td>: </td>
-        </tr>
-        <tr>
             <td>NO LAPORAN </td>
-            <td>:</td>
+            <td>: {{ $penjualan[0]->id }}</td>
         </tr>
         <tr>
-            <td>NAMA ANGGOTA </td>
-            <td>: </td>
+            <td>TANGGAL</td>
+            <td>: {{ $penjualan[0]->created_at->toDateString() }}</td>
+        </tr>
+        @if (empty($penjualan[0]->user[0]) == false)
+            <tr>
+                <td>NAMA ANGGOTA </td>
+                <td>: {{ $penjualan[0]->user[0]->name }}</td>
+            </tr>
+            <tr>
+                <td>POIN ANGGOTA </td>
+                <td>: {{ $penjualan[0]->user[0]->poin }}</td>
+            </tr>
+            <tr>
+                <td>CREDIT ANGGOTA </td>
+                <td>: Rp. {{ number_format($penjualan[0]->user[0]->credit) }}</td>
+            </tr>
+        @endif
+        <tr>
+            <td>SUB TOTAL </td>
+            <td>: Rp. {{ number_format($penjualan[0]->subtotal) }}</td>
         </tr>
         <tr>
-            <td>ANGGOTA BARU </td>
-            <td>: </td>
+            <td>DISKON </td>
+            <td>: Rp. {{ number_format($penjualan[0]->diskon) }}</td>
         </tr>
         <tr>
-            <td>JUMLAH </td>
-            <td>: </td>
+            <td>TOTAL BAYAR </td>
+            <td>: Rp. {{ number_format($penjualan[0]->total_bayar) }}</td>
         </tr>
         <tr>
-            <td>ANGGOTA BAYAR </td>
-            <td>: </td>
-        </tr>
-        <tr>
-            <td>TOTAL PENDAPATAN </td>
-            <td>: </td>
+            <td>METODE PEMBAYARAN </td>
+            <td>: {{ $penjualan[0]->metode_pembayaran }}</td>
         </tr>
     </table>
 
     <br /><br />
-    <p>Credit</p>
+    <p>List Barang dibeli</p>
 
     <table class="sicycatablemanual">
         <tr>
             <th>No</th>
-            <th>Id Anggota </th>
-            <th>Nama</th>
-            <th>Poin</th>
-            <th>Credit</th>
-            <th>Waktu</th>
-            <th>Keterangan</th>
+            <th>ID BARANG </th>
+            <th>KATEGORI</th>
+            <th>NAMA BARANG</th>
+            <th>JUMLAH BARANG</th>
+            <th>HARGA JUAL</th>
+            <th>HARGA AKHIR</th>
         </tr>
 
-        {{-- @foreach ($data as $item) --}}
-        @php
-            // dd($item);
-        @endphp
-        <tr class="odd">
-            <td></td>
+        @foreach ($penjualan_detail as $item)
+            @php
+                // dd($item);
+            @endphp
+            <tr class="odd">
+                <td>{{ $loop->iteration }}</td>
 
-            <td>
-                <br>
-            </td>
-            <td>
-                <br>
-            </td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>
-                {{-- @php
-                        if ($item->credit_keluar != 0) {
-                            echo 'keluar';
-                        } elseif ($item->credit_masuk != 0) {
-                            echo 'masuk';
-                        } else {
-                            echo '-';
-                        }
-                    @endphp --}}
-            </td>
-        </tr>
-        {{-- @endforeach --}}
+                <td>
+                    {{ $item->id_product }}
+                    <br>
+                </td>
+                <td>
+                    {{ $item->product[0]->kategori }}
+                    <br>
+                </td>
+                <td>
+                    {{ $item->product[0]->nama }}
+                </td>
+                <td>{{ number_format($item->jumlah_barang) }}</td>
+                <td>Rp. {{ number_format($item->product[0]->harga) }}</td>
+                <td>
+                    Rp. {{ number_format($item->harga_akhir) }}
+                </td>
+            </tr>
+        @endforeach
 
     </table>
 
@@ -522,43 +527,7 @@
     <script>
         window.print();
     </script>
-    <script type="text/javascript">
-        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
-            'August', 'September', 'October', 'November', 'December'
-        ];
-        // var tomorrow = new Date();
-        // tomorrow.setTime(tomorrow.getTime() + (1000 * 3600 * 24));
-        // document.getElementById("spanDate").innerHTML = months[tomorrow.getMonth()] + " " + tomorrow.getDate() + ", " +
-        //     tomorrow.getFullYear();
-        var today = new Date();
-        var day = today.getDate();
-        var month = months[today.getMonth()];
 
-        function appendZero(value) {
-            return "0" + value;
-        }
-
-        function theTime() {
-            var d = new Date();
-            document.getElementById("time").innerHTML = d.toLocaleTimeString("id-ID");
-        }
-
-        if (day < 10) {
-            day = appendZero(day);
-        }
-
-        if (month < 10) {
-            month = appendZero(month);
-        }
-
-        today = day + "/" + month + "/" + today.getFullYear();
-
-        document.getElementById("date").innerHTML = today;
-
-        var myVar = setInterval(function() {
-            theTime();
-        }, 1000);
-    </script>
 </body>
 
 </html>

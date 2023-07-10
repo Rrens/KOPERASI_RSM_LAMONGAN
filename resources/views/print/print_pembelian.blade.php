@@ -416,8 +416,6 @@
 </head>
 
 <body>
-    {{-- <link media="all" rel="stylesheet" href="https://sicyca.dinamika.ac.id/static/css/print_table.css"
-        type="text/css" /> --}}
     <table style="width:670px;">
         <tr style="vertical-align:top">
             <td style="text-align:left">
@@ -432,8 +430,7 @@
     <p style="text-align:center;font-weight: bold;font-size: 14px;margin-bottom:3px;padding-bottom:0px ">KOPERASI RUMAH
         SAKIT MUHAMMADIYAH LAMONGAN
     </p>
-    <p style="text-align:center;font-weight:normal;margin-top:0px;padding-top:0px" id="date"></p>
-    <p style="text-align:center;font-weight:normal;margin-top:0px;padding-top:0px" id="time"></p>
+
     @php
         // dd($data);
     @endphp
@@ -442,31 +439,19 @@
     <table>
         <tr>
             <td>TANGGAL</td>
-            <td>: </td>
+            <td>: {{ $data->created_at->toDateString() }}</td>
         </tr>
         <tr>
-            <td>NO LAPORAN </td>
-            <td>:</td>
+            <td>NO PEMBELIAN </td>
+            <td>: {{ $data->id }}</td>
         </tr>
         <tr>
-            <td>NAMA ANGGOTA </td>
-            <td>: </td>
+            <td>TOTAL BARANG </td>
+            <td>: Rp. {{ number_format($data->total_bayar) }}</td>
         </tr>
         <tr>
-            <td>ANGGOTA BARU </td>
-            <td>: </td>
-        </tr>
-        <tr>
-            <td>JUMLAH </td>
-            <td>: </td>
-        </tr>
-        <tr>
-            <td>ANGGOTA BAYAR </td>
-            <td>: </td>
-        </tr>
-        <tr>
-            <td>TOTAL PENDAPATAN </td>
-            <td>: </td>
+            <td>KETERANGAN </td>
+            <td>: {{ $data->keterangan }}</td>
         </tr>
     </table>
 
@@ -476,43 +461,34 @@
     <table class="sicycatablemanual">
         <tr>
             <th>No</th>
-            <th>Id Anggota </th>
-            <th>Nama</th>
-            <th>Poin</th>
-            <th>Credit</th>
-            <th>Waktu</th>
-            <th>Keterangan</th>
+            <th>MAMA BARANG </th>
+            <th>KATEGORI</th>
+            <th>HARGA BELI</th>
+            <th>HARGA JUAL</th>
+            <th>JUMLAH BARANG</th>
+            <th>TOTAL HARGA</th>
         </tr>
 
-        {{-- @foreach ($data as $item) --}}
-        @php
-            // dd($item);
-        @endphp
-        <tr class="odd">
-            <td></td>
+        @foreach ($pembelian_detail as $item)
+            <tr class="odd">
+                <td>{{ $loop->iteration }}</td>
 
-            <td>
-                <br>
-            </td>
-            <td>
-                <br>
-            </td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>
-                {{-- @php
-                        if ($item->credit_keluar != 0) {
-                            echo 'keluar';
-                        } elseif ($item->credit_masuk != 0) {
-                            echo 'masuk';
-                        } else {
-                            echo '-';
-                        }
-                    @endphp --}}
-            </td>
-        </tr>
-        {{-- @endforeach --}}
+                <td>
+                    {{ $item->product[0]->nama }}
+                    <br>
+                </td>
+                <td>
+                    {{ $item->product[0]->kategori }}
+                    <br>
+                </td>
+                <td>Rp. {{ number_format($item->harga_beli) }}</td>
+                <td>Rp. {{ number_format($item->harga_jual) }}</td>
+                <td>{{ number_format($item->jumlah_barang) }} pcs</td>
+                <td>
+                    Rp. {{ number_format($item->harga_beli * $item->jumlah_barang) }}
+                </td>
+            </tr>
+        @endforeach
 
     </table>
 
@@ -522,43 +498,7 @@
     <script>
         window.print();
     </script>
-    <script type="text/javascript">
-        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
-            'August', 'September', 'October', 'November', 'December'
-        ];
-        // var tomorrow = new Date();
-        // tomorrow.setTime(tomorrow.getTime() + (1000 * 3600 * 24));
-        // document.getElementById("spanDate").innerHTML = months[tomorrow.getMonth()] + " " + tomorrow.getDate() + ", " +
-        //     tomorrow.getFullYear();
-        var today = new Date();
-        var day = today.getDate();
-        var month = months[today.getMonth()];
 
-        function appendZero(value) {
-            return "0" + value;
-        }
-
-        function theTime() {
-            var d = new Date();
-            document.getElementById("time").innerHTML = d.toLocaleTimeString("id-ID");
-        }
-
-        if (day < 10) {
-            day = appendZero(day);
-        }
-
-        if (month < 10) {
-            month = appendZero(month);
-        }
-
-        today = day + "/" + month + "/" + today.getFullYear();
-
-        document.getElementById("date").innerHTML = today;
-
-        var myVar = setInterval(function() {
-            theTime();
-        }, 1000);
-    </script>
 </body>
 
 </html>

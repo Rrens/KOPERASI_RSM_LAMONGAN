@@ -304,6 +304,7 @@ class PenjualanController extends Controller
                     'status' => 'Success',
                     'message' => 'Success Add Data'
                 ],
+                'data' => $penjualan->id
             ], 200);
 
 
@@ -456,8 +457,10 @@ class PenjualanController extends Controller
 
     public function cetak($id)
     {
-        $penjualan = Penjualan::findOrFail($id);
-        return view('print.print_penjualan', compact('penjualan'));
+        $penjualan = Penjualan::where('id', $id)->with('user')->get();
+        $penjualan_detail = Penjualan_details::where('id_penjualan', $id)->with('product')->get();
+        // dd($penjualan, $penjualan_detail);
+        return view('print.print_penjualan', compact('penjualan', 'penjualan_detail'));
     }
 
     public function delete_table_kasir(Request $request)
