@@ -9,8 +9,14 @@ body {
     background: url(https://muhammadiyah.or.id/wp-content/uploads/2022/06/WhatsApp-Image-2022-06-20-at-11.19.44-750x368.jpeg),
     /* background: url(https://i.pinimg.com/736x/87/1e/ee/871eee469a7afa37d7fef0566be0b6ea.jpg), */
         linear-gradient(90deg, #2d499d, #3f5491);
-    background-size: contain;
+    /* background-size: contain; */
+    /* height: 100%;
+     */
+
     height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 #auth #auth-left {
     padding: 5rem 8rem;
