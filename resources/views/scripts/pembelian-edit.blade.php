@@ -26,6 +26,7 @@
                 let i = 0;
                 $('#table_edit tbody').empty();
                 get_data.forEach(value => {
+                    // console.log(value['harga_beli'] * value['jumlah_barang']);
                     let newRow = `
                             <tr>
                                 <td class="text-bold-500">
@@ -58,7 +59,7 @@
                                     ${value['jumlah_barang']}
                                 </td>
                                 <td class="text-bold-500">
-                                    ${value['total_bayar']}
+                                    ${value['harga_beli'] * value['jumlah_barang']}
                                 </td>
                             </tr>
                         `;

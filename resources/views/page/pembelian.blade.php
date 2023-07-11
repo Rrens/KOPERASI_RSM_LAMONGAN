@@ -17,7 +17,7 @@
 
         body.theme-dark a {
             /* text-decoration: none !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        color: white; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        color: white; */
             color: inherit;
             text-decoration: none !important;
         }
@@ -174,8 +174,13 @@
                                 <fieldset class="form-group mt-3">
                                     <select class="form-select" id="kategori" name="kategori">
                                         <Option selected hidden>Pilih Kategori</Option>
-                                        <option value="makanan">Makanan</option>
-                                        <option value="minuman">Minuman</option>
+                                        <option value="Bahan Sembako">Bahan Sembako</option>
+                                        <option value="Kebutuhan rumah tangga">Kebutuhan rumah tangga</option>
+                                        <option value="Obat-obatan">Obat-obatan</option>
+                                        <option value="Alat tulis">Alat tulis</option>
+                                        <option value="Perlengkapan bayi">Perlengkapan bayi</option>
+                                        <option value="Produk Digital">Produk Digital</option>
+                                        <option value="Lain-lain">Lain-lain</option>
                                     </select>
                                 </fieldset>
                             </div>
@@ -272,8 +277,13 @@
                                 <fieldset class="form-group mt-3">
                                     <select class="form-select" id="kategori_edit" name="kategori">
                                         <button hidden>Pilih Kategori</button>
-                                        <option value="makanan">Makanan</option>
-                                        <option value="minuman">Minuman</option>
+                                        <option value="Bahan Sembako">Bahan Sembako</option>
+                                        <option value="Kebutuhan rumah tangga">Kebutuhan rumah tangga</option>
+                                        <option value="Obat-obatan">Obat-obatan</option>
+                                        <option value="Alat tulis">Alat tulis</option>
+                                        <option value="Perlengkapan bayi">Perlengkapan bayi</option>
+                                        <option value="Produk Digital">Produk Digital</option>
+                                        <option value="Lain-lain">Lain-lain</option>
                                     </select>
                                 </fieldset>
                             </div>
