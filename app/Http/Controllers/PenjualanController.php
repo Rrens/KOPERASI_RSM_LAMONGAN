@@ -221,7 +221,7 @@ class PenjualanController extends Controller
                 $lap_anggota_detail->save();
 
                 $penjualan->save();
-                $lap_anggota->id_penjualan = $penjualan->id;
+                // $lap_anggota->id_penjualan = $penjualan->id;
                 $lap_anggota->save();
             } else {
                 $penjualan->save();
@@ -390,7 +390,7 @@ class PenjualanController extends Controller
 
             $penjualan->save();
 
-            $lap_anggota->id_penjualan = $penjualan->id;
+            // $lap_anggota->id_penjualan = $penjualan->id;
             $lap_anggota->save();
             $lap_anggota_detail->id_lap_anggota = $lap_anggota->id;
 
