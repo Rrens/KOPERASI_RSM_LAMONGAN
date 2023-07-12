@@ -21,13 +21,16 @@ class DashboardConroller extends Controller
 
         $grafik = DB::table('penjualan_details as pd')
             ->select(
-                DB::raw('COUNT(pd.id) as id_penjualan_detail'),
-                DB::raw('DATE(p.created_at) as tanggal'),
+                // DB::raw('COUNT(pd.id_penjualan) as id_penjualan_detail'),
+                DB::raw('COUNT(pd.id_penjualan) as id_penjualan_detail'),
+                // DB::raw('DATE(p.tanggal) as tanggal'),
+                'p.tanggal'
                 // 'pd.id_penjualan'
             )
             ->join('penjualan as p', 'p.id', '=', 'pd.id_penjualan')
-            ->groupBy('pd.id_penjualan')
-            ->orderBy('p.created_at')
+            ->orderBy('p.tanggal', 'DESC')
+            ->groupBy('p.tanggal')
+            // ->groupBy('pd.id_penjualan')
             ->get();
 
         $penjualan_grafik = array();

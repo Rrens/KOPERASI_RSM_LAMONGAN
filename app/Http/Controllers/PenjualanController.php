@@ -98,7 +98,6 @@ class PenjualanController extends Controller
     public function update_table_kasir(Request $request)
     {
         try {
-            // return response()->json($request->data);
             $penjualan_old = Penjualan::findOrFail($request->data[0]['id_penjualan_edit']);
             $penjualan = Penjualan::findOrFail($request->data[0]['id_penjualan_edit']);
             $penjualan->id_user = $request->data[0]['id_anggota_edit'];
@@ -107,6 +106,7 @@ class PenjualanController extends Controller
             $penjualan->total_bayar = $request->data[0]['uang_bayar_edit'];
             $penjualan->kembalian = $request->data[0]['kembalian_edit'];
             $penjualan->poin_pakai = $request->data[0]['jumlah_poin_edit'];
+
             if ($request->data[0]['tambahan_poin_edit'] == 1) {
                 $penjualan->poin_tambah = $request->data[0]['tambahan_poin_edit'];
             } else {
@@ -334,6 +334,7 @@ class PenjualanController extends Controller
             $penjualan->poin_tambah = (int) $request->data[0]['tambahan_poin'];
             $penjualan->metode_pembayaran = $request->data[0]['metode_pembayaran'];
             $penjualan->poin_pakai = $request->data[0]['jumlah_poin'];
+            $penjualan->tanggal = Carbon::now()->toDateString();
 
             $lap_anggota = lap_anggota::whereDate('tanggal', Carbon::now()->today())->first();
             if (empty($lap_anggota)) {

@@ -22,6 +22,7 @@ class Penjualan extends Model
         'poin_tambah',
         'poin_pakai',
         'metode_pembayaran',
+        'tanggal',
         'created_at',
         'updated_at',
     ];

@@ -194,7 +194,6 @@
             });
         });
 
-        console.log(data);
 
         $.ajax({
             url: '/penjualan',
@@ -208,7 +207,7 @@
             success: function(response) {
                 console.log(response);
                 _url = `/penjualan/print/${response.data}`
-                // window.open(_url, '_blank');
+                // // window.open(_url, '_blank');
                 location.href = _url;
             },
             error: function(xhr, status, error) {
