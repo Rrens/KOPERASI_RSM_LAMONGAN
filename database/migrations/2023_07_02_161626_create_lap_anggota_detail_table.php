@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_lap_anggota')->nullable();
             $table->foreign('id_lap_anggota')->references('id')->on('lap_anggota');
             $table->bigInteger('total_bayar')->nullable();
+            $table->bigInteger('credit')->nullable();
             $table->bigInteger('credit_masuk')->nullable();
             $table->bigInteger('credit_keluar')->nullable();
             $table->bigInteger('poin')->nullable();

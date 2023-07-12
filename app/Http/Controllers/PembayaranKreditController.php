@@ -20,7 +20,7 @@ class PembayaranKreditController extends Controller
         $data = lap_anggota_detail::with('user')->whereHas('user', function ($query) {
             // $query->where('credit', '>', 0);
         })
-            ->where('credit_masuk', '!=', 0)
+            // ->where('credit_masuk', '!=', 0)
             ->get();
         // dd($data);
         return view('page.pembayaran-kredit', compact('active', 'data'));
@@ -46,11 +46,23 @@ class PembayaranKreditController extends Controller
                 // return response()->json($lap_anggota);
             }
             $lap_anggota->save();
+
+            $lap_anggota_detail_old = lap_anggota_detail::latest()->first();
+            // dd(User::where('id', $request->data['id_anggota'])->select('credit')->first()->credit);
+            $credit_user = User::where('id', $request->data['id_anggota'])->select('credit')->first()->credit;
+
             $lap_anggota_detail = new lap_anggota_detail();
             $lap_anggota_detail->id_lap_anggota = $lap_anggota->id;
             $lap_anggota_detail->id_user = $user->id;
             $lap_anggota_detail->tanggal = Carbon::now()->toDateString();
             $lap_anggota_detail->credit_masuk = $request->data['jumlah_bayar'];
+            if ($lap_anggota_detail_old->credit == null) {
+                $lap_anggota_detail->credit = $credit_user;
+                // $lap_anggota_detail->credit == $lap_anggota_detail_old->credit_keluar - $request->data['jumlah_bayar'];
+                // dd($lap_anggota_detail);
+            } else {
+                $lap_anggota_detail->credit = $lap_anggota_detail_old->credit - $request->data['jumlah_bayar'];
+            }
             $lap_anggota_detail->save();
 
             return response()->json([

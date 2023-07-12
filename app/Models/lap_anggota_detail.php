@@ -17,6 +17,7 @@ class lap_anggota_detail extends Model
         'id_penjualan',
         'id_lap_anggota',
         'total_bayar',
+        'credit',
         'credit_masuk',
         'credit_keluar',
         'poin',
