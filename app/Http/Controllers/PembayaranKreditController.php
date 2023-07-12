@@ -14,9 +14,15 @@ class PembayaranKreditController extends Controller
     public function index()
     {
         $active = 'kredit';
-        $data = User::where('credit', '>', 0)
+        $data2 = User::where('credit', '>', 0)
             ->select('id', 'name', 'poin', 'credit', 'phone', 'address')
             ->get();
+        $data = lap_anggota_detail::with('user')->whereHas('user', function ($query) {
+            // $query->where('credit', '>', 0);
+        })
+            ->where('credit_masuk', '!=', 0)
+            ->get();
+        // dd($data);
         return view('page.pembayaran-kredit', compact('active', 'data'));
     }
 

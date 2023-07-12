@@ -119,12 +119,15 @@
         var uang_bayar = $('#uang_bayar').val();
         var nominal_bayar = $('#nominal_bayar').val();
         // console.log(`UANG BAYAR: ${uang_bayar} NOMINAL BAYAR ${nominal_bayar}`)
+        let checkUang = uang_bayar - nominal_bayar;
 
-        if (uang_bayar < nominal_bayar) {
+        if (checkUang < 0) {
+            // console.log('kurang');
+            alert('Uang kurang ' + (checkUang))
             $('#kembalian').val('');
-            alert('Uang kurang ' + (nominal_bayar - uang_bayar))
         } else {
-            $('#kembalian').val(uang_bayar - nominal_bayar);
+            console.log('lebih');
+            $('#kembalian').val(checkUang);
         }
     })
 

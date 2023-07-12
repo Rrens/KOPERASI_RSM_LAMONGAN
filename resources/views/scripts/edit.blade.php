@@ -238,12 +238,13 @@
             var uang_bayar = $('#uang_bayar_edit').val();
             var nominal_bayar = $('#nominal_bayar_edit').val();
             // console.log(`UANG BAYAR: ${uang_bayar} NOMINAL BAYAR ${nominal_bayar}`)
+            let checkUang = uang_bayar - nominal_bayar;
 
-            if (uang_bayar < nominal_bayar) {
-                alert('Uang kurang ' + (nominal_bayar - uang_bayar))
+            if (checkUang < 0) {
+                alert('Uang kurang ' + (checkUang))
                 $('#kembalian_edit').val('');
             } else {
-                $('#kembalian_edit').val(uang_bayar - nominal_bayar);
+                $('#kembalian_edit').val(checkUang);
             }
         })
 

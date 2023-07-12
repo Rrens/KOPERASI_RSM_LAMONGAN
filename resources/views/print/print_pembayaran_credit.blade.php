@@ -470,7 +470,7 @@
             </td>
             <td>
                 Rp.
-                {{ number_format($laporan->user[0]->credit == 0 ? 0 : $laporan->user[0]->credit - $laporan->credit_masuk) }}
+                {{ number_format($laporan->user[0]->credit == 0 ? 0 : $laporan->user[0]->credit - $laporan->credit_masuk + $laporan->credit_masuk) }}
             </td>
             <td>{{ $laporan->user[0]->credit == 0 ? 'Lunas' : 'Belum Lunas' }}</td>
         </tr>

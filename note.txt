@@ -57,3 +57,11 @@ ANGGOTA BAYAR = TOTAL ANGGOTA BAYAR UTANG
 
 
 
+///////////////////////////
+NOTE HITUNG KEMBALIAN
+HAPUS PENJUALAN
+Perhitungan credit, pas cetak salah
+
+PEMBAYARAN CREDIT CETAK salah (sisa)
+
+
