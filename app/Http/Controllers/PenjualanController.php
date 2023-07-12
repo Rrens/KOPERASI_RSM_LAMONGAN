@@ -329,7 +329,7 @@ class PenjualanController extends Controller
 
             $penjualan->subtotal = $request->data[0]['sub_total'];
             $penjualan->diskon = $request->data[0]['hasil_diskon'];
-            $penjualan->total_bayar = $request->data[0]['uang_bayar'];
+            $penjualan->total_bayar = $request->data[0]['nominal_bayar'];
             $penjualan->kembalian = $request->data[0]['kembalian'];
             $penjualan->poin_tambah = (int) $request->data[0]['tambahan_poin'];
             $penjualan->metode_pembayaran = $request->data[0]['metode_pembayaran'];
