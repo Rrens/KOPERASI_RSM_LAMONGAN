@@ -22,11 +22,12 @@ class DashboardConroller extends Controller
         $grafik = DB::table('penjualan_details as pd')
             ->select(
                 DB::raw('COUNT(pd.id) as id_penjualan_detail'),
-                DB::raw('DATE(pd.created_at) as tanggal'),
+                DB::raw('DATE(p.created_at) as tanggal'),
                 // 'pd.id_penjualan'
             )
+            ->join('penjualan as p', 'p.id', '=', 'pd.id_penjualan')
             ->groupBy('pd.id_penjualan')
-            ->orderBy('pd.created_at')
+            ->orderBy('p.created_at')
             ->get();
 
         $penjualan_grafik = array();
