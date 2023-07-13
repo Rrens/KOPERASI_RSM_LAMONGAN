@@ -445,7 +445,7 @@
         </tr>
         <tr>
             <td>TANGGAL</td>
-            <td>: {{ $penjualan[0]->created_at->toDateString() }}</td>
+            <td>: {{ $penjualan[0]->tanggal }}</td>
         </tr>
         @if (empty($penjualan[0]->user[0]) == false)
             <tr>

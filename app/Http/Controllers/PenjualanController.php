@@ -50,7 +50,7 @@ class PenjualanController extends Controller
         if (empty($checkPenjualan->id_user)) {
             $penjualan = DB::table('penjualan_details as pd')
                 ->select(
-                    'p.created_at as tanggal_penjualan',
+                    'p.tanggal as tanggal_penjualan',
                     'pd.id_product as id_barang',
                     'pr.kategori',
                     'pr.nama as nama_product',
@@ -73,7 +73,7 @@ class PenjualanController extends Controller
                     'u.poin as poin_user',
                     'u.credit as credit_user',
                     'u.id as id_user',
-                    'p.created_at as tanggal_penjualan',
+                    'p.tanggal as tanggal_penjualan',
                     'pd.id_product as id_barang',
                     'pr.kategori',
                     'pr.nama as nama_product',
@@ -334,7 +334,7 @@ class PenjualanController extends Controller
             $penjualan->poin_tambah = (int) $request->data[0]['tambahan_poin'];
             $penjualan->metode_pembayaran = $request->data[0]['metode_pembayaran'];
             $penjualan->poin_pakai = $request->data[0]['jumlah_poin'];
-            $penjualan->tanggal = Carbon::now()->toDateString();
+            $penjualan->tanggal = $request->data[0]['tanggal'];
 
             $lap_anggota = lap_anggota::whereDate('tanggal', Carbon::now()->today())->first();
             if (empty($lap_anggota)) {

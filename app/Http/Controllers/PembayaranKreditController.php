@@ -20,7 +20,7 @@ class PembayaranKreditController extends Controller
         $data = lap_anggota_detail::with('user')->whereHas('user', function ($query) {
             // $query->where('credit', '>', 0);
         })
-            // ->where('credit_masuk', '!=', 0)
+            ->where('credit', '!=', null)
             ->get();
         // dd($data);
         return view('page.pembayaran-kredit', compact('active', 'data'));
